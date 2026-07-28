@@ -1,0 +1,27 @@
+.page {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: var(--space-8);
+}
+
+.title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  letter-spacing: -0.02em;
+}
+
+.accent {
+  color: var(--color-accent);
+}
+
+.description {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  text-align: center;
+  max-width: 480px;
+  line-height: var(--leading-relaxed);
+}

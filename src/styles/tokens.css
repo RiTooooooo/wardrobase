@@ -1,0 +1,94 @@
+/*
+ * Wardrobase デザイントークン
+ *
+ * UIコンセプト (wardrobase-ui-concept.png) から抽出。
+ * ダーク基調・メンズ寄りのミニマルデザイン。
+ *
+ * 色・余白・フォントサイズをハードコードせず、
+ * すべてここで定義した変数を参照すること（conventions.md §8）。
+ */
+
+:root {
+  /* ===== カラー: 背景 ===== */
+  --color-bg-base: #0c0d0e;
+  --color-bg-elevated: #141516;
+  --color-bg-surface: #1c1d1f;
+  --color-bg-overlay: #252628;
+
+  /* ===== カラー: アクセント（ロイヤルブルー） ===== */
+  --color-accent: #4169e1;
+  --color-accent-hover: #5a7fe8;
+  --color-accent-muted: rgba(65, 105, 225, 0.15);
+
+  /* ===== カラー: テキスト ===== */
+  --color-text-primary: #ededed;
+  --color-text-secondary: #888888;
+  --color-text-tertiary: #555555;
+  --color-text-inverse: #0c0d0e;
+
+  /* ===== カラー: ボーダー ===== */
+  --color-border: #2a2b2d;
+  --color-border-strong: #3a3b3d;
+
+  /* ===== カラー: セマンティック ===== */
+  --color-error: #e05555;
+  --color-success: #4caf7c;
+  --color-warning: #d4a843;
+
+  /* ===== タイポグラフィ: フォント ===== */
+  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  /* ===== タイポグラフィ: サイズ ===== */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+
+  /* ===== タイポグラフィ: ウェイト ===== */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+
+  /* ===== タイポグラフィ: 行間 ===== */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  /* ===== スペーシング (4px刻み) ===== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ===== 角丸 ===== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* ===== シャドウ ===== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+
+  /* ===== トランジション ===== */
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ===== レイアウト ===== */
+  --sidebar-width: 200px;
+  --bottom-nav-height: 64px;
+  --header-height: 56px;
+}

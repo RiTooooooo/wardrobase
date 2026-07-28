@@ -1,0 +1,65 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: wardrobase-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wardrobase
+      POSTGRES_PASSWORD: wardrobase
+      POSTGRES_DB: wardrobase
+    ports:
+      # ホスト側は5433（5432はローカルの別Postgresと衝突しやすいため）
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wardrobase -d wardrobase"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # S3互換ストレージ。本番は R2 / S3 に差し替えられるようコードはS3 APIで書く
+  minio:
+    image: minio/minio:latest
+    container_name: wardrobase-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # 管理コンソール http://localhost:9001
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 起動時にバケットを自動作成する使い捨てコンテナ
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 minioadmin minioadmin &&
+      mc mb --ignore-existing local/wardrobase-items &&
+      echo 'bucket ready'
+      "
+
+  # 開発用メールサーバー。認証メールは全てここに届く（http://localhost:8025）
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: wardrobase-mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+
+volumes:
+  postgres-data:
+  minio-data:

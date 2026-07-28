@@ -1,0 +1,225 @@
+// Wardrobase データベーススキーマ
+// 変更したら `npx prisma migrate dev --name <変更内容>` でマイグレーションを作成する
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+// 接続URLは prisma.config.ts で指定する（Prisma 7 で url は廃止）
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// better-auth 管理テーブル
+//
+// better-auth の CLI（`npx auth@latest generate`）は既存スキーマへの
+// マージができず、実行すると schema.prisma を上書きしてしまう。
+// そのため、このセクションは better-auth のコアスキーマ定義
+// （https://better-auth.com/docs/concepts/database）に沿って手で管理する。
+//
+// better-auth をアップデートした際は、上記ドキュメントで
+// フィールドの追加・変更がないか確認すること。
+// ============================================================
+
+model User {
+  id            String   @id
+  name          String
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  image         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sessions Session[]
+  accounts Account[]
+
+  items    Item[]
+  outfits  Outfit[]
+  stylings Styling[]
+  wearLogs WearLog[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  idToken               String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+// ============================================================
+// アプリケーションのドメインテーブル
+// ============================================================
+
+enum Category {
+  TOPS
+  BOTTOMS
+  OUTER
+  SHOES
+  BAG
+  ACCESSORY
+}
+
+enum Season {
+  SPRING
+  SUMMER
+  AUTUMN
+  WINTER
+}
+
+enum ItemStatus {
+  ACTIVE
+  CANDIDATE_FOR_DISPOSAL
+  ARCHIVED
+}
+
+/// 服。imagePath は S3互換ストレージのキーのみを保持し、URLは表示時に都度生成する
+model Item {
+  id          String     @id @default(uuid())
+  userId      String     @map("user_id")
+  imagePath   String?    @map("image_path")
+  name        String
+  category    Category
+  subCategory String?    @map("sub_category")
+  color       String
+  seasons     Season[]
+  brand       String?
+  price       Int?
+  purchasedAt DateTime?  @map("purchased_at") @db.Date
+  memo        String?
+  status      ItemStatus @default(ACTIVE)
+  deletedAt   DateTime?  @map("deleted_at")
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outfitItems  OutfitItem[]
+  stylingItems StylingItem[]
+  wearLogs     WearLog[]
+
+  @@index([userId, deletedAt])
+  @@index([userId, category])
+  @@map("items")
+}
+
+/// その日に実際に着たコーデ（実績）。同日に複数登録できる
+model Outfit {
+  id           String    @id @default(uuid())
+  userId       String    @map("user_id")
+  wornOn       DateTime  @map("worn_on") @db.Date
+  satisfaction Int?
+  weather      String?
+  memo         String?
+  deletedAt    DateTime? @map("deleted_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items    OutfitItem[]
+  wearLogs WearLog[]
+
+  @@index([userId, wornOn])
+  @@map("outfits")
+}
+
+model OutfitItem {
+  outfitId String @map("outfit_id")
+  itemId   String @map("item_id")
+
+  outfit Outfit @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@id([outfitId, itemId])
+  @@index([itemId])
+  @@map("outfit_items")
+}
+
+/// 定番スタイリング（再利用するテンプレート）。日付を持たない点で Outfit と異なる
+model Styling {
+  id        String    @id @default(uuid())
+  userId    String    @map("user_id")
+  name      String
+  seasons   Season[]
+  memo      String?
+  deletedAt DateTime? @map("deleted_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items StylingItem[]
+
+  @@index([userId, deletedAt])
+  @@map("stylings")
+}
+
+model StylingItem {
+  stylingId String @map("styling_id")
+  itemId    String @map("item_id")
+
+  styling Styling @relation(fields: [stylingId], references: [id], onDelete: Cascade)
+  item    Item    @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@id([stylingId, itemId])
+  @@index([itemId])
+  @@map("styling_items")
+}
+
+/// 着用記録。分析の土台。コーデ保存時に自動生成され、コーデ削除時に連動して消える
+model WearLog {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  itemId    String   @map("item_id")
+  wornOn    DateTime @map("worn_on") @db.Date
+  outfitId  String?  @map("outfit_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item   Item    @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  outfit Outfit? @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+
+  @@unique([itemId, wornOn])
+  @@index([userId, wornOn])
+  @@map("wear_logs")
+}
