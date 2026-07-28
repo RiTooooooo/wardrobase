@@ -1,0 +1,21 @@
+.button {
+  min-height: 44px;
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: #fff;
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  transition:
+    background var(--duration-fast) var(--easing),
+    opacity var(--duration-fast) var(--easing);
+}
+
+.button:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
