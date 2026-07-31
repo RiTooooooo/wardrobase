@@ -5,6 +5,7 @@ import type { FormEvent, ReactElement } from "react";
 
 import { useRouter } from "next/navigation";
 
+import { ImageUpload } from "@/components/features/item/ImageUpload";
 import { SeasonPicker } from "@/components/features/item/SeasonPicker";
 import { Button } from "@/components/ui/Button";
 import { SelectField } from "@/components/ui/SelectField";
@@ -28,6 +29,7 @@ export function ItemForm(): ReactElement {
   const router = useRouter();
   const [category, setCategory] = useState<Category | "">("");
   const [seasons, setSeasons] = useState<Season[]>([]);
+  const [imagePath, setImagePath] = useState<string | undefined>(undefined);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState("");
   const [isPending, setIsPending] = useState(false);
@@ -55,6 +57,7 @@ export function ItemForm(): ReactElement {
       price: formData.get("price"),
       purchasedAt: formData.get("purchasedAt"),
       memo: formData.get("memo"),
+      imagePath,
     });
 
     if (!parsed.success) {
@@ -73,11 +76,15 @@ export function ItemForm(): ReactElement {
     }
 
     router.push("/wardrobe");
-    router.refresh();
   }
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
+      <ImageUpload
+        disabled={isPending}
+        onUploaded={(key) => setImagePath(key)}
+        onRemoved={() => setImagePath(undefined)}
+      />
       <TextField
         id="name"
         name="name"

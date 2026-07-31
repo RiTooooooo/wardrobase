@@ -33,6 +33,7 @@ export async function registerItem(
     price: orNull(input.price),
     purchasedAt: orNull(input.purchasedAt),
     memo: orNull(input.memo),
+    imagePath: orNull(input.imagePath),
   });
 
   return item.id;

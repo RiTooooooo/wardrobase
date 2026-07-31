@@ -31,6 +31,11 @@ export async function createItemAction(
     return { ok: false, message: "入力内容を確認してください" };
   }
 
+  const { imagePath } = parsed.data;
+  if (imagePath !== undefined && !imagePath.startsWith(`${session.user.id}/`)) {
+    return { ok: false, message: "不正な画像パスです" };
+  }
+
   const id = await registerItem(session.user.id, parsed.data);
 
   return { ok: true, id };

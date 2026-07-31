@@ -1,0 +1,91 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+}
+
+.optional {
+  font-weight: var(--font-normal);
+  color: var(--color-text-secondary);
+  margin-left: var(--space-2);
+}
+
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  cursor: pointer;
+  transition: border-color var(--duration-normal) var(--easing);
+}
+
+.dropzone:hover {
+  border-color: var(--color-border-strong);
+}
+
+.dropzoneDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.dropzoneText {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: var(--space-4);
+}
+
+.preview {
+  position: relative;
+  display: inline-block;
+}
+
+.previewImage {
+  display: block;
+  max-width: 100%;
+  max-height: 240px;
+  border-radius: var(--radius-md);
+  object-fit: contain;
+}
+
+.removeButton {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploading {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.error {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+}
+
+.hidden {
+  display: none;
+}

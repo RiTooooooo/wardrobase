@@ -47,6 +47,11 @@ const optionalPurchasedAt = z.preprocess(
   z.coerce.date().optional(),
 );
 
+const optionalImagePath = z.preprocess(
+  emptyToUndefined,
+  z.string().max(300).optional(),
+);
+
 export const createItemSchema = z.object({
   name: z
     .string()
@@ -60,6 +65,7 @@ export const createItemSchema = z.object({
   price: optionalPrice,
   purchasedAt: optionalPurchasedAt,
   memo: optionalMemo,
+  imagePath: optionalImagePath,
 });
 
 export type CreateItemInput = z.infer<typeof createItemSchema>;

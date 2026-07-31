@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 import { SignOutButton } from "@/components/features/auth/SignOutButton";
 import { findItemsByUser } from "@/infrastructure/prisma/itemRepository";
+import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
 import { auth } from "@/lib/auth";
 
 import styles from "./page.module.css";
@@ -19,6 +20,13 @@ export default async function WardrobePage(): Promise<ReactElement> {
   }
 
   const items = await findItemsByUser(session.user.id);
+
+  const itemsWithUrls = await Promise.all(
+    items.map(async (item) => ({
+      ...item,
+      imageUrl: item.imagePath ? await createViewUrl(item.imagePath) : null,
+    })),
+  );
 
   return (
     <div className={styles.page}>
@@ -43,8 +51,17 @@ export default async function WardrobePage(): Promise<ReactElement> {
         </p>
       ) : (
         <ul className={styles.list}>
-          {items.map((item) => (
+          {itemsWithUrls.map((item) => (
             <li key={item.id} className={styles.listItem}>
+              {item.imageUrl ? (
+                <img
+                  className={styles.itemImage}
+                  src={item.imageUrl}
+                  alt={item.name}
+                />
+              ) : (
+                <div className={styles.itemPlaceholder} />
+              )}
               <span className={styles.itemName}>{item.name}</span>
               <span className={styles.itemBrand}>{item.brand ?? "—"}</span>
             </li>
