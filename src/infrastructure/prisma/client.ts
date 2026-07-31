@@ -37,8 +37,17 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient();
-
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+// ビルド時のモジュール読み込みで DATABASE_URL が未定義でも失敗しないよう遅延初期化する
+// 実際の DB アクセス時に初めてクライアントを生成する
+function getPrismaClient(): PrismaClient {
+  if (globalForPrisma.prisma === undefined) {
+    globalForPrisma.prisma = createPrismaClient();
+  }
+  return globalForPrisma.prisma;
 }
+
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, prop: string | symbol): unknown {
+    return Reflect.get(getPrismaClient(), prop);
+  },
+});
