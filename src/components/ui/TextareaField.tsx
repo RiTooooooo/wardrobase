@@ -2,33 +2,31 @@ import type { ReactElement } from "react";
 
 import { FieldError } from "./FieldError";
 import { fieldErrorAria } from "./fieldA11y";
-import styles from "./TextField.module.css";
+import styles from "./TextareaField.module.css";
 
-interface TextFieldProps {
+interface TextareaFieldProps {
   id: string;
   name: string;
   label: string;
-  type: "text" | "email" | "password" | "number" | "date";
-  autoComplete?: string;
-  placeholder?: string;
+  rows?: number;
   optional?: boolean;
   error?: string;
   disabled?: boolean;
 }
 
-export function TextField({
+export function TextareaField({
   id,
   name,
   label,
-  type,
-  autoComplete,
-  placeholder,
+  rows,
   optional,
   error,
   disabled,
-}: TextFieldProps): ReactElement {
+}: TextareaFieldProps): ReactElement {
   const errorId = `${id}-error`;
-  const className = error ? `${styles.input} ${styles.inputError}` : styles.input;
+  const className = error
+    ? `${styles.textarea} ${styles.textareaError}`
+    : styles.textarea;
 
   return (
     <div className={styles.field}>
@@ -36,13 +34,11 @@ export function TextField({
         {label}
         {optional ? <span className={styles.optional}>任意</span> : null}
       </label>
-      <input
+      <textarea
         className={className}
         id={id}
         name={name}
-        type={type}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
+        rows={rows}
         disabled={disabled}
         {...fieldErrorAria(errorId, error)}
       />
