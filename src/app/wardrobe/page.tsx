@@ -5,28 +5,40 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { SignOutButton } from "@/components/features/auth/SignOutButton";
+import { WardrobeGrid } from "@/components/features/wardrobe/WardrobeGrid";
+import type { WardrobeItem } from "@/components/features/wardrobe/wardrobeTypes";
 import { findItemsByUser } from "@/infrastructure/prisma/itemRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
 import { auth } from "@/lib/auth";
 
 import styles from "./page.module.css";
 
+async function toWardrobeItem(
+  item: Awaited<ReturnType<typeof findItemsByUser>>[number],
+): Promise<WardrobeItem> {
+  return {
+    id: item.id,
+    name: item.name,
+    category: item.category,
+    color: item.color,
+    seasons: item.seasons,
+    brand: item.brand,
+    price: item.price,
+    memo: item.memo,
+    imageUrl: item.imagePath ? await createViewUrl(item.imagePath) : null,
+    createdAt: item.createdAt.toISOString(),
+  };
+}
+
 export default async function WardrobePage(): Promise<ReactElement> {
   const session = await auth.api.getSession({ headers: await headers() });
 
-  // proxy.ts の振り分けは Cookie の有無しか見ていないため、ここで実際に検証する
   if (session === null) {
     redirect("/login");
   }
 
   const items = await findItemsByUser(session.user.id);
-
-  const itemsWithUrls = await Promise.all(
-    items.map(async (item) => ({
-      ...item,
-      imageUrl: item.imagePath ? await createViewUrl(item.imagePath) : null,
-    })),
-  );
+  const wardrobeItems = await Promise.all(items.map(toWardrobeItem));
 
   return (
     <div className={styles.page}>
@@ -50,23 +62,7 @@ export default async function WardrobePage(): Promise<ReactElement> {
           </Link>
         </p>
       ) : (
-        <ul className={styles.list}>
-          {itemsWithUrls.map((item) => (
-            <li key={item.id} className={styles.listItem}>
-              {item.imageUrl ? (
-                <img
-                  className={styles.itemImage}
-                  src={item.imageUrl}
-                  alt={item.name}
-                />
-              ) : (
-                <div className={styles.itemPlaceholder} />
-              )}
-              <span className={styles.itemName}>{item.name}</span>
-              <span className={styles.itemBrand}>{item.brand ?? "—"}</span>
-            </li>
-          ))}
-        </ul>
+        <WardrobeGrid items={wardrobeItems} />
       )}
     </div>
   );
