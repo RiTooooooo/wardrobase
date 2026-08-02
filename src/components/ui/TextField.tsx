@@ -11,6 +11,7 @@ interface TextFieldProps {
   type: "text" | "email" | "password" | "number" | "date";
   autoComplete?: string;
   placeholder?: string;
+  defaultValue?: string;
   optional?: boolean;
   error?: string;
   disabled?: boolean;
@@ -23,6 +24,7 @@ export function TextField({
   type,
   autoComplete,
   placeholder,
+  defaultValue,
   optional,
   error,
   disabled,
@@ -43,6 +45,7 @@ export function TextField({
         type={type}
         autoComplete={autoComplete}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         disabled={disabled}
         {...fieldErrorAria(errorId, error)}
       />

@@ -15,6 +15,7 @@ interface SelectFieldProps {
   label: string;
   options: readonly Option[];
   placeholder: string;
+  defaultValue?: string;
   error?: string;
   disabled?: boolean;
   onChange?: (value: string) => void;
@@ -26,6 +27,7 @@ export function SelectField({
   label,
   options,
   placeholder,
+  defaultValue,
   error,
   disabled,
   onChange,
@@ -44,7 +46,7 @@ export function SelectField({
         className={className}
         id={id}
         name={name}
-        defaultValue=""
+        defaultValue={defaultValue ?? ""}
         disabled={disabled}
         {...fieldErrorAria(errorId, error)}
         onChange={(event) => {

@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { ItemForm } from "@/components/features/item/ItemForm";
 import { auth } from "@/lib/auth";
 
+import { createItemAction } from "./actions";
 import styles from "./page.module.css";
 
 export default async function NewItemPage(): Promise<ReactElement> {
@@ -24,7 +25,12 @@ export default async function NewItemPage(): Promise<ReactElement> {
         </Link>
         <h1 className={styles.title}>アイテムを登録</h1>
       </div>
-      <ItemForm />
+      <ItemForm
+        onSubmitAction={createItemAction}
+        submitLabel="登録する"
+        pendingLabel="登録中..."
+        redirectTo="/wardrobe"
+      />
     </div>
   );
 }

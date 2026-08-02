@@ -10,19 +10,33 @@ import styles from "./ImageUpload.module.css";
 
 type Props = {
   disabled: boolean;
+  initialImageUrl?: string;
   onUploaded: (key: string) => void;
   onRemoved: () => void;
 };
 
 type UploadState = "idle" | "processing" | "uploading" | "done";
 
+function initialState(url: string | undefined): {
+  state: UploadState;
+  preview: string | null;
+} {
+  return url ? { state: "done", preview: url } : { state: "idle", preview: null };
+}
+
+function isInputBusy(state: UploadState): boolean {
+  return state === "processing" || state === "uploading";
+}
+
 export function ImageUpload({
   disabled,
+  initialImageUrl,
   onUploaded,
   onRemoved,
 }: Props): ReactElement {
-  const [state, setState] = useState<UploadState>("idle");
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const init = initialState(initialImageUrl);
+  const [state, setState] = useState<UploadState>(init.state);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(init.preview);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -93,7 +107,7 @@ export function ImageUpload({
         accept="image/jpeg,image/png,image/webp"
         className={styles.hidden}
         onChange={handleFileChange}
-        disabled={disabled || state === "processing" || state === "uploading"}
+        disabled={disabled || isInputBusy(state)}
       />
       {previewUrl ? (
         <UploadedPreview
@@ -126,34 +140,19 @@ function handleKeyDown(onClickSelect: () => void) {
   };
 }
 
-function dropzoneProps(
-  isDisabled: boolean,
-  onClickSelect: () => void,
-): Record<string, unknown> {
-  if (isDisabled) {
-    return {};
-  }
-  return {
-    onClick: onClickSelect,
-    onKeyDown: handleKeyDown(onClickSelect),
-  };
+function dropzoneProps(isDisabled: boolean, onClickSelect: () => void): Record<string, unknown> {
+  if (isDisabled) return {};
+  return { onClick: onClickSelect, onKeyDown: handleKeyDown(onClickSelect) };
 }
 
-function Dropzone({
-  disabled,
-  onClickSelect,
-  state,
-}: {
-  disabled: boolean;
-  onClickSelect: () => void;
-  state: UploadState;
+function Dropzone({ disabled, onClickSelect, state }: {
+  disabled: boolean; onClickSelect: () => void; state: UploadState;
 }): ReactElement {
   const message = stateMessage(state);
   const isDisabled = disabled || message !== null;
   const zoneClass = `${styles.dropzone} ${isDisabled ? styles.dropzoneDisabled : ""}`;
   const text = message ?? "クリックして写真を選択";
   const textClass = message ? styles.uploading : styles.dropzoneText;
-
   return (
     <div className={zoneClass} role="button" tabIndex={0} {...dropzoneProps(isDisabled, onClickSelect)}>
       <p className={textClass}>{text}</p>
@@ -161,34 +160,17 @@ function Dropzone({
   );
 }
 
-function UploadedPreview({
-  previewUrl,
-  state,
-  disabled,
-  onRemove,
-}: {
-  previewUrl: string;
-  state: UploadState;
-  disabled: boolean;
-  onRemove: () => void;
+function UploadedPreview({ previewUrl, state, disabled, onRemove }: {
+  previewUrl: string; state: UploadState; disabled: boolean; onRemove: () => void;
 }): ReactElement {
   return (
     <div className={styles.preview}>
-      <img
-        className={styles.previewImage}
-        src={previewUrl}
-        alt="プレビュー"
-      />
+      <img className={styles.previewImage} src={previewUrl} alt="プレビュー" />
       {state === "uploading" ? (
         <p className={styles.uploading}>アップロード中...</p>
       ) : null}
       {state === "done" && !disabled ? (
-        <button
-          type="button"
-          className={styles.removeButton}
-          onClick={onRemove}
-          aria-label="写真を削除"
-        >
+        <button type="button" className={styles.removeButton} onClick={onRemove} aria-label="写真を削除">
           ✕
         </button>
       ) : null}

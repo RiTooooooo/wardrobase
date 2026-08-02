@@ -1,5 +1,7 @@
 import type { ReactElement } from "react";
 
+import Link from "next/link";
+
 import type { Category } from "@/domain/item/category";
 import { CATEGORY_LABELS } from "@/domain/item/category";
 
@@ -14,7 +16,7 @@ export function ItemCard({ item }: Props): ReactElement {
   const categoryLabel = CATEGORY_LABELS[item.category as Category];
 
   return (
-    <div className={styles.card}>
+    <Link className={styles.card} href={`/items/${item.id}`}>
       <div className={styles.imageWrapper}>
         {item.imageUrl ? (
           <img
@@ -36,6 +38,6 @@ export function ItemCard({ item }: Props): ReactElement {
           ) : null}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -9,6 +9,7 @@ interface TextareaFieldProps {
   name: string;
   label: string;
   rows?: number;
+  defaultValue?: string;
   optional?: boolean;
   error?: string;
   disabled?: boolean;
@@ -19,6 +20,7 @@ export function TextareaField({
   name,
   label,
   rows,
+  defaultValue,
   optional,
   error,
   disabled,
@@ -39,6 +41,7 @@ export function TextareaField({
         id={id}
         name={name}
         rows={rows}
+        defaultValue={defaultValue}
         disabled={disabled}
         {...fieldErrorAria(errorId, error)}
       />
