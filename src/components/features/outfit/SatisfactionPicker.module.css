@@ -1,0 +1,53 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+}
+
+.optional {
+  font-weight: var(--font-normal);
+  color: var(--color-text-secondary);
+  margin-left: var(--space-2);
+  font-size: var(--text-xs);
+}
+
+.buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.button {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing);
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+}
+
+.buttonSelected {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
