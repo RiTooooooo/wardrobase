@@ -48,6 +48,9 @@ export default async function WardrobePage(): Promise<ReactElement> {
           <span className={styles.count}>{items.length} items</span>
         </div>
         <div className={styles.headerActions}>
+          <Link className={styles.addButton} href="/stylings">
+            スタイリング
+          </Link>
           <Link className={styles.addButton} href="/outfits/new">
             コーデを記録
           </Link>
