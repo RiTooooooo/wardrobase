@@ -51,8 +51,8 @@ export default async function WardrobePage(): Promise<ReactElement> {
           <Link className={styles.addButton} href="/stylings">
             スタイリング
           </Link>
-          <Link className={styles.addButton} href="/outfits/new">
-            コーデを記録
+          <Link className={styles.addButton} href="/outfits">
+            コーデ記録
           </Link>
           <Link className={styles.addButton} href="/items/new">
             アイテムを追加
