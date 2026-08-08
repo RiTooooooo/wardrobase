@@ -4,18 +4,17 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
-import type { PickerItem } from "@/components/features/outfit/outfitTypes";
-import { StylingForm } from "@/components/features/styling/StylingForm";
-import type { StylingFormValues } from "@/components/features/styling/stylingTypes";
+import type { BoardItem, DrawerItem } from "@/components/features/board/boardTypes";
+import { StylingBoard } from "@/components/features/board/StylingBoard";
 import { findItemsByUser } from "@/infrastructure/prisma/itemRepository";
 import type { StylingWithItems } from "@/infrastructure/prisma/stylingRepository";
 import { findStylingById } from "@/infrastructure/prisma/stylingRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
 import { auth } from "@/lib/auth";
-import type { CreateStylingInput } from "@/schemas/styling";
 
-import { updateStylingAction } from "../actions";
-import styles from "../page.module.css";
+import { updateStylingBoardAction } from "./actions";
+
+import styles from "../../board/new/page.module.css";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -25,18 +24,18 @@ function orUndefined<T>(value: T | null): T | undefined {
   return value ?? undefined;
 }
 
-function toInitialValues(styling: StylingWithItems): StylingFormValues {
-  return {
-    name: styling.name,
-    itemIds: styling.items.map((si) => si.itemId),
-    seasons: styling.seasons,
-    memo: orUndefined(styling.memo),
-  };
+function toBoardItems(styling: StylingWithItems): BoardItem[] {
+  return styling.items.map((si, i) => ({
+    itemId: si.itemId,
+    x: si.positionX ?? i * 110,
+    y: si.positionY ?? 0,
+    zIndex: si.zIndex,
+  }));
 }
 
-async function toPickerItem(
+async function toDrawerItem(
   item: Awaited<ReturnType<typeof findItemsByUser>>[number],
-): Promise<PickerItem> {
+): Promise<DrawerItem> {
   return {
     id: item.id,
     name: item.name,
@@ -45,7 +44,7 @@ async function toPickerItem(
   };
 }
 
-export default async function EditStylingPage({
+export default async function EditBoardPage({
   params,
 }: Props): Promise<ReactElement> {
   const { id } = await params;
@@ -62,14 +61,13 @@ export default async function EditStylingPage({
   }
 
   const allItems = await findItemsByUser(session.user.id);
-  const pickerItems = await Promise.all(allItems.map(toPickerItem));
-  const initialValues = toInitialValues(styling);
+  const drawerItems = await Promise.all(allItems.map(toDrawerItem));
 
   async function handleUpdate(
-    data: CreateStylingInput,
+    data: unknown,
   ): Promise<{ ok: true; id: string } | { ok: false; message: string }> {
     "use server";
-    return updateStylingAction(id, data);
+    return updateStylingBoardAction(id, data);
   }
 
   return (
@@ -78,14 +76,15 @@ export default async function EditStylingPage({
         <Link className={styles.back} href={`/stylings/${id}`}>
           詳細に戻る
         </Link>
-        <h1 className={styles.title}>スタイリングを編集</h1>
+        <h1 className={styles.title}>スタイリングボード</h1>
       </div>
-      <StylingForm
-        items={pickerItems}
-        initialValues={initialValues}
+      <StylingBoard
+        drawerItems={drawerItems}
+        initialBoardItems={toBoardItems(styling)}
+        initialName={styling.name}
+        initialSeasons={styling.seasons}
+        initialMemo={orUndefined(styling.memo)}
         onSubmitAction={handleUpdate}
-        submitLabel="保存する"
-        pendingLabel="保存中..."
         redirectTo={`/stylings/${id}`}
       />
     </div>

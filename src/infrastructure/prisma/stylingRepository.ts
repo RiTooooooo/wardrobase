@@ -1,14 +1,28 @@
-import type { Item, Styling } from "@/generated/prisma/client";
+import type { Item, Styling, StylingItem } from "@/generated/prisma/client";
 
 import { prisma } from "./client";
 
 export type StylingWithItems = Styling & {
-  items: Array<{ itemId: string; item: Item }>;
+  items: Array<StylingItem & { item: Item }>;
 };
 
 export type CreateStylingData = {
   name: string;
   itemIds: string[];
+  seasons: Array<"SPRING" | "SUMMER" | "AUTUMN" | "WINTER">;
+  memo?: string;
+};
+
+export type BoardItemData = {
+  itemId: string;
+  x: number;
+  y: number;
+  zIndex: number;
+};
+
+export type CreateStylingBoardData = {
+  name: string;
+  items: BoardItemData[];
   seasons: Array<"SPRING" | "SUMMER" | "AUTUMN" | "WINTER">;
   memo?: string;
 };
@@ -74,6 +88,60 @@ export async function updateStyling(
     await tx.stylingItem.deleteMany({ where: { stylingId: id } });
     await tx.stylingItem.createMany({
       data: data.itemIds.map((itemId) => ({ stylingId: id, itemId })),
+    });
+
+    return result.count;
+  });
+}
+
+export async function createStylingWithBoard(
+  userId: string,
+  data: CreateStylingBoardData,
+): Promise<Styling> {
+  return prisma.styling.create({
+    data: {
+      userId,
+      name: data.name,
+      seasons: data.seasons,
+      memo: data.memo ?? null,
+      items: {
+        create: data.items.map((item) => ({
+          itemId: item.itemId,
+          positionX: item.x,
+          positionY: item.y,
+          zIndex: item.zIndex,
+        })),
+      },
+    },
+  });
+}
+
+export async function updateStylingBoard(
+  userId: string,
+  id: string,
+  data: CreateStylingBoardData,
+): Promise<number> {
+  return prisma.$transaction(async (tx) => {
+    const result = await tx.styling.updateMany({
+      where: { id, userId, deletedAt: null },
+      data: {
+        name: data.name,
+        seasons: data.seasons,
+        memo: data.memo ?? null,
+      },
+    });
+
+    if (result.count === 0) return 0;
+
+    await tx.stylingItem.deleteMany({ where: { stylingId: id } });
+    await tx.stylingItem.createMany({
+      data: data.items.map((item) => ({
+        stylingId: id,
+        itemId: item.itemId,
+        positionX: item.x,
+        positionY: item.y,
+        zIndex: item.zIndex,
+      })),
     });
 
     return result.count;

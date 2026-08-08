@@ -197,6 +197,9 @@ model Styling {
 model StylingItem {
   stylingId String @map("styling_id")
   itemId    String @map("item_id")
+  positionX Float? @map("position_x")
+  positionY Float? @map("position_y")
+  zIndex    Int    @default(0) @map("z_index")
 
   styling Styling @relation(fields: [stylingId], references: [id], onDelete: Cascade)
   item    Item    @relation(fields: [itemId], references: [id], onDelete: Cascade)

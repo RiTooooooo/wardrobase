@@ -51,3 +51,6 @@ CLAUDE.md
 
 # Prisma Client（生成物。スキーマから再生成できるためコミットしない）
 /src/generated/
+
+# Claude Code のローカル設定
+/.claude/

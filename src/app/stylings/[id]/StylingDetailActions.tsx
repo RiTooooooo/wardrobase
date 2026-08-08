@@ -42,6 +42,12 @@ export function StylingDetailActions({
     <div className={styles.actions}>
       <Link
         className={styles.editLink}
+        href={`/stylings/${stylingId}/board`}
+      >
+        ボードで編集
+      </Link>
+      <Link
+        className={styles.editLink}
         href={`/stylings/${stylingId}/edit`}
       >
         編集する

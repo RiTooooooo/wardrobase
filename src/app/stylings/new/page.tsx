@@ -20,6 +20,7 @@ async function toPickerItem(
     id: item.id,
     name: item.name,
     imageUrl: item.imagePath ? await createViewUrl(item.imagePath) : null,
+    category: item.category,
   };
 }
 

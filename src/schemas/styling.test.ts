@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { createStylingSchema } from "./styling";
+import { boardStylingSchema, createStylingSchema } from "./styling";
 
 const VALID = {
   name: "仕事の日の定番",
@@ -78,5 +78,56 @@ describe("createStylingSchema", () => {
     if (result.success) {
       expect(result.data.memo).toBeUndefined();
     }
+  });
+});
+
+const VALID_BOARD = {
+  name: "夏の定番",
+  items: [
+    { itemId: "550e8400-e29b-41d4-a716-446655440000", x: 100, y: 50, zIndex: 1 },
+  ],
+};
+
+describe("boardStylingSchema", () => {
+  it("必須項目だけで成功する", () => {
+    const result = boardStylingSchema.safeParse(VALID_BOARD);
+
+    expect(result.success).toBe(true);
+  });
+
+  it("アイテムが空配列のとき失敗する", () => {
+    const result = boardStylingSchema.safeParse({
+      ...VALID_BOARD,
+      items: [],
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("アイテムIDがUUID形式でないとき失敗する", () => {
+    const result = boardStylingSchema.safeParse({
+      ...VALID_BOARD,
+      items: [{ itemId: "not-uuid", x: 0, y: 0, zIndex: 0 }],
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("座標が数値でないとき失敗する", () => {
+    const result = boardStylingSchema.safeParse({
+      ...VALID_BOARD,
+      items: [{ itemId: "550e8400-e29b-41d4-a716-446655440000", x: "a", y: 0, zIndex: 0 }],
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it("zIndexが整数でないとき失敗する", () => {
+    const result = boardStylingSchema.safeParse({
+      ...VALID_BOARD,
+      items: [{ itemId: "550e8400-e29b-41d4-a716-446655440000", x: 0, y: 0, zIndex: 1.5 }],
+    });
+
+    expect(result.success).toBe(false);
   });
 });

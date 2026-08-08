@@ -21,3 +21,24 @@ export const createStylingSchema = z.object({
 });
 
 export type CreateStylingInput = z.infer<typeof createStylingSchema>;
+
+const boardItemSchema = z.object({
+  itemId: z.string().uuid(),
+  x: z.number(),
+  y: z.number(),
+  zIndex: z.number().int(),
+});
+
+export const boardStylingSchema = z.object({
+  name: z
+    .string()
+    .min(1, "名前を入力してください")
+    .max(100, "名前は100文字以内で入力してください"),
+  items: z
+    .array(boardItemSchema)
+    .min(1, "アイテムを1つ以上配置してください"),
+  seasons: z.array(z.enum(SEASON_VALUES)).default([]),
+  memo: optionalMemo,
+});
+
+export type BoardStylingInput = z.infer<typeof boardStylingSchema>;
