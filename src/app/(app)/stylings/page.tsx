@@ -58,17 +58,14 @@ export default async function StylingListPage(): Promise<ReactElement> {
           <span className={styles.count}>{cards.length} styles</span>
         </div>
         <div className={styles.headerActions}>
+          <Link className={styles.secondaryButton} href="/stylings/new">
+            スタイリングを登録
+          </Link>
           <Link className={styles.addButton} href="/stylings/board/new">
             ボードで作成
           </Link>
-          <Link className={styles.addButton} href="/stylings/new">
-            スタイリングを登録
-          </Link>
         </div>
       </header>
-      <Link className={styles.backLink} href="/wardrobe">
-        ワードローブに戻る
-      </Link>
       {cards.length === 0 ? (
         <EmptyState />
       ) : (

@@ -25,3 +25,47 @@
   max-width: 480px;
   line-height: var(--leading-relaxed);
 }
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.primaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-8);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: #fff;
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  transition: background var(--duration-fast) var(--easing);
+}
+
+.primaryLink:hover {
+  background: var(--color-accent-hover);
+}
+
+.secondaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-8);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    color var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing);
+}
+
+.secondaryLink:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}

@@ -91,9 +91,6 @@ export default async function OutfitListPage(): Promise<ReactElement> {
           コーデを記録
         </Link>
       </header>
-      <Link className={styles.backLink} href="/wardrobe">
-        ワードローブに戻る
-      </Link>
       {groups.length === 0 ? (
         <EmptyState />
       ) : (

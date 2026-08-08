@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import type { ChangeEvent, ReactElement } from "react";
 
-import { getUploadUrlAction } from "@/app/items/new/uploadActions";
+import { getUploadUrlAction } from "@/app/(app)/items/new/uploadActions";
 
 import { isAllowedImageType, resizeImage } from "./imageResize";
 import styles from "./ImageUpload.module.css";

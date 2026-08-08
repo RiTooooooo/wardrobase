@@ -55,13 +55,24 @@
   background: var(--color-accent-hover);
 }
 
-.backLink {
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
+  font-weight: var(--font-medium);
   color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    color var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing);
 }
 
-.backLink:hover {
-  color: var(--color-accent);
+.secondaryButton:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
 }
 
 .empty {

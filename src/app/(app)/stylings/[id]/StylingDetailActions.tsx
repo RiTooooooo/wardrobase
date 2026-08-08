@@ -47,7 +47,7 @@ export function StylingDetailActions({
         ボードで編集
       </Link>
       <Link
-        className={styles.editLink}
+        className={styles.secondaryLink}
         href={`/stylings/${stylingId}/edit`}
       >
         編集する

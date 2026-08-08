@@ -4,7 +4,6 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { SignOutButton } from "@/components/features/auth/SignOutButton";
 import { WardrobeGrid } from "@/components/features/wardrobe/WardrobeGrid";
 import type { WardrobeItem } from "@/components/features/wardrobe/wardrobeTypes";
 import { findItemsByUser } from "@/infrastructure/prisma/itemRepository";
@@ -47,18 +46,9 @@ export default async function WardrobePage(): Promise<ReactElement> {
           <h1 className={styles.title}>ワードローブ</h1>
           <span className={styles.count}>{items.length} items</span>
         </div>
-        <div className={styles.headerActions}>
-          <Link className={styles.addButton} href="/stylings">
-            スタイリング
-          </Link>
-          <Link className={styles.addButton} href="/outfits">
-            コーデ記録
-          </Link>
-          <Link className={styles.addButton} href="/items/new">
-            アイテムを追加
-          </Link>
-          <SignOutButton />
-        </div>
+        <Link className={styles.addButton} href="/items/new">
+          アイテムを追加
+        </Link>
       </header>
       {items.length === 0 ? (
         <p className={styles.empty}>

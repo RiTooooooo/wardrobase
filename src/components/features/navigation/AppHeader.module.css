@@ -1,0 +1,92 @@
+.header {
+  height: var(--header-height);
+  background: var(--color-bg-chrome);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+/* .page と同じボックス構造（max-width + 内側パディング）にして左端を揃える */
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 100%;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-8);
+}
+
+/* ボード画面用。左端をボードの引き出しと揃える（board/new の .page と同じ左右padding） */
+.innerWide {
+  max-width: none;
+  padding: 0 var(--space-4);
+}
+
+.logo {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+.logoAccent {
+  color: var(--color-accent);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  transition:
+    color var(--duration-fast) var(--easing),
+    background var(--duration-fast) var(--easing);
+}
+
+.navLink:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+}
+
+.navLinkActive {
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+}
+
+.trailing {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .header {
+    overflow-x: auto;
+  }
+
+  .inner {
+    gap: var(--space-3);
+    padding: 0 var(--space-3);
+  }
+
+  .navLink {
+    padding: var(--space-2) var(--space-3);
+    white-space: nowrap;
+  }
+}

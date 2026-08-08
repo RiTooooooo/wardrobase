@@ -47,7 +47,7 @@
 
 .toolbar {
   position: absolute;
-  bottom: -36px;
+  bottom: -60px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -69,14 +69,14 @@
 }
 
 .toolBtn {
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   border: none;
   border-radius: var(--radius-sm);
   background: transparent;
   color: var(--color-text-secondary);
-  font-size: 0.625rem;
+  font-size: var(--text-xs);
   cursor: pointer;
-  min-height: 28px;
+  min-height: 44px;
   transition: background var(--duration-fast) var(--easing);
 }
 
@@ -86,14 +86,14 @@
 }
 
 .removeBtn {
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   border: none;
   border-radius: var(--radius-sm);
   background: transparent;
   color: var(--color-error);
-  font-size: 0.625rem;
+  font-size: var(--text-xs);
   cursor: pointer;
-  min-height: 28px;
+  min-height: 44px;
   transition: background var(--duration-fast) var(--easing);
 }
 
