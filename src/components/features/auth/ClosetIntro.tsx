@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import type { ReactElement, ReactNode } from "react";
 
 import styles from "./ClosetIntro.module.css";
@@ -17,9 +20,41 @@ type Props = {
   children: ReactNode;
 };
 
+/*
+ * 描画が始まってからアニメーションを開始する。
+ *
+ * CSSアニメーションの時計はスタイルが当たった時点から進むため、初回起動のように
+ * 最初の描画が遅れる場面では、画面が見えたときには既に途中まで進んでしまう。
+ * 2フレーム待って「実際に描かれた」ことを確かめてから走らせる。
+ */
+function usePlayAfterPaint(): boolean {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    let second = 0;
+    const first = requestAnimationFrame(function onFirstFrame(): void {
+      second = requestAnimationFrame(function onSecondFrame(): void {
+        setIsPlaying(true);
+      });
+    });
+
+    return function cancel(): void {
+      cancelAnimationFrame(first);
+      cancelAnimationFrame(second);
+    };
+  }, []);
+
+  return isPlaying;
+}
+
 export function ClosetIntro({ children }: Props): ReactElement {
+  const isPlaying = usePlayAfterPaint();
+  const stageClass = isPlaying
+    ? `${styles.stage} ${styles.play}`
+    : styles.stage;
+
   return (
-    <div className={styles.stage}>
+    <div className={stageClass}>
       <div className={styles.closet} aria-hidden="true">
         <Carcass />
         <div className={`${styles.door} ${styles.doorLeft}`}>

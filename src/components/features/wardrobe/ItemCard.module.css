@@ -3,7 +3,12 @@
   flex-direction: column;
   background: var(--color-bg-surface);
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  /*
+   * 検索ボックスと丸みが揃って見える値。
+   * 丸みの見え方は要素の大きさに左右されるため、数値を合わせても揃わない。
+   * 同じ 8px でも、高さ44pxの入力欄では丸く、幅400px超のカードでは直角に見える。
+   */
+  border-radius: var(--radius-xl);
   overflow: hidden;
   /*
    * ヘッダー・フィルタに続いて、左上から順に現れる。

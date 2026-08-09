@@ -54,10 +54,13 @@
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-text-secondary);
+  /* 現在地の枠が付いたときに文字がずれないよう、常に枠の分を確保しておく */
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
   transition:
     color var(--duration-fast) var(--easing),
-    background var(--duration-fast) var(--easing);
+    background var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing);
 }
 
 .navLink:hover {
@@ -65,9 +68,11 @@
   background: var(--color-bg-surface);
 }
 
+/* 現在地。フィルタのチップと同じ「アクセントの枠＋淡い塗り」で揃える */
 .navLinkActive {
   color: var(--color-text-primary);
-  background: var(--color-bg-surface);
+  background: var(--color-accent-muted);
+  border-color: var(--color-accent);
 }
 
 .trailing {

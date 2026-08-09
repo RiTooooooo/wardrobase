@@ -18,9 +18,18 @@
   --color-bg-chrome: rgba(20, 21, 22, 0.72);
 
   /* ===== カラー: アクセント（ロイヤルブルー） ===== */
-  --color-accent: #4169e1;
-  --color-accent-hover: #5a7fe8;
-  --color-accent-muted: rgba(65, 105, 225, 0.15);
+  /*
+   * hsl(216, 100%, 48%)。彩度は100%のまま明度だけ調整しているので、
+   * 背景から浮きすぎず原色感も残る。白文字とのコントラストは 5.17:1。
+   * ホバーは明るくすると白文字のコントラストが落ちるため、深い方へ振る。
+   */
+  --color-accent: #0062f5;
+  --color-accent-hover: #0054d1;
+  /*
+   * 選択中の淡い塗り。RGBを書き写すと accent を変えるたびに手で揃える必要があり、
+   * 忘れると枠線と塗りで色が食い違う。accent から導出して自動で追従させる。
+   */
+  --color-accent-muted: color-mix(in srgb, var(--color-accent) 16%, transparent);
 
   /* ===== カラー: テキスト ===== */
   --color-text-primary: #ededed;
@@ -78,6 +87,8 @@
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
+  /* カードなど面積の大きい要素用。小さい要素と丸みが揃って見える値 */
+  --radius-xl: 18px;
   --radius-full: 9999px;
 
   /* ===== シャドウ ===== */

@@ -24,7 +24,8 @@
   color: var(--color-text-secondary);
   text-align: center;
   border: 1px dashed color-mix(in srgb, var(--color-accent) 45%, transparent);
-  border-radius: var(--radius-md);
+  /* 隣に並ぶカードと同じ丸みにする */
+  border-radius: var(--radius-xl);
   animation: riseIn var(--duration-slower) var(--easing-out)
     calc(540ms + min(var(--index, 0), 12) * 55ms) backwards;
   transition:

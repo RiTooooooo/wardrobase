@@ -1,5 +1,5 @@
 /*
- * タイムライン
+ * タイムライン（.play が付いてから）
  *   0.00s  本体・天板が描かれる
  *   0.25s  開口部
  *   0.40s  台輪・脚
@@ -8,14 +8,15 @@
  *   1.05s  取っ手（1.35s に描き終わる）
  *   1.60s  扉が開く（間を 0.25s 置いてから）
  *   2.00s  ログインUIが現れる
+ *
+ * 素の状態は「描き終わって扉が開いた完成形」にしてある。
+ * JSが動かない環境でもフォームが必ず見えるようにするため。
+ * アニメーションは .play が付いたときだけ、fill-mode: backwards で
+ * 開始前の状態（線が未描画・扉が閉じている）から走らせる。
  */
 
 .stage {
-  /*
-   * 扉の内側にフォームが収まるよう、閉じ幅を1箇所で決めて共有する。
-   * 開口部は本体幅の 77%（62〜478 / 540）。フォームを 62% に抑えることで
-   * 左右におよそ 7.5% ずつの余白が生まれる。
-   */
+  /* 扉の内側にフォームが収まるよう、閉じ幅を1箇所で決めて共有する */
   --closet-width: min(92vw, 680px, 72vh);
 
   display: grid;
@@ -55,41 +56,48 @@
   stroke-linecap: round;
   /* pathLength="1" により、線の実長に関係なく描画速度が揃う */
   stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 0.75s var(--easing) forwards;
+  stroke-dashoffset: 0;
+}
+
+.play .line {
+  animation: draw 0.75s var(--easing) backwards;
 }
 
 @keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+
   to {
     stroke-dashoffset: 0;
   }
 }
 
-.drawBody {
+.play .drawBody {
   animation-delay: 0s;
 }
 
-.drawInterior {
+.play .drawInterior {
   animation-duration: 0.55s;
   animation-delay: 0.25s;
 }
 
-.drawBase {
+.play .drawBase {
   animation-duration: 0.5s;
   animation-delay: 0.4s;
 }
 
-.drawDoor {
+.play .drawDoor {
   animation-duration: 0.5s;
   animation-delay: 0.55s;
 }
 
-.drawDoorPanel {
+.play .drawDoorPanel {
   animation-duration: 0.4s;
   animation-delay: 0.8s;
 }
 
-.drawHandle {
+.play .drawHandle {
   animation-duration: 0.3s;
   animation-delay: 1.05s;
 }
@@ -98,9 +106,12 @@
   position: absolute;
   inset: 0;
   will-change: transform;
+}
+
+.play .door {
   animation-duration: 0.85s;
   animation-delay: 1.6s;
-  animation-fill-mode: forwards;
+  animation-fill-mode: backwards;
   /* 開き終わりが減速する、ドアらしい効き方 */
   animation-timing-function: cubic-bezier(0.22, 0.9, 0.28, 1);
 }
@@ -108,11 +119,19 @@
 /* 回転軸は蝶番の位置。SVG座標 62 / 478 を viewBox 幅 540 で割った値 */
 .doorLeft {
   transform-origin: 11.48% 50%;
-  animation-name: openLeft;
+  transform: rotateY(-115deg);
 }
 
 .doorRight {
   transform-origin: 88.52% 50%;
+  transform: rotateY(115deg);
+}
+
+.play .doorLeft {
+  animation-name: openLeft;
+}
+
+.play .doorRight {
   animation-name: openRight;
 }
 
@@ -121,12 +140,20 @@
  * 実際のクローゼットと同じ見え方になり、内側にログインUIの場所が空く。
  */
 @keyframes openLeft {
+  from {
+    transform: rotateY(0deg);
+  }
+
   to {
     transform: rotateY(-115deg);
   }
 }
 
 @keyframes openRight {
+  from {
+    transform: rotateY(0deg);
+  }
+
   to {
     transform: rotateY(115deg);
   }
@@ -135,8 +162,10 @@
 .content {
   position: relative;
   width: min(400px, calc(var(--closet-width) * 0.62));
-  opacity: 0;
-  animation: reveal 0.65s var(--easing) 2s forwards;
+}
+
+.play .content {
+  animation: reveal 0.65s var(--easing) 2s backwards;
 }
 
 @keyframes reveal {
@@ -171,23 +200,9 @@
  * 完成形（扉が開いた状態）をそのまま見せる。
  */
 @media (prefers-reduced-motion: reduce) {
-  .line {
-    stroke-dashoffset: 0;
-    animation: none;
-  }
-
-  .doorLeft {
-    transform: rotateY(-115deg);
-    animation: none;
-  }
-
-  .doorRight {
-    transform: rotateY(115deg);
-    animation: none;
-  }
-
-  .content {
-    opacity: 1;
+  .play .line,
+  .play .door,
+  .play .content {
     animation: none;
   }
 }

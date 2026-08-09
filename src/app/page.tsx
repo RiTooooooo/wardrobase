@@ -1,36 +1,17 @@
-import type { ReactElement } from "react";
-
 import { headers } from "next/headers";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
 
-import styles from "./page.module.css";
-
-export default async function Home(): Promise<ReactElement> {
+/*
+ * ルートは入口へ送るだけ。
+ *
+ * 未ログインなら /login。ログイン画面はロゴ・キャッチコピー・新規登録への導線を
+ * すべて備えているため、その手前に同じ内容の画面を置くと重複するうえ、
+ * 「クローゼットを開けるとアプリが始まる」という演出が薄れる。
+ */
+export default async function Home(): Promise<never> {
   const session = await auth.api.getSession({ headers: await headers() });
 
-  if (session !== null) {
-    redirect("/wardrobe");
-  }
-
-  return (
-    <div className={styles.page}>
-      <h1 className={styles.title}>
-        wardro<span className={styles.accent}>base</span>
-      </h1>
-      <p className={styles.description}>
-        自分の&quot;好き&quot;なスタイリングを、蓄積して使い回すためのワードローブ基盤
-      </p>
-      <div className={styles.actions}>
-        <Link className={styles.primaryLink} href="/login">
-          ログイン
-        </Link>
-        <Link className={styles.secondaryLink} href="/signup">
-          新規登録
-        </Link>
-      </div>
-    </div>
-  );
+  redirect(session === null ? "/login" : "/wardrobe");
 }
