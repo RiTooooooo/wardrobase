@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import type { CSSProperties, ReactElement } from "react";
 
 import Link from "next/link";
 
@@ -10,13 +10,16 @@ import styles from "./ItemCard.module.css";
 
 type Props = {
   item: WardrobeItem;
+  /** グリッド内の並び順。表示時のずらし幅に使う */
+  index: number;
 };
 
-export function ItemCard({ item }: Props): ReactElement {
+export function ItemCard({ item, index }: Props): ReactElement {
   const categoryLabel = CATEGORY_LABELS[item.category as Category];
+  const order = { "--index": index } as CSSProperties;
 
   return (
-    <Link className={styles.card} href={`/items/${item.id}`}>
+    <Link className={styles.card} href={`/items/${item.id}`} style={order}>
       <div className={styles.imageWrapper}>
         {item.imageUrl ? (
           <img

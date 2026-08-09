@@ -1,77 +1,36 @@
+/*
+ * カーペットは実写のテクスチャを敷く。
+ * CSSのグラデーションを重ねる方法では布の不規則さが出せなかった。
+ *
+ * 素材はそのままだと明るいグレーで、服の写真より前に出てしまうため、
+ * 上に暗い層を重ねて落とす（HIG: コンテンツ優先）。
+ * 濃さはこの1箇所で調整できる。
+ */
 .canvas {
+  --carpet-shade: 58%;
+
   flex: 1;
   position: relative;
   min-height: 600px;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  background-color: #3d3330;
+  background-color: var(--color-bg-base);
   background-image:
-    /* 細かい縦繊維 */
-    repeating-linear-gradient(
-      90deg,
-      transparent 0px,
-      transparent 1px,
-      rgba(0, 0, 0, 0.08) 1px,
-      rgba(0, 0, 0, 0.08) 2px
-    ),
-    /* 細かい横繊維 */
-    repeating-linear-gradient(
-      0deg,
-      transparent 0px,
-      transparent 1px,
-      rgba(0, 0, 0, 0.06) 1px,
-      rgba(0, 0, 0, 0.06) 2px
-    ),
-    /* 織りの粗いパターン（縦） */
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.02) 0px,
-      transparent 1px,
-      transparent 3px,
-      rgba(255, 255, 255, 0.015) 4px
-    ),
-    /* 織りの粗いパターン（横） */
-    repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.02) 0px,
-      transparent 1px,
-      transparent 3px,
-      rgba(255, 255, 255, 0.015) 4px
-    ),
-    /* 斜めの繊維のうねり */
-    repeating-linear-gradient(
-      30deg,
-      transparent 0px,
-      transparent 6px,
-      rgba(255, 255, 255, 0.012) 6px,
-      rgba(255, 255, 255, 0.012) 7px
-    ),
-    repeating-linear-gradient(
-      -30deg,
-      transparent 0px,
-      transparent 6px,
-      rgba(0, 0, 0, 0.04) 6px,
-      rgba(0, 0, 0, 0.04) 7px
-    ),
-    /* 色ムラ（大きめのグラデーション） */
-    radial-gradient(
-      ellipse 120% 80% at 30% 25%,
-      rgba(90, 70, 55, 0.3) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 100% 90% at 75% 70%,
-      rgba(70, 55, 45, 0.25) 0%,
-      transparent 55%
-    ),
-    /* ベースのグラデーション */
+    /* 周辺を落として、中央に置いたアイテムへ視線を集める */
     radial-gradient(
       ellipse at 50% 45%,
-      #453a34 0%,
-      #3d3330 35%,
-      #332a26 70%,
-      #2a2220 100%
-    );
+      transparent 40%,
+      color-mix(in srgb, var(--color-bg-base) 45%, transparent) 100%
+    ),
+    /* 全体を暗く沈める層 */
+    linear-gradient(
+      color-mix(in srgb, var(--color-bg-base) var(--carpet-shade), transparent),
+      color-mix(in srgb, var(--color-bg-base) var(--carpet-shade), transparent)
+    ),
+    url("/textures/carpet.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .hint {
@@ -79,7 +38,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--color-text-secondary);
   font-size: var(--text-sm);
   text-align: center;
   pointer-events: none;

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactElement } from "react";
+import type { CSSProperties, ReactElement } from "react";
 
 import { CATEGORIES, CATEGORY_LABELS } from "@/domain/item/category";
 import { SEASON_LABELS, SEASONS } from "@/domain/item/season";
@@ -13,8 +13,17 @@ type Props = {
   onChange: (filters: Filters) => void;
 };
 
+/* 季節チップはカテゴリチップ（「すべて」+ 6件）の後に続く */
+const SEASON_STEP_OFFSET = CATEGORIES.length + 1;
+const SEARCH_STEP = SEASON_STEP_OFFSET + SEASONS.length;
+
 function chipClass(isActive: boolean): string {
   return `${styles.chip} ${isActive ? styles.chipActive : ""}`;
+}
+
+/** 表示を1つずつずらすための通し番号 */
+function step(index: number): CSSProperties {
+  return { "--step": index } as CSSProperties;
 }
 
 export function WardrobeFilters({
@@ -44,6 +53,7 @@ export function WardrobeFilters({
         />
         <input
           className={styles.searchInput}
+          style={step(SEARCH_STEP)}
           type="text"
           placeholder="ブランド・メモで検索"
           value={filters.query}
@@ -70,15 +80,17 @@ function CategoryChips({
       <button
         type="button"
         className={chipClass(selected === null)}
+        style={step(0)}
         onClick={() => onSelect(null)}
       >
         すべて
       </button>
-      {CATEGORIES.map((cat) => (
+      {CATEGORIES.map((cat, i) => (
         <button
           key={cat}
           type="button"
           className={chipClass(selected === cat)}
+          style={step(i + 1)}
           onClick={() => onSelect(selected === cat ? null : cat)}
         >
           {CATEGORY_LABELS[cat]}
@@ -97,11 +109,12 @@ function SeasonChips({
 }): ReactElement {
   return (
     <div className={styles.chips}>
-      {SEASONS.map((s) => (
+      {SEASONS.map((s, i) => (
         <button
           key={s}
           type="button"
           className={chipClass(selected === s)}
+          style={step(SEASON_STEP_OFFSET + i)}
           onClick={() => onSelect(selected === s ? null : s)}
         >
           {SEASON_LABELS[s]}
@@ -121,6 +134,7 @@ function SortSelect({
   return (
     <select
       className={styles.sortSelect}
+      style={step(SEARCH_STEP + 1)}
       value={value}
       onChange={(e) => onChange(e.target.value as SortKey)}
     >

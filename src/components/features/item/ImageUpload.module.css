@@ -1,4 +1,7 @@
 .wrapper {
+  /* 空・写真ありの両方で共有する枠の大きさ */
+  --photo-size: 260px;
+
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -16,11 +19,17 @@
   margin-left: var(--space-2);
 }
 
+/*
+ * 写真の枠は、空のときと入れたあとで同じ大きさにする。
+ * 全幅の横長バナーにすると写真らしく見えず、選んだ瞬間に形が変わって
+ * レイアウトが跳ねる。服の写真は縦長が多いので正方形で受ける。
+ */
 .dropzone {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 160px;
+  width: var(--photo-size);
+  aspect-ratio: 1;
   border: 2px dashed var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-bg-surface);
@@ -44,16 +53,20 @@
   padding: var(--space-4);
 }
 
+/* 幅を明示して、削除ボタンが写真から離れて右端に浮かないようにする */
 .preview {
   position: relative;
-  display: inline-block;
+  width: var(--photo-size);
+  aspect-ratio: 1;
 }
 
 .previewImage {
   display: block;
-  max-width: 100%;
-  max-height: 240px;
+  width: 100%;
+  height: 100%;
   border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  /* 服の全体が切れずに見えるよう cover ではなく contain */
   object-fit: contain;
 }
 

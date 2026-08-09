@@ -68,3 +68,27 @@ img {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
+
+/*
+ * 表示時のフェードイン（riseIn）は、CSS Modules が animation-name の
+ * 参照側までスコープ化するため、ここに置いても各モジュールから解決できない。
+ * 使う側のモジュールでそれぞれ定義している。
+ */
+
+/*
+ * OSで「視差効果を減らす」を有効にしている人には動きを出さない。
+ * 各コンポーネントで個別に書かず、ここで一括して打ち消す。
+ * 完全に0にすると遷移完了イベントが発火しない実装が壊れるため、
+ * 0ではなく極小値にする。
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

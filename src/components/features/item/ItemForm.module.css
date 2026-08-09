@@ -1,8 +1,25 @@
+/*
+ * 広い画面では写真を左、入力欄を右に置く。
+ * 項目数が多く1列だと縦に長くなりすぎるため、横幅を使って行数を減らす。
+ */
 .form {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+/* 入力中も写真が見えているよう、スクロールに追従させる */
+.photo {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-4));
+}
+
+.fields {
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
-  max-width: 640px;
+  min-width: 0;
 }
 
 .row {
@@ -20,6 +37,18 @@
   display: flex;
   justify-content: flex-end;
   padding-top: var(--space-2);
+}
+
+/* 2カラムを保てなくなったら写真を上に戻して1列にする */
+@media (max-width: 820px) {
+  .form {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .photo {
+    position: static;
+  }
 }
 
 @media (max-width: 600px) {

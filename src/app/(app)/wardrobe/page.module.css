@@ -16,10 +16,15 @@
   flex-wrap: wrap;
 }
 
+/*
+ * 塊ごとに出すと「3段が順に出た」で終わってしまうため、
+ * 見出し・ボタン・フィルタ・カードを1本の流れとして少しずつずらす。
+ */
 .titleArea {
   display: flex;
   align-items: baseline;
   gap: var(--space-3);
+  animation: riseIn var(--duration-slower) var(--easing-out) backwards;
 }
 
 .title {
@@ -43,6 +48,7 @@
   background: var(--color-accent);
   border-radius: var(--radius-md);
   transition: background var(--duration-fast) var(--easing);
+  animation: riseIn var(--duration-slower) var(--easing-out) 55ms backwards;
 }
 
 .addButton:hover {
@@ -65,4 +71,17 @@
 
 .emptyLink:hover {
   text-decoration: underline;
+}
+
+/* CSS Modules は animation-name をスコープ化するため、使う側で定義する */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

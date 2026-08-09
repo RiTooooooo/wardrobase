@@ -2,13 +2,31 @@
   display: flex;
   flex-direction: column;
   background: var(--color-bg-surface);
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: background var(--duration-normal) var(--easing);
+  /*
+   * ヘッダー・フィルタに続いて、左上から順に現れる。
+   * 枚数が増えても最後の1枚まで待たされないよう、ずれ幅は12番目で頭打ちにする。
+   * fill-mode は both ではなく backwards。both だと終了後も transform が
+   * 保持され、ホバーの浮き上がりを打ち消してしまう。
+   */
+  animation: riseIn var(--duration-slower) var(--easing-out)
+    calc(540ms + min(var(--index, 0), 12) * 55ms) backwards;
+  transition:
+    transform var(--duration-normal) var(--easing),
+    box-shadow var(--duration-normal) var(--easing),
+    border-color var(--duration-normal) var(--easing),
+    background var(--duration-normal) var(--easing);
 }
 
+/* ふわっと浮かせて、選べる対象であることを伝える */
 .card:hover {
   background: var(--color-bg-overlay);
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px
+    color-mix(in srgb, var(--color-accent) 22%, transparent);
 }
 
 .imageWrapper {
@@ -64,4 +82,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* CSS Modules は animation-name をスコープ化するため、使う側で定義する */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

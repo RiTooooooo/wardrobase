@@ -32,6 +32,13 @@ export function proxy(request: NextRequest): NextResponse {
 }
 
 export const config = {
-  // 静的ファイル・画像・API は対象外にする
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  /*
+   * 静的ファイル・画像・API は対象外にする。
+   *
+   * `public/` 配下（/textures/*.jpg など）も除外する必要がある。
+   * 拡張子付きのパスをまとめて弾くことで、favicon やテクスチャが
+   * 未ログイン時に /login へリダイレクトされるのを防ぐ。
+   * ルートの動的セグメントはUUIDでドットを含まないため、この除外で問題ない。
+   */
+  matcher: ["/((?!api|_next/static|_next/image|.*\\.).*)"],
 };

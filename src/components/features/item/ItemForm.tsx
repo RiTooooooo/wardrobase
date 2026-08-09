@@ -140,35 +140,44 @@ export function ItemForm({
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
-      <ImageUpload
-        disabled={isPending}
-        initialImageUrl={defs.imageUrl}
-        onUploaded={(key) => setImagePath(key)}
-        onRemoved={() => setImagePath(undefined)}
-      />
-      <NameField iv={initialValues} errors={fieldErrors} disabled={isPending} />
-      <CategoryRow
-        iv={initialValues} category={category} errors={fieldErrors}
-        disabled={isPending} onCategoryChange={setCategory}
-      />
-      <ColorBrandRow iv={initialValues} errors={fieldErrors} disabled={isPending} />
-      <SeasonPicker selected={seasons} disabled={isPending} onToggle={toggleSeason} />
-      <PriceDateRow
-        priceDef={defs.price} dateDef={defs.purchasedAt}
-        errors={fieldErrors} disabled={isPending}
-      />
-      <TextareaField
-        id="memo" name="memo" label="メモ"
-        defaultValue={initialValues?.memo}
-        error={fieldErrors.memo} disabled={isPending}
-      />
-      {formError ? (
-        <p className={styles.formError} role="alert">{formError}</p>
-      ) : null}
-      <div className={styles.actions}>
-        <Button type="submit" disabled={isPending}>
-          {isPending ? pendingLabel : submitLabel}
-        </Button>
+      {/* 写真は入力中も見えているほうが判断しやすいので、左に留めておく */}
+      <div className={styles.photo}>
+        <ImageUpload
+          disabled={isPending}
+          initialImageUrl={defs.imageUrl}
+          onUploaded={(key) => setImagePath(key)}
+          onRemoved={() => setImagePath(undefined)}
+        />
+      </div>
+      <div className={styles.fields}>
+        <NameField iv={initialValues} errors={fieldErrors} disabled={isPending} />
+        <CategoryRow
+          iv={initialValues} category={category} errors={fieldErrors}
+          disabled={isPending} onCategoryChange={setCategory}
+        />
+        <ColorBrandRow
+          iv={initialValues} errors={fieldErrors} disabled={isPending}
+        />
+        <SeasonPicker
+          selected={seasons} disabled={isPending} onToggle={toggleSeason}
+        />
+        <PriceDateRow
+          priceDef={defs.price} dateDef={defs.purchasedAt}
+          errors={fieldErrors} disabled={isPending}
+        />
+        <TextareaField
+          id="memo" name="memo" label="メモ"
+          defaultValue={initialValues?.memo}
+          error={fieldErrors.memo} disabled={isPending}
+        />
+        {formError ? (
+          <p className={styles.formError} role="alert">{formError}</p>
+        ) : null}
+        <div className={styles.actions}>
+          <Button type="submit" disabled={isPending}>
+            {isPending ? pendingLabel : submitLabel}
+          </Button>
+        </div>
       </div>
     </form>
   );
