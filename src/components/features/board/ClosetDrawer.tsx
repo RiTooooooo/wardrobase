@@ -10,6 +10,16 @@ import type { DrawerItem } from "./boardTypes";
 import styles from "./ClosetDrawer.module.css";
 import { DrawerCategory } from "./DrawerCategory";
 
+/*
+ * カテゴリを「引き出し」に見立てたクローゼット。
+ *
+ * ログイン画面と同じ線画の語彙（細い青線）で家具として描き、
+ * 引き出しを開けて中のアイテムを掴む、という物理的な操作に寄せている。
+ *
+ * 実際の引き出しと同じく同時に開くのは1つだけ。
+ * 開いた引き出しに縦の領域を集中させたいという実利もある。
+ */
+
 type Props = {
   items: DrawerItem[];
   placedIds: string[];
@@ -21,55 +31,43 @@ export function ClosetDrawer({
   placedIds,
   onDragStart,
 }: Props): ReactElement {
-  const [openCats, setOpenCats] = useState<Set<Category>>(
-    () => new Set(["TOPS"]),
-  );
+  const [openCat, setOpenCat] = useState<Category | null>("TOPS");
 
-  const grouped = useMemo(
-    () => groupByCategory(items),
-    [items],
-  );
+  const grouped = useMemo(() => groupByCategory(items), [items]);
 
   function toggleCategory(cat: Category): void {
-    setOpenCats((prev) => {
-      const next = new Set(prev);
-      if (next.has(cat)) {
-        next.delete(cat);
-      } else {
-        next.add(cat);
-      }
-      return next;
-    });
+    setOpenCat((prev) => (prev === cat ? null : cat));
   }
 
   return (
-    <div className={styles.drawer}>
-      <div className={styles.drawerHeader}>クローゼット</div>
-      {CATEGORIES.map((cat) => {
-        const catItems = grouped[cat] ?? [];
-        const isOpen = openCats.has(cat);
-
-        return (
-          <AccordionSection
-            key={cat}
-            category={cat}
-            count={catItems.length}
-            isOpen={isOpen}
-            onToggle={toggleCategory}
-          >
-            <DrawerCategory
-              items={catItems}
-              placedIds={placedIds}
-              onDragStart={onDragStart}
-            />
-          </AccordionSection>
-        );
-      })}
+    <div className={styles.closet}>
+      <div className={styles.cornice} aria-hidden="true" />
+      <div className={styles.carcass}>
+        <p className={styles.title}>クローゼット</p>
+        <div className={styles.drawers}>
+          {CATEGORIES.map((cat) => (
+            <Drawer
+              key={cat}
+              category={cat}
+              count={(grouped[cat] ?? []).length}
+              isOpen={openCat === cat}
+              onToggle={toggleCategory}
+            >
+              <DrawerCategory
+                items={grouped[cat] ?? []}
+                placedIds={placedIds}
+                onDragStart={onDragStart}
+              />
+            </Drawer>
+          ))}
+        </div>
+      </div>
+      <div className={styles.plinth} aria-hidden="true" />
     </div>
   );
 }
 
-function AccordionSection({
+function Drawer({
   category,
   count,
   isOpen,
@@ -82,25 +80,30 @@ function AccordionSection({
   onToggle: (cat: Category) => void;
   children: ReactElement;
 }): ReactElement {
+  const className = isOpen
+    ? `${styles.drawer} ${styles.drawerOpen}`
+    : styles.drawer;
+
   return (
-    <div className={styles.section}>
+    <div className={className}>
       <button
         type="button"
-        className={styles.sectionHeader}
+        className={styles.front}
         onClick={() => onToggle(category)}
         aria-expanded={isOpen}
       >
-        <span className={styles.sectionLabel}>
-          {CATEGORY_LABELS[category]}
-        </span>
-        <span className={styles.sectionCount}>{count}</span>
-        <span className={styles.chevron}>
-          {isOpen ? "▾" : "▸"}
-        </span>
+        {/* 引き出しの取っ手。家具に見せるための造形 */}
+        <span className={styles.pull} aria-hidden="true" />
+        <span className={styles.label}>{CATEGORY_LABELS[category]}</span>
+        <span className={styles.count}>{count}</span>
       </button>
-      {isOpen ? (
-        <div className={styles.sectionBody}>{children}</div>
-      ) : null}
+      {/*
+        開閉をアニメーションさせるため、閉じていても描画したまま高さを潰す。
+        閉じた引き出しの中身をキーボードで掴めてしまわないよう inert にする。
+      */}
+      <div className={styles.interior} inert={!isOpen}>
+        <div className={styles.interiorInner}>{children}</div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,193 @@
+/*
+ * タイムライン
+ *   0.00s  本体・天板が描かれる
+ *   0.25s  開口部
+ *   0.40s  台輪・脚
+ *   0.55s  扉の外形
+ *   0.80s  扉の鏡板
+ *   1.05s  取っ手（1.35s に描き終わる）
+ *   1.60s  扉が開く（間を 0.25s 置いてから）
+ *   2.00s  ログインUIが現れる
+ */
+
+.stage {
+  /*
+   * 扉の内側にフォームが収まるよう、閉じ幅を1箇所で決めて共有する。
+   * 開口部は本体幅の 77%（62〜478 / 540）。フォームを 62% に抑えることで
+   * 左右におよそ 7.5% ずつの余白が生まれる。
+   */
+  --closet-width: min(92vw, 680px, 72vh);
+
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+/* 線画とフォームを同じマス目に重ねる */
+.stage > * {
+  grid-area: 1 / 1;
+}
+
+.closet {
+  position: relative;
+  width: var(--closet-width);
+  aspect-ratio: 540 / 560;
+  /*
+   * 蝶番は中心から離れているため、パースを近くすると扉の上下の辺が
+   * 極端な斜線になって線画の端正さが崩れる。遠めに取って歪みを抑える。
+   */
+  perspective: 3000px;
+  pointer-events: none;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.line {
+  stroke: var(--color-accent);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  /* pathLength="1" により、線の実長に関係なく描画速度が揃う */
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 0.75s var(--easing) forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.drawBody {
+  animation-delay: 0s;
+}
+
+.drawInterior {
+  animation-duration: 0.55s;
+  animation-delay: 0.25s;
+}
+
+.drawBase {
+  animation-duration: 0.5s;
+  animation-delay: 0.4s;
+}
+
+.drawDoor {
+  animation-duration: 0.5s;
+  animation-delay: 0.55s;
+}
+
+.drawDoorPanel {
+  animation-duration: 0.4s;
+  animation-delay: 0.8s;
+}
+
+.drawHandle {
+  animation-duration: 0.3s;
+  animation-delay: 1.05s;
+}
+
+.door {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+  animation-duration: 0.85s;
+  animation-delay: 1.6s;
+  animation-fill-mode: forwards;
+  /* 開き終わりが減速する、ドアらしい効き方 */
+  animation-timing-function: cubic-bezier(0.22, 0.9, 0.28, 1);
+}
+
+/* 回転軸は蝶番の位置。SVG座標 62 / 478 を viewBox 幅 540 で割った値 */
+.doorLeft {
+  transform-origin: 11.48% 50%;
+  animation-name: openLeft;
+}
+
+.doorRight {
+  transform-origin: 88.52% 50%;
+  animation-name: openRight;
+}
+
+/*
+ * 90度を超えて回すことで、扉が開口部の中ではなく本体の外側に畳まれる。
+ * 実際のクローゼットと同じ見え方になり、内側にログインUIの場所が空く。
+ */
+@keyframes openLeft {
+  to {
+    transform: rotateY(-115deg);
+  }
+}
+
+@keyframes openRight {
+  to {
+    transform: rotateY(115deg);
+  }
+}
+
+.content {
+  position: relative;
+  width: min(400px, calc(var(--closet-width) * 0.62));
+  opacity: 0;
+  animation: reveal 0.65s var(--easing) 2s forwards;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+ * 狭い画面では扉の内側にフォームが収まらないため、
+ * 線画を背景に退かせてフォームの読みやすさを優先する。
+ */
+@media (max-width: 600px) {
+  .closet {
+    opacity: 0.3;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 360px;
+  }
+}
+
+/*
+ * OSで「視差効果を減らす」を有効にしている人には演出を飛ばし、
+ * 完成形（扉が開いた状態）をそのまま見せる。
+ */
+@media (prefers-reduced-motion: reduce) {
+  .line {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .doorLeft {
+    transform: rotateY(-115deg);
+    animation: none;
+  }
+
+  .doorRight {
+    transform: rotateY(115deg);
+    animation: none;
+  }
+
+  .content {
+    opacity: 1;
+    animation: none;
+  }
+}
