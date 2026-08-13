@@ -11,6 +11,7 @@ type Props = {
   boardItems: BoardItem[];
   drawerItems: DrawerItem[];
   onReposition: (itemId: string, x: number, y: number) => void;
+  onResize: (itemId: string, scale: number) => void;
   onBringToFront: (itemId: string) => void;
   onSendToBack: (itemId: string) => void;
   onRemove: (itemId: string) => void;
@@ -25,7 +26,10 @@ function findDrawerItem(
 
 export const BoardCanvas = forwardRef<HTMLDivElement, Props>(
   function BoardCanvas(
-    { boardItems, drawerItems, onReposition, onBringToFront, onSendToBack, onRemove },
+    {
+      boardItems, drawerItems, onReposition, onResize,
+      onBringToFront, onSendToBack, onRemove,
+    },
     ref,
   ): ReactElement {
     const sorted = [...boardItems].sort((a, b) => a.zIndex - b.zIndex);
@@ -38,6 +42,7 @@ export const BoardCanvas = forwardRef<HTMLDivElement, Props>(
             boardItem={bi}
             drawerItem={findDrawerItem(drawerItems, bi.itemId)}
             onReposition={onReposition}
+            onResize={onResize}
             onBringToFront={onBringToFront}
             onSendToBack={onSendToBack}
             onRemove={onRemove}

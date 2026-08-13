@@ -4,7 +4,13 @@
  * アクセントを薄めた色を使う（HIG: コンテンツ優先）。
  */
 .closet {
-  --line: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  /*
+   * ログイン画面のクローゼットと同じ青い線画で、アプリの世界観を揃える。
+   * 構造の線は薄く、開いている引き出しの取っ手だけ濃くすることで、
+   * 同じ青のままでも「どこが開いているか」が分かるようにしている。
+   */
+  --line: color-mix(in srgb, var(--color-accent) 55%, transparent);
+  --line-open: var(--color-accent);
 
   display: flex;
   flex-direction: column;
@@ -124,7 +130,7 @@
  * 中央寄せの translateX(-50%) を打ち消さないよう、拡大と併記する。
  */
 .drawerOpen .pull {
-  border-color: var(--color-accent);
+  border-color: var(--line-open);
   transform: translateX(-50%) scale(1.15);
 }
 

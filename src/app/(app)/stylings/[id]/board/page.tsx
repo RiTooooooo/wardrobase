@@ -30,6 +30,7 @@ function toBoardItems(styling: StylingWithItems): BoardItem[] {
     x: si.positionX ?? i * 110,
     y: si.positionY ?? 0,
     zIndex: si.zIndex,
+    scale: si.scale,
   }));
 }
 

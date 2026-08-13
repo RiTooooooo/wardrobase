@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { MAX_SCALE, MIN_SCALE } from "@/domain/styling/boardLayout";
+
 function emptyToUndefined(value: unknown): unknown {
   return value === "" ? undefined : value;
 }
@@ -27,6 +29,8 @@ const boardItemSchema = z.object({
   x: z.number(),
   y: z.number(),
   zIndex: z.number().int(),
+  /* 画面側でも制限しているが、直接POSTされうるのでここでも範囲を見る */
+  scale: z.number().min(MIN_SCALE).max(MAX_SCALE).default(1),
 });
 
 export const boardStylingSchema = z.object({

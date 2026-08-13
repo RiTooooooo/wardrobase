@@ -5,6 +5,48 @@ export type RectLike = { left: number; top: number };
 
 const GAP = 16;
 
+/*
+ * ボード上での拡大率。
+ * 小さすぎると掴めず、大きすぎるとキャンバスを覆ってしまうため範囲を決める。
+ */
+export const MIN_SCALE = 0.5;
+export const MAX_SCALE = 2.5;
+
+export function clampScale(scale: number): number {
+  if (!Number.isFinite(scale)) return 1;
+
+  return Math.max(MIN_SCALE, Math.min(scale, MAX_SCALE));
+}
+
+/*
+ * リサイズつまみのドラッグ量を倍率に変える。
+ * 掴んだ時点の見た目の幅に対して、横へ動かした分だけ伸ばす。
+ * 縦横は同じ比率で変わるので、横の移動量だけ見れば足りる。
+ */
+export function scaleFromDrag(
+  startScale: number,
+  dx: number,
+  baseWidth: number,
+): number {
+  const startWidth = baseWidth * startScale;
+
+  return clampScale((startWidth + dx) / baseWidth);
+}
+
+/* キャンバスの実寸が取れないときの保険 */
+const FALLBACK_BOUNDS: CanvasBounds = { width: 800, height: 600 };
+
+/*
+ * 配置できる範囲はキャンバスの実寸から決める。
+ * 固定値にすると、画面が広くてキャンバスが大きいときに
+ * 右下の領域へアイテムを動かせなくなる。
+ */
+export function boundsOf(rect: CanvasBounds | null): CanvasBounds {
+  if (rect === null) return FALLBACK_BOUNDS;
+
+  return { width: rect.width, height: rect.height };
+}
+
 export function clampPosition(
   x: number,
   y: number,

@@ -18,6 +18,7 @@ export type BoardItemData = {
   x: number;
   y: number;
   zIndex: number;
+  scale: number;
 };
 
 export type CreateStylingBoardData = {
@@ -110,6 +111,7 @@ export async function createStylingWithBoard(
           positionX: item.x,
           positionY: item.y,
           zIndex: item.zIndex,
+          scale: item.scale,
         })),
       },
     },
@@ -141,6 +143,7 @@ export async function updateStylingBoard(
         positionX: item.x,
         positionY: item.y,
         zIndex: item.zIndex,
+        scale: item.scale,
       })),
     });
 

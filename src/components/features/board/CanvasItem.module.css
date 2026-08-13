@@ -1,9 +1,10 @@
 .item {
+  /* 本体とツールバーの間隔。橋の高さと共有する */
+  --toolbar-gap: 8px;
+
   position: absolute;
   top: 0;
   left: 0;
-  width: 160px;
-  height: 200px;
   border: 2px solid transparent;
   border-radius: var(--radius-md);
   background: var(--color-bg-elevated);
@@ -45,9 +46,50 @@
   padding: var(--space-2);
 }
 
+/*
+ * 大きさを変えるつまみ。
+ * 目印は角に小さく出すが、当たり判定は44px確保する（HIG）。
+ * 判定をアイテムの内側に収めているのは、下に出るツールバーと重ならないようにするため。
+ */
+.resizeHandle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: nwse-resize;
+  touch-action: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing);
+}
+
+.resizeHandle::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  /* 服の写真が明るくても輪郭が沈まないよう、背景色で縁取る */
+  border: 2px solid var(--color-bg-base);
+}
+
+.item:hover .resizeHandle {
+  opacity: 1;
+}
+
 .toolbar {
   position: absolute;
-  bottom: -60px;
+  /*
+   * bottom の負値だとツールバー自身の高さ次第で隙間の大きさが変わってしまう。
+   * 本体の下端からの距離で指定して、間隔を明示的に決める。
+   */
+  top: calc(100% + var(--toolbar-gap));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -61,6 +103,20 @@
   transition: opacity var(--duration-fast) var(--easing);
   white-space: nowrap;
   z-index: 1;
+}
+
+/*
+ * 本体とツールバーの隙間には当たり判定がないため、カーソルがそこを通ると
+ * :hover が切れてツールバーが消え、ボタンを押せない。
+ * 隙間を埋める見えない領域を足して、当たり判定を連続させる。
+ */
+.toolbar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--toolbar-gap);
 }
 
 .item:hover .toolbar {
@@ -99,4 +155,30 @@
 
 .removeBtn:hover {
   background: rgba(224, 85, 85, 0.15);
+}
+
+/*
+ * 大きさを変えるつまみ。右下の角に置く。
+ * アイテム本体は拡大率で伸縮するが、つまみは常に同じ大きさにしたいので
+ * 本体の transform ではなく width/height を変える方式にしている。
+ */
+.resizeHandle {
+  position: absolute;
+  right: -7px;
+  bottom: -7px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-base);
+  cursor: nwse-resize;
+  touch-action: none;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing);
+}
+
+.item:hover .resizeHandle,
+.resizeHandle:focus-visible {
+  opacity: 1;
 }
