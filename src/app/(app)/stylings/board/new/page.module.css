@@ -4,6 +4,12 @@
   gap: var(--space-2);
   width: 100%;
   height: calc(100vh - var(--header-height));
+  /*
+   * iOS Safari の 100vh はアドレスバーを含まない大きい値になり、
+   * 実際に見えている高さより大きくなる。dvh は今見えている高さを指す。
+   * 対応していないブラウザ向けに vh を先に書いて上書きする。
+   */
+  height: calc(100dvh - var(--header-height));
   padding: var(--space-2) var(--space-4);
   overflow: hidden;
 }
@@ -37,12 +43,29 @@
 @media (max-width: 600px) {
   .page {
     height: auto;
-    min-height: calc(100vh - var(--header-height));
+    min-height: calc(
+      100vh - var(--header-height) - var(--bottom-nav-height) -
+        env(safe-area-inset-bottom)
+    );
+    min-height: calc(
+      100dvh - var(--header-height) - var(--bottom-nav-height) -
+        env(safe-area-inset-bottom)
+    );
     padding: var(--space-2) 0;
     overflow: visible;
   }
 
   .header {
     padding: 0 var(--space-3);
+  }
+
+  /*
+   * 狭い画面では主役はカーペット。ページ名は現在地が分かれば足りるので、
+   * 見出しの強さを下げてボードから視線を奪わないようにする。
+   */
+  .title {
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
   }
 }

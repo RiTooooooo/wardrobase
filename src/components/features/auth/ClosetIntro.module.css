@@ -18,6 +18,7 @@
 .stage {
   /* 扉の内側にフォームが収まるよう、閉じ幅を1箇所で決めて共有する */
   --closet-width: min(92vw, 680px, 72vh);
+  --closet-width: min(92vw, 680px, 72dvh);
 
   display: grid;
   place-items: center;

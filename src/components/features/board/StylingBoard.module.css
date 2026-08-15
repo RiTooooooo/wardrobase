@@ -13,7 +13,14 @@
 @media (max-width: 600px) {
   .board {
     flex-direction: column;
-    overflow-y: auto;
+    /*
+     * ここでスクロールさせない。
+     * flex:1 のまま overflow-y:auto にすると、ボードが親の高さに制限された
+     * 独自のスクロール領域になり、入りきらないカーペットが下端で切られる。
+     * 中身の高さぶんだけ伸ばして、ページ全体をスクロールさせる。
+     */
+    flex: none;
+    overflow: visible;
   }
 }
 

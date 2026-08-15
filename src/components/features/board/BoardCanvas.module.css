@@ -12,6 +12,8 @@
   flex: 1;
   position: relative;
   min-height: 600px;
+  /* デスクトップでもフォーム側と画面下端へ接触させない */
+  margin: 0 var(--space-4) var(--space-4) 0;
   overflow: hidden;
   border-radius: var(--radius-lg);
   background-color: var(--color-bg-base);
@@ -52,7 +54,28 @@
   .canvas {
     flex: none;
     min-height: 0;
-    height: 55vh;
-    margin: 0 var(--space-3);
+    /*
+     * クローゼットを畳めば、この高さでも画面に収まる。
+     * 開いたままだと下にはみ出すが、その場合はスクロールで見る。
+     */
+    height: 60vh;
+    height: 60dvh;
+    /* フォームの上端ボーダーがカーペットの下端に被らないよう離す */
+    margin: 0 var(--space-3) var(--space-4);
+  }
+}
+
+/* 案内文は画面幅で入れ替える。操作方法自体が変わるため */
+.hintNarrow {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .hintWide {
+    display: none;
+  }
+
+  .hintNarrow {
+    display: inline;
   }
 }

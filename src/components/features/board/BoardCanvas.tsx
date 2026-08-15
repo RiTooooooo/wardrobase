@@ -49,8 +49,17 @@ export const BoardCanvas = forwardRef<HTMLDivElement, Props>(
           />
         ))}
         {boardItems.length === 0 ? (
+          /*
+            置き方は画面幅で変わる（横並びはドラッグ、縦積みはタップ）。
+            案内も CSS で出し分ける。
+          */
           <p className={styles.hint}>
-            左の引き出しからアイテムをドラッグして配置してください
+            <span className={styles.hintWide}>
+              左の引き出しからアイテムをドラッグして配置してください
+            </span>
+            <span className={styles.hintNarrow}>
+              上のクローゼットを開き、アイテムをタップして配置してください
+            </span>
           </p>
         ) : null}
       </div>

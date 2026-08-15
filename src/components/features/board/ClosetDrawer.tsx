@@ -9,6 +9,7 @@ import type { Category } from "@/domain/item/category";
 import type { DrawerItem } from "./boardTypes";
 import styles from "./ClosetDrawer.module.css";
 import { DrawerCategory } from "./DrawerCategory";
+import { useIsNarrow } from "./useIsNarrow";
 
 /*
  * カテゴリを「引き出し」に見立てたクローゼット。
@@ -35,6 +36,16 @@ export function ClosetDrawer({
   onPick,
 }: Props): ReactElement {
   const [openCat, setOpenCat] = useState<Category | null>("TOPS");
+  /*
+   * 本体ごとの開閉。狭い画面では、閉じるとカーペットに高さを譲れる。
+   * 広い画面は横に並ぶので畳む必要がなく、CSS 側で closetShut を無視する。
+   *
+   * 既定は畳んだ状態。開いたままだとカーペットの下が画面からはみ出すため。
+   * サーバー側の出力もこの状態なので、読み込み直後に畳まれる動きは起きない。
+   */
+  const [isShut, setIsShut] = useState(true);
+  /* 畳めるのは狭い画面だけ。広い画面では開閉の状態自体が意味を持たない */
+  const isCollapsible = useIsNarrow();
 
   const grouped = useMemo(() => groupByCategory(items), [items]);
 
@@ -42,11 +53,25 @@ export function ClosetDrawer({
     setOpenCat((prev) => (prev === cat ? null : cat));
   }
 
+  const closetClass = isShut
+    ? `${styles.closet} ${styles.closetShut}`
+    : styles.closet;
+
   return (
-    <div className={styles.closet}>
+    <div className={closetClass}>
       <div className={styles.cornice} aria-hidden="true" />
       <div className={styles.carcass}>
-        <p className={styles.title}>クローゼット</p>
+        <button
+          type="button"
+          className={styles.title}
+          aria-expanded={isCollapsible ? !isShut : undefined}
+          onClick={() => setIsShut((prev) => !prev)}
+        >
+          <span>クローゼット</span>
+          <span className={styles.toggleHint} aria-hidden="true">
+            {isShut ? "開く" : "閉じる"}
+          </span>
+        </button>
         <div className={styles.drawers}>
           {CATEGORIES.map((cat) => (
             <Drawer

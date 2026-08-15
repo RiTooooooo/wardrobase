@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from "react";
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import "../styles/globals.css";
 
@@ -33,6 +33,12 @@ export const metadata: Metadata = {
   },
   description:
     "自分の好きなスタイリングを、蓄積して使い回すためのワードローブ基盤",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

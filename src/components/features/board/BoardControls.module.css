@@ -22,5 +22,11 @@
     min-width: 0;
     border-left: none;
     border-top: 1px solid var(--color-border);
+    /*
+     * overflow-y: auto は横並びのサイドバー用。縦積みでは中身が
+     * この中の独自スクロールに閉じ込められ、ページを下まで送っても
+     * 保存ボタンに届かなくなりうる。縦積みではページごとスクロールさせる。
+     */
+    overflow: visible;
   }
 }
