@@ -1,6 +1,9 @@
 import type { ReactElement, ReactNode } from "react";
 
 import { AppHeader } from "@/components/features/navigation/AppHeader";
+import { BottomNav } from "@/components/features/navigation/BottomNav";
+
+import styles from "./layout.module.css";
 
 export default function AppLayout({
   children,
@@ -10,7 +13,8 @@ export default function AppLayout({
   return (
     <>
       <AppHeader />
-      <main>{children}</main>
+      <main className={styles.main}>{children}</main>
+      <BottomNav />
     </>
   );
 }

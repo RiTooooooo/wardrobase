@@ -8,12 +8,7 @@ import { usePathname } from "next/navigation";
 import { SignOutButton } from "@/components/features/auth/SignOutButton";
 
 import styles from "./AppHeader.module.css";
-
-const NAV_ITEMS = [
-  { href: "/wardrobe", label: "ワードローブ", match: ["/wardrobe", "/items"] },
-  { href: "/stylings", label: "スタイリング", match: ["/stylings"] },
-  { href: "/outfits", label: "コーデ記録", match: ["/outfits"] },
-] as const;
+import { isCurrent, NAV_ITEMS } from "./navItems";
 
 export function AppHeader(): ReactElement {
   const pathname = usePathname();
@@ -33,7 +28,7 @@ export function AppHeader(): ReactElement {
               key={item.href}
               href={item.href}
               label={item.label}
-              isActive={item.match.some((m) => isActivePath(pathname, m))}
+              isActive={isCurrent(pathname, item)}
             />
           ))}
         </nav>
@@ -67,12 +62,6 @@ function NavLink({
       {label}
     </Link>
   );
-}
-
-function isActivePath(pathname: string, href: string): boolean {
-  if (pathname === href) return true;
-
-  return pathname.startsWith(`${href}/`);
 }
 
 /** ボードは全幅レイアウトなので、ヘッダーも中央寄せせず端まで使う */

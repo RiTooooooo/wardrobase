@@ -87,6 +87,8 @@
   display: flex;
   gap: var(--space-3);
   padding-top: var(--space-4);
+  /* 狭い画面ではボタンが横に並びきらないため折り返す */
+  flex-wrap: wrap;
 }
 
 .editLink {
@@ -130,4 +132,11 @@
 .deleteButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* 狭い画面では左右32pxの余白が効きすぎるため詰める */
+@media (max-width: 600px) {
+  .page {
+    padding: var(--space-4);
+  }
 }

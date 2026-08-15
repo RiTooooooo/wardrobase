@@ -1,0 +1,45 @@
+/*
+ * 広い画面ではヘッダー内にナビが出るため、こちらは出さない。
+ * 表示するのはヘッダーがナビを畳む幅（600px以下）のときだけ。
+ */
+.nav {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    /* iPhone のホームバーに隠れないよう、安全領域のぶんを足す */
+    height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    background: var(--color-bg-chrome);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .tab {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+    /* 現在地の下線ぶんを常に確保して、切り替わっても文字が動かないようにする */
+    border-top: 2px solid transparent;
+    transition:
+      color var(--duration-fast) var(--easing),
+      border-color var(--duration-fast) var(--easing);
+  }
+
+  .tabActive {
+    color: var(--color-text-primary);
+    border-top-color: var(--color-accent);
+  }
+}

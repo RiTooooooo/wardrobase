@@ -1,11 +1,22 @@
 .switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   text-align: center;
 }
 
+/*
+ * 文字だけのリンクは行の高さぶんしか当たり判定がなく、指では押しにくい。
+ * 上下に余白を持たせて最低44pxを確保する（conventions.md §8）。
+ */
 .link {
-  margin-left: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-2);
   color: var(--color-accent);
 }
 

@@ -84,18 +84,20 @@
   align-items: center;
 }
 
+/*
+ * 狭い画面ではナビを下部のタブバー（BottomNav）に移す。
+ * 3項目とロゴとログアウトを1行に並べると 569px 必要で、
+ * 375px の画面では横スクロールしないとログアウトに届かなかった。
+ */
 @media (max-width: 600px) {
-  .header {
-    overflow-x: auto;
+  .nav {
+    display: none;
   }
 
   .inner {
     gap: var(--space-3);
     padding: 0 var(--space-3);
-  }
-
-  .navLink {
-    padding: var(--space-2) var(--space-3);
-    white-space: nowrap;
+    /* ナビが無くなるぶん、ログアウトを右端へ寄せる */
+    justify-content: space-between;
   }
 }

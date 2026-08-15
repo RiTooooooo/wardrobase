@@ -1,0 +1,16 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/*
+ * 下部タブバーは fixed なので、そのままだと本文の末尾が隠れる。
+ * タブバーの高さぶんを本文の下に確保する。
+ */
+@media (max-width: 600px) {
+  .main {
+    padding-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+  }
+}
