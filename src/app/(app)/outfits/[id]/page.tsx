@@ -72,7 +72,12 @@ function OutfitItems({ items }: { items: OutfitItemView[] }): ReactElement {
       {items.map((item) => (
         <Link key={item.id} href={`/items/${item.id}`} className={styles.itemThumb}>
           {item.imageUrl ? (
-            <img className={styles.itemThumbImage} src={item.imageUrl} alt={item.name} />
+            <img
+              className={styles.itemThumbImage}
+              src={item.imageUrl}
+              alt={item.name}
+              loading="lazy"
+            />
           ) : (
             <span className={styles.itemThumbName}>{item.name}</span>
           )}
@@ -86,7 +91,7 @@ function OutfitMeta({ outfit }: { outfit: OutfitWithItems }): ReactElement {
   return (
     <div className={styles.details}>
       {outfit.satisfaction !== null ? (
-        <DetailField label="満足度" value={`${outfit.satisfaction} / 5`} />
+        <DetailField label="お気に入り度" value={`${outfit.satisfaction} / 5`} />
       ) : null}
       {outfit.weather !== null ? (
         <DetailField label="天気" value={outfit.weather} />

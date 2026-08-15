@@ -124,6 +124,7 @@ function CardItemThumbs({
               className={styles.cardThumbImage}
               src={item.imageUrl}
               alt={item.name}
+              loading="lazy"
             />
           ) : (
             <span className={styles.cardThumbName}>{item.name}</span>

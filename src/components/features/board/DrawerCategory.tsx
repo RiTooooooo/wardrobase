@@ -62,6 +62,7 @@ function DrawerThumb({
             className={styles.thumbImage}
             src={item.imageUrl}
             alt={item.name}
+            loading="lazy"
             draggable={false}
           />
         </div>

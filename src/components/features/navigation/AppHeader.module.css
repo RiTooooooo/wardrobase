@@ -43,7 +43,11 @@
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  flex: 1;
+  /*
+   * 余白をナビの手前に寄せて、項目を右側にまとめる。
+   * flex:1 で伸ばすとナビ自体が余白を吸い、項目はロゴの直後に残ってしまう。
+   */
+  margin-left: auto;
 }
 
 .navLink {

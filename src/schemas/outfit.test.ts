@@ -44,7 +44,7 @@ describe("createOutfitSchema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("満足度が1〜5の範囲で成功する", () => {
+  it("お気に入り度が1〜5の範囲で成功する", () => {
     const result = createOutfitSchema.safeParse({
       ...VALID,
       satisfaction: 3,
@@ -53,7 +53,7 @@ describe("createOutfitSchema", () => {
     expect(result.success).toBe(true);
   });
 
-  it("満足度が0のとき失敗する", () => {
+  it("お気に入り度が0のとき失敗する", () => {
     const result = createOutfitSchema.safeParse({
       ...VALID,
       satisfaction: 0,
@@ -62,7 +62,7 @@ describe("createOutfitSchema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("満足度が6のとき失敗する", () => {
+  it("お気に入り度が6のとき失敗する", () => {
     const result = createOutfitSchema.safeParse({
       ...VALID,
       satisfaction: 6,

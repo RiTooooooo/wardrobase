@@ -87,6 +87,7 @@ function StylingItems({
               className={styles.itemThumbImage}
               src={item.imageUrl}
               alt={item.name}
+              loading="lazy"
             />
           ) : (
             <span className={styles.itemThumbName}>{item.name}</span>

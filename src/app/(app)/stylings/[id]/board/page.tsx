@@ -24,13 +24,23 @@ function orUndefined<T>(value: T | null): T | undefined {
   return value ?? undefined;
 }
 
+/*
+ * 拡大率は NOT NULL DEFAULT 1 なので、通常は必ず値が入っている。
+ * ただし実行中のPrismaクライアントがこの列を知らない場合（マイグレーション後に
+ * devサーバーを再起動していない等）は undefined が来て、幅が NaN になり
+ * レイアウトが無言で崩れる。画面から原因が分からない壊れ方なので等倍へ倒す。
+ */
+function toScale(value: number): number {
+  return Number.isFinite(value) ? value : 1;
+}
+
 function toBoardItems(styling: StylingWithItems): BoardItem[] {
   return styling.items.map((si, i) => ({
     itemId: si.itemId,
     x: si.positionX ?? i * 110,
     y: si.positionY ?? 0,
     zIndex: si.zIndex,
-    scale: si.scale,
+    scale: toScale(si.scale),
   }));
 }
 

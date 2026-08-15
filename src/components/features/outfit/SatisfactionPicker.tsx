@@ -18,7 +18,7 @@ export function SatisfactionPicker({
   return (
     <div className={styles.wrapper}>
       <span className={styles.label}>
-        満足度<span className={styles.optional}>任意</span>
+        お気に入り度<span className={styles.optional}>任意</span>
       </span>
       <div className={styles.buttons}>
         {LEVELS.map((level) => (

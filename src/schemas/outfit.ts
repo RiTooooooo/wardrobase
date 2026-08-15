@@ -21,8 +21,8 @@ const optionalSatisfaction = z.preprocess(
   z.coerce
     .number()
     .int()
-    .min(1, "満足度は1〜5で入力してください")
-    .max(MAX_SATISFACTION, "満足度は1〜5で入力してください")
+    .min(1, "お気に入り度は1〜5で入力してください")
+    .max(MAX_SATISFACTION, "お気に入り度は1〜5で入力してください")
     .optional(),
 );
 

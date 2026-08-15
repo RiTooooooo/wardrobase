@@ -164,6 +164,7 @@ function CardThumbs({
               className={styles.cardThumbImage}
               src={item.imageUrl}
               alt={item.name}
+              loading="lazy"
             />
           ) : (
             <span className={styles.cardThumbName}>{item.name}</span>
@@ -181,7 +182,7 @@ function CardMeta({
 }): ReactElement | null {
   const parts: string[] = [];
   if (entry.satisfaction !== null) {
-    parts.push(`満足度 ${entry.satisfaction}/5`);
+    parts.push(`お気に入り度 ${entry.satisfaction}/5`);
   }
   if (entry.weather !== null) {
     parts.push(entry.weather);

@@ -34,7 +34,11 @@
   /* ===== カラー: テキスト ===== */
   --color-text-primary: #ededed;
   --color-text-secondary: #888888;
-  --color-text-tertiary: #555555;
+  /*
+   * #555 では最も明るい背景（bg-surface）上で 2.3:1 しかなく、
+   * WCAG AA の 4.5:1 に届かなかった。どの背景でも満たす値に引き上げている。
+   */
+  --color-text-tertiary: #848484;
   --color-text-inverse: #0c0d0e;
 
   /* ===== カラー: ボーダー ===== */
