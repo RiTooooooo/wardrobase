@@ -16,11 +16,15 @@ import { ItemPicker } from "./ItemPicker";
 import styles from "./OutfitForm.module.css";
 import type { OutfitFormValues, PickerItem } from "./outfitTypes";
 import { SatisfactionPicker } from "./SatisfactionPicker";
+import type { StylingChoice } from "./StylingPicker";
+import { StylingPicker } from "./StylingPicker";
 
 type ActionResult = { ok: true; id: string } | { ok: false; message: string };
 
 type Props = {
   items: PickerItem[];
+  /** 保存済みスタイリング。記録の起点として選べる */
+  stylings?: StylingChoice[];
   initialValues?: OutfitFormValues;
   onSubmitAction: (data: CreateOutfitInput) => Promise<ActionResult>;
   submitLabel: string;
@@ -47,6 +51,7 @@ function buildDefaults(iv: OutfitFormValues | undefined): Defaults {
 
 export function OutfitForm({
   items,
+  stylings,
   initialValues,
   onSubmitAction,
   submitLabel,
@@ -67,6 +72,21 @@ export function OutfitForm({
         ? current.filter((id) => id !== itemId)
         : [...current, itemId],
     );
+  }
+
+  /*
+   * スタイリングの構成アイテムを選択欄に写す。
+   *
+   * 参照ではなくコピーなので、あとからスタイリングを編集しても
+   * 記録済みの実績は変わらない（spec.md の方針）。
+   *
+   * 選べるアイテムだけに絞るのは、スタイリング作成後に削除された服が
+   * 混ざると、選択欄に出ていない id を保存してしまうため。
+   */
+  function applyStyling(itemIds: string[]): void {
+    const selectable = new Set(items.map((item) => item.id));
+
+    setSelectedIds(itemIds.filter((id) => selectable.has(id)));
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
@@ -110,6 +130,11 @@ export function OutfitForm({
         id="wornOn" name="wornOn" label="日付" type="date"
         defaultValue={defs.date}
         error={fieldErrors.wornOn} disabled={isPending}
+      />
+      <StylingPicker
+        stylings={stylings ?? []}
+        disabled={isPending}
+        onApply={applyStyling}
       />
       <ItemPicker
         items={items} selected={selectedIds} disabled={isPending}

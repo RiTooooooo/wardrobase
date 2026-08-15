@@ -6,7 +6,9 @@ import { redirect } from "next/navigation";
 
 import { OutfitForm } from "@/components/features/outfit/OutfitForm";
 import type { PickerItem } from "@/components/features/outfit/outfitTypes";
+import type { StylingChoice } from "@/components/features/outfit/StylingPicker";
 import { findItemsByUser } from "@/infrastructure/prisma/itemRepository";
+import { findStylingsByUser } from "@/infrastructure/prisma/stylingRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
 import { auth } from "@/lib/auth";
 
@@ -24,6 +26,16 @@ async function toPickerItem(
   };
 }
 
+function toStylingChoice(
+  styling: Awaited<ReturnType<typeof findStylingsByUser>>[number],
+): StylingChoice {
+  return {
+    id: styling.id,
+    name: styling.name,
+    itemIds: styling.items.map((si) => si.itemId),
+  };
+}
+
 export default async function NewOutfitPage(): Promise<ReactElement> {
   const session = await auth.api.getSession({ headers: await headers() });
 
@@ -33,6 +45,7 @@ export default async function NewOutfitPage(): Promise<ReactElement> {
 
   const items = await findItemsByUser(session.user.id);
   const pickerItems = await Promise.all(items.map(toPickerItem));
+  const stylings = await findStylingsByUser(session.user.id);
 
   return (
     <div className={styles.page}>
@@ -44,6 +57,7 @@ export default async function NewOutfitPage(): Promise<ReactElement> {
       </div>
       <OutfitForm
         items={pickerItems}
+        stylings={stylings.map(toStylingChoice)}
         onSubmitAction={createOutfitAction}
         submitLabel="記録する"
         pendingLabel="記録中..."
