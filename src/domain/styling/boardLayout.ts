@@ -33,6 +33,15 @@ export function scaleFromDrag(
   return clampScale((startWidth + dx) / baseWidth);
 }
 
+/*
+ * 拡大率をかけた実際の大きさ。
+ * 配置できる範囲は見た目の大きさで決まるため、基準サイズのまま計算すると
+ * 小さくしたアイテムが下端・右端の手前で止まってしまう。
+ */
+export function scaledSize(base: ItemSize, scale: number): ItemSize {
+  return { width: base.width * scale, height: base.height * scale };
+}
+
 /* キャンバスの実寸が取れないときの保険 */
 const FALLBACK_BOUNDS: CanvasBounds = { width: 800, height: 600 };
 

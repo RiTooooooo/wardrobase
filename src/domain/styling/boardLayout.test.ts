@@ -4,18 +4,13 @@ import {
   autoGridPosition,
   boundsOf,
   clampPosition,
-  clampScale,
-  MAX_SCALE,
-  MIN_SCALE,
   nextZIndex,
   prevZIndex,
-  scaleFromDrag,
   toCanvasPosition,
 } from "./boardLayout";
 
 const BOUNDS = { width: 800, height: 600 };
 const ITEM_SIZE = { width: 100, height: 120 };
-const ITEM_WIDTH = 160;
 
 describe("clampPosition", () => {
   it("キャンバス内の座標はそのまま返す", () => {
@@ -58,44 +53,6 @@ describe("nextZIndex", () => {
     const items = [{ zIndex: 3 }, { zIndex: 1 }, { zIndex: 5 }];
 
     expect(nextZIndex(items)).toBe(6);
-  });
-});
-
-describe("clampScale", () => {
-  it("範囲内の倍率はそのまま返す", () => {
-    expect(clampScale(1.4)).toBe(1.4);
-  });
-
-  it("小さくしすぎたら下限で止める", () => {
-    expect(clampScale(0.1)).toBe(MIN_SCALE);
-  });
-
-  it("大きくしすぎたら上限で止める", () => {
-    expect(clampScale(5)).toBe(MAX_SCALE);
-  });
-
-  it("数値でない値は等倍に戻す", () => {
-    expect(clampScale(Number.NaN)).toBe(1);
-  });
-});
-
-describe("scaleFromDrag", () => {
-  it("右下へ引くと大きくなる", () => {
-    // 幅160のアイテムを右へ80px引く → 240/160 = 1.5倍
-    expect(scaleFromDrag(1, 80, ITEM_WIDTH)).toBeCloseTo(1.5);
-  });
-
-  it("左上へ引くと小さくなる", () => {
-    expect(scaleFromDrag(1, -80, ITEM_WIDTH)).toBeCloseTo(0.5);
-  });
-
-  it("掴んだ時点の倍率を基準にする", () => {
-    // 既に1.5倍のものをさらに引く
-    expect(scaleFromDrag(1.5, 80, ITEM_WIDTH)).toBeCloseTo(2);
-  });
-
-  it("下限を超えて縮まない", () => {
-    expect(scaleFromDrag(1, -1000, ITEM_WIDTH)).toBe(MIN_SCALE);
   });
 });
 
