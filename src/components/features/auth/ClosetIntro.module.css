@@ -185,13 +185,57 @@
  * 線画を背景に退かせてフォームの読みやすさを優先する。
  */
 @media (max-width: 600px) {
+  /*
+   * 狭い画面では扉の内側にフォームが収まらないため、線画は背景に退かせる。
+   * ただし演出中まで暗いとクローゼットが開くところが見えないので、
+   * 明るさを固定せず、フォームが現れるのに合わせて落とす。
+   *
+   * 既定値は「演出後」の暗い状態。JSが動かない環境でも、
+   * フォームが読みやすい状態で止まる。
+   */
   .closet {
     opacity: 0.3;
+  }
+
+  .play .closet {
+    animation: dim 0.7s var(--easing-out) 2s backwards;
   }
 
   .content {
     width: 100%;
     max-width: 360px;
+  }
+
+  /*
+   * 扉が開いた奥から手前に出てくるように見せる。
+   * 小さい状態から等倍へ拡大しつつ現れることで、
+   * 「クローゼットの中から取り出した」印象になる。
+   */
+  .play .content {
+    animation: emerge 0.7s var(--easing-out) 2s backwards;
+  }
+}
+
+@keyframes emerge {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* フォームが現れるのと同じ間に、線画が背景へ引く */
+@keyframes dim {
+  from {
+    opacity: 0.8;
+  }
+
+  to {
+    opacity: 0.3;
   }
 }
 
@@ -202,6 +246,7 @@
 @media (prefers-reduced-motion: reduce) {
   .play .line,
   .play .door,
+  .play .closet,
   .play .content {
     animation: none;
   }
