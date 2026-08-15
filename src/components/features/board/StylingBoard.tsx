@@ -4,6 +4,8 @@ import { useCallback, useRef, useState } from "react";
 import type { PointerEvent, ReactElement } from "react";
 
 import {
+  autoGridPosition,
+  boundsOf,
   clampPosition,
   nextZIndex,
   toCanvasPosition,
@@ -18,6 +20,7 @@ import { GhostOverlay } from "./GhostOverlay";
 import styles from "./StylingBoard.module.css";
 import { useBoardItems } from "./useBoardItems";
 import { useDrag } from "./useDrag";
+import { useIsNarrow } from "./useIsNarrow";
 
 type ActionResult = { ok: true; id: string } | { ok: false; message: string };
 
@@ -42,6 +45,7 @@ export function StylingBoard({
   onSubmitAction,
   redirectTo,
 }: Props): ReactElement {
+  const isNarrow = useIsNarrow();
   const [ghost, setGhost] = useState<GhostState | null>(null);
   const [isPending, setIsPending] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -104,6 +108,29 @@ export function StylingBoard({
     onEnd: handleDrawerDragEnd,
   });
 
+  /*
+   * 狭い画面ではタップで配置する。
+   * 置き先は既にある枚数から機械的に決め、あとから指で動かせるようにする。
+   */
+  const handlePick = useCallback(
+    function pick(item: DrawerItem): void {
+      const canvas = canvasRef.current;
+      const bounds = boundsOf(
+        canvas === null ? null : canvas.getBoundingClientRect(),
+      );
+      const pos = autoGridPosition(items.boardItems.length, bounds, ITEM_SIZE);
+
+      items.add({
+        itemId: item.id,
+        x: pos.x,
+        y: pos.y,
+        zIndex: nextZIndex(items.boardItems),
+        scale: 1,
+      });
+    },
+    [items],
+  );
+
   function handleDrawerItemDragStart(
     item: DrawerItem,
     e: PointerEvent,
@@ -118,6 +145,7 @@ export function StylingBoard({
         items={drawerItems}
         placedIds={placedIds}
         onDragStart={handleDrawerItemDragStart}
+        onPick={isNarrow ? handlePick : undefined}
       />
       <BoardCanvas
         ref={canvasRef}

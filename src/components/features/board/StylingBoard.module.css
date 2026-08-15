@@ -5,6 +5,18 @@
   overflow: hidden;
 }
 
+/*
+ * 狭い画面では横に3列並べられない（引き出し220px + コントロール240pxで
+ * カーペットの幅が残らない）。DOM順のまま縦に積む。
+ * 全体を縦スクロールさせ、カーペットには固定の高さを与える。
+ */
+@media (max-width: 600px) {
+  .board {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
 .ghost {
   position: fixed;
   width: 160px;

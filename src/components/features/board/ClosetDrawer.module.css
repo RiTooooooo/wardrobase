@@ -163,3 +163,17 @@
     min-width: 220px;
   }
 }
+
+/*
+ * 狭い画面では上部の帯として置く。
+ * 縦に伸ばすとカーペットの領域が無くなるので、高さを抑えて中身をスクロールさせる。
+ */
+@media (max-width: 600px) {
+  .closet {
+    width: 100%;
+    min-width: 0;
+    max-height: 40vh;
+    padding: var(--space-2) var(--space-3) 0;
+    flex-shrink: 0;
+  }
+}

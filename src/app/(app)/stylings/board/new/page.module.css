@@ -29,3 +29,20 @@
   font-size: var(--text-lg);
   font-weight: var(--font-bold);
 }
+
+/*
+ * 狭い画面では中身を縦に積んで全体をスクロールさせるため、
+ * ページ側で高さを固定しない。
+ */
+@media (max-width: 600px) {
+  .page {
+    height: auto;
+    min-height: calc(100vh - var(--header-height));
+    padding: var(--space-2) 0;
+    overflow: visible;
+  }
+
+  .header {
+    padding: 0 var(--space-3);
+  }
+}

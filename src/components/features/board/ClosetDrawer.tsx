@@ -24,12 +24,15 @@ type Props = {
   items: DrawerItem[];
   placedIds: string[];
   onDragStart: (item: DrawerItem, e: PointerEvent) => void;
+  /** 指定するとドラッグではなくタップで配置する（狭い画面向け） */
+  onPick?: (item: DrawerItem) => void;
 };
 
 export function ClosetDrawer({
   items,
   placedIds,
   onDragStart,
+  onPick,
 }: Props): ReactElement {
   const [openCat, setOpenCat] = useState<Category | null>("TOPS");
 
@@ -57,6 +60,7 @@ export function ClosetDrawer({
                 items={grouped[cat] ?? []}
                 placedIds={placedIds}
                 onDragStart={onDragStart}
+                onPick={onPick}
               />
             </Drawer>
           ))}
