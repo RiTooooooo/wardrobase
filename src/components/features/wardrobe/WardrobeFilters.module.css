@@ -88,6 +88,16 @@
   flex-shrink: 0;
 }
 
+/*
+ * 狭い画面ではプルダウン（FilterSelects）に置き換えるため、チップは出さない。
+ * カテゴリ7個・季節4個が折り返して縦に4行を占めていた。
+ */
+@media (max-width: 600px) {
+  .chipRow {
+    display: none;
+  }
+}
+
 @media (max-width: 600px) {
   .searchInput {
     max-width: none;

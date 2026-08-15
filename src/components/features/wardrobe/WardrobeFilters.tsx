@@ -5,6 +5,7 @@ import type { CSSProperties, ReactElement } from "react";
 import { CATEGORIES, CATEGORY_LABELS } from "@/domain/item/category";
 import { SEASON_LABELS, SEASONS } from "@/domain/item/season";
 
+import { FilterSelects } from "./FilterSelects";
 import type { SortKey, WardrobeFilters as Filters } from "./wardrobeTypes";
 import styles from "./WardrobeFilters.module.css";
 
@@ -40,17 +41,26 @@ export function WardrobeFilters({
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.row}>
+      {/* 狭い画面ではチップの代わりにプルダウンを出す（CSSで出し分ける） */}
+      <FilterSelects
+        category={filters.category}
+        season={filters.season}
+        onCategoryChange={setCategory}
+        onSeasonChange={setSeason}
+      />
+      <div className={`${styles.row} ${styles.chipRow}`}>
         <CategoryChips
           selected={filters.category}
           onSelect={setCategory}
         />
       </div>
       <div className={styles.row}>
-        <SeasonChips
-          selected={filters.season}
-          onSelect={setSeason}
-        />
+        <div className={styles.chipRow}>
+          <SeasonChips
+            selected={filters.season}
+            onSelect={setSeason}
+          />
+        </div>
         <input
           className={styles.searchInput}
           style={step(SEARCH_STEP)}
