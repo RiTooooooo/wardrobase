@@ -6,6 +6,14 @@ import type { Category } from "@/domain/item/category";
  */
 export const BOARD_ITEM_SIZE = { width: 160, height: 200 } as const;
 
+/*
+ * カーペットの色。見た目の切り替えだけで、スタイリングには保存しない。
+ * 保存しないため domain ではなくここに置く。
+ * black は従来の暗いカーペット（素材はグレーを暗く沈めたもの）。
+ */
+export const CARPET_COLORS = ["black", "white"] as const;
+export type CarpetColor = (typeof CARPET_COLORS)[number];
+
 export type DrawerItem = {
   id: string;
   name: string;

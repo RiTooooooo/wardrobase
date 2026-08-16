@@ -12,7 +12,12 @@ import {
 } from "@/domain/styling/boardLayout";
 import type { Season } from "@/domain/item/season";
 
-import type { BoardItem, DrawerItem, GhostState } from "./boardTypes";
+import type {
+  BoardItem,
+  CarpetColor,
+  DrawerItem,
+  GhostState,
+} from "./boardTypes";
 import { BoardCanvas } from "./BoardCanvas";
 import { BoardControls } from "./BoardControls";
 import { ClosetDrawer } from "./ClosetDrawer";
@@ -47,6 +52,8 @@ export function StylingBoard({
 }: Props): ReactElement {
   const isNarrow = useIsNarrow();
   const [ghost, setGhost] = useState<GhostState | null>(null);
+  /* カーペットの色。保存しない見た目の設定なので、ここで完結させる */
+  const [carpetColor, setCarpetColor] = useState<CarpetColor>("black");
   const [isPending, setIsPending] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
   const draggingItemRef = useRef<DrawerItem | null>(null);
@@ -151,6 +158,8 @@ export function StylingBoard({
         ref={canvasRef}
         boardItems={items.boardItems}
         drawerItems={drawerItems}
+        carpetColor={carpetColor}
+        onCarpetColorChange={setCarpetColor}
         onReposition={items.reposition}
         onResize={items.resize}
         onBringToFront={items.bringToFront}

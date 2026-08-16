@@ -3,18 +3,31 @@
 import { forwardRef } from "react";
 import type { ReactElement } from "react";
 
-import type { BoardItem, DrawerItem } from "./boardTypes";
+import type { BoardItem, CarpetColor, DrawerItem } from "./boardTypes";
+import { CARPET_COLORS } from "./boardTypes";
 import styles from "./BoardCanvas.module.css";
 import { CanvasItem } from "./CanvasItem";
 
 type Props = {
   boardItems: BoardItem[];
   drawerItems: DrawerItem[];
+  carpetColor: CarpetColor;
+  onCarpetColorChange: (color: CarpetColor) => void;
   onReposition: (itemId: string, x: number, y: number) => void;
   onResize: (itemId: string, scale: number) => void;
   onBringToFront: (itemId: string) => void;
   onSendToBack: (itemId: string) => void;
   onRemove: (itemId: string) => void;
+};
+
+const CARPET_LABELS: Record<CarpetColor, string> = {
+  black: "ブラック",
+  white: "ホワイト",
+};
+
+const CANVAS_CLASS: Record<CarpetColor, string> = {
+  black: styles.canvas,
+  white: `${styles.canvas} ${styles.canvasWhite}`,
 };
 
 function findDrawerItem(
@@ -27,15 +40,15 @@ function findDrawerItem(
 export const BoardCanvas = forwardRef<HTMLDivElement, Props>(
   function BoardCanvas(
     {
-      boardItems, drawerItems, onReposition, onResize,
-      onBringToFront, onSendToBack, onRemove,
+      boardItems, drawerItems, carpetColor, onCarpetColorChange,
+      onReposition, onResize, onBringToFront, onSendToBack, onRemove,
     },
     ref,
   ): ReactElement {
     const sorted = [...boardItems].sort((a, b) => a.zIndex - b.zIndex);
 
     return (
-      <div ref={ref} className={styles.canvas}>
+      <div ref={ref} className={CANVAS_CLASS[carpetColor]}>
         {sorted.map((bi) => (
           <CanvasItem
             key={bi.itemId}
@@ -62,6 +75,31 @@ export const BoardCanvas = forwardRef<HTMLDivElement, Props>(
             </span>
           </p>
         ) : null}
+        {/*
+          カーペットの色替え。地図アプリの表示切替と同じく、対象の上に置く。
+          保存されない見た目の設定なので、保存フォームには混ぜない。
+        */}
+        <div
+          className={styles.carpetPicker}
+          role="group"
+          aria-label="カーペットの色"
+        >
+          {CARPET_COLORS.map((color) => (
+            <button
+              key={color}
+              type="button"
+              className={
+                color === carpetColor
+                  ? `${styles.carpetBtn} ${styles.carpetBtnSelected}`
+                  : styles.carpetBtn
+              }
+              aria-pressed={color === carpetColor}
+              onClick={() => onCarpetColorChange(color)}
+            >
+              {CARPET_LABELS[color]}
+            </button>
+          ))}
+        </div>
       </div>
     );
   },

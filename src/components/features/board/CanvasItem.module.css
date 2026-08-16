@@ -8,6 +8,11 @@
   border: 2px solid transparent;
   border-radius: var(--radius-md);
   background: var(--color-bg-elevated);
+  /*
+   * 透明な枠の下に背景色を塗らない。
+   * 塗ると枠ぶんの2pxが暗い縁取りとして透け、白いカーペットで黒枠に見える。
+   */
+  background-clip: padding-box;
   cursor: grab;
   touch-action: none;
   overflow: visible;

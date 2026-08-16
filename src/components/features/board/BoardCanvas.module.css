@@ -8,9 +8,17 @@
  */
 .canvas {
   --carpet-shade: 58%;
+  --carpet-vignette: 45%;
+  --carpet-image: url("/textures/carpet.jpg");
 
   flex: 1;
   position: relative;
+  /*
+   * 内部の重なり順（アイテムの z-index や色替えボタン）をカーペットの中に
+   * 閉じ込める。これが無いと、固定ヘッダーやタブバー（z-index: 100）より
+   * 大きい値を持つ要素が、スクロール時にそれらの上へ描かれてしまう。
+   */
+  isolation: isolate;
   min-height: 600px;
   /* デスクトップでもフォーム側と画面下端へ接触させない */
   margin: 0 var(--space-4) var(--space-4) 0;
@@ -22,17 +30,35 @@
     radial-gradient(
       ellipse at 50% 45%,
       transparent 40%,
-      color-mix(in srgb, var(--color-bg-base) 45%, transparent) 100%
+      color-mix(in srgb, var(--color-bg-base) var(--carpet-vignette), transparent)
+        100%
     ),
     /* 全体を暗く沈める層 */
     linear-gradient(
       color-mix(in srgb, var(--color-bg-base) var(--carpet-shade), transparent),
       color-mix(in srgb, var(--color-bg-base) var(--carpet-shade), transparent)
     ),
-    url("/textures/carpet.jpg");
+    var(--carpet-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+/*
+ * 色替え。素材ごとに「沈める層」の濃さも変える。
+ * 既定のブラックは明るい素材を暗い部屋に馴染ませるため強めに沈めているが、
+ * ホワイトは白さを見せるのが目的なので薄くする。
+ */
+.canvasWhite {
+  --carpet-shade: 14%;
+  /* 白地では周辺減光が「汚れ」に見えるため、気配だけ残す */
+  --carpet-vignette: 18%;
+  --carpet-image: url("/textures/carpet-white.jpg");
+}
+
+/* 白地の上では、暗い部屋向けの薄文字が読めないため文字色を落とす */
+.canvasWhite .hint {
+  color: rgba(0, 0, 0, 0.55);
 }
 
 .hint {
@@ -62,6 +88,66 @@
     height: 60dvh;
     /* フォームの上端ボーダーがカーペットの下端に被らないよう離す */
     margin: 0 var(--space-3) var(--space-4);
+  }
+}
+
+/*
+ * カーペットの色替え。
+ * どの色の上でも読めるよう、カーペットに透けない自前の背景を持つ。
+ * アイテムは z-index を持つため、確実に上に出す（ゴーストの 9999 より下）。
+ */
+.carpetPicker {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  z-index: 1000;
+}
+
+.carpetBtn {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  transition:
+    color var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing);
+}
+
+.carpetBtn:hover {
+  color: var(--color-text-primary);
+}
+
+/* 選択中。季節チップと同じ「アクセントの枠＋淡い塗り」で揃える */
+.carpetBtnSelected {
+  color: var(--color-accent);
+  background: var(--color-accent-muted);
+  border-color: var(--color-accent);
+}
+
+/*
+ * 狭い画面ではタップ配置のアイテムが左上から順に埋まるため、
+ * 上に置くと2枚目からボタンの下に潜り込む。下端へ逃がす。
+ * カーペットが狭いぶん、ボタンも一回り小さくして場所を取らせない。
+ */
+@media (max-width: 600px) {
+  .carpetPicker {
+    top: auto;
+    bottom: var(--space-2);
+    right: var(--space-2);
+    padding: 2px;
+  }
+
+  .carpetBtn {
+    min-height: 28px;
+    padding: var(--space-1) var(--space-2);
   }
 }
 
