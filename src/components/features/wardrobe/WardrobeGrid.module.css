@@ -11,14 +11,14 @@
  * aspect-ratio は使わない。grid の 1fr は中身の必要幅を最小幅に取るため、
  * 行の高さ（カードに合わせて伸びた高さ）と同じ幅を要求してしまい、
  * この列だけが広がって他の列と揃わなくなる。
- * 高さはカードに合わせて伸ばし、単独行のときだけ min-height で支える。
+ *
+ * 高さはカードと同じ構成（正方形の画像 + 情報欄）を ::before の
+ * padding-top で自前に作る。padding の % は幅を基準にするため、
+ * aspect-ratio と違って列幅を歪めずに「幅と同じ高さ」を作れる。
+ * 67px はカードの情報欄の高さ（padding 24 + 名前行 21 + 隙間 4 + メタ行 18）。
  */
 .addTile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 180px;
-  padding: var(--space-4);
+  position: relative;
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-text-secondary);
@@ -26,12 +26,33 @@
   border: 1px dashed color-mix(in srgb, var(--color-accent) 45%, transparent);
   /* 隣に並ぶカードと同じ丸みにする */
   border-radius: var(--radius-xl);
+  /*
+   * カードのずらし幅は12枚目で頭打ちのため、タイルを同じ式に乗せると
+   * 後半のカードと同時に（＝一覧の途中で）現れてしまう。
+   * 全カードが出そろってから、一拍おいて最後に現れるよう遅らせる。
+   */
   animation: riseIn var(--duration-slower) var(--easing-out)
-    calc(540ms + min(var(--index, 0), 12) * 55ms) backwards;
+    calc(760ms + min(var(--index, 0), 12) * 55ms) backwards;
   transition:
     color var(--duration-normal) var(--easing),
     border-color var(--duration-normal) var(--easing),
     background var(--duration-normal) var(--easing);
+}
+
+.addTile::before {
+  content: "";
+  display: block;
+  padding-top: calc(100% + 67px);
+}
+
+/* 高さは ::before が作るので、文字は全面に重ねて中央へ置く */
+.addTileLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
 }
 
 .addTile:hover {

@@ -35,13 +35,14 @@
 .addButton {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: var(--space-2) var(--space-5);
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-normal);
   color: #fff;
   background: var(--color-accent);
-  border-radius: var(--radius-md);
+  /* developer.apple.com のボタンと同じカプセル形 */
+  border-radius: var(--radius-full);
   transition: background var(--duration-fast) var(--easing);
 }
 
@@ -73,26 +74,35 @@
   gap: var(--space-3);
 }
 
+/* 日付は区切りの脇役なので、白ではなく一段引いた色に留める */
 .dateLabel {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-text-secondary);
   padding-bottom: var(--space-1);
-  border-bottom: 1px solid var(--color-border);
+  /* 区切りの気配だけ。カードの白枠より目立たせない */
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-text-primary) 20%, transparent);
 }
 
+/*
+ * カードは面で持ち上げず、地の黒のまま白い枠だけで輪郭を作る
+ * （入力欄と同じ、developer.apple.com の語彙）
+ */
 .card {
   display: flex;
   gap: var(--space-4);
   padding: var(--space-4);
-  background: var(--color-bg-elevated);
+  background: var(--color-bg-base);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-bright);
   transition: border-color var(--duration-fast) var(--easing);
 }
 
-.card:hover {
-  border-color: var(--color-border-strong);
+/* 入力欄のフォーカスと同じく、指した先は青で示す */
+.card:hover,
+.card:focus-visible {
+  border-color: var(--color-accent);
 }
 
 .cardThumbs {
@@ -134,16 +144,17 @@
   min-width: 0;
 }
 
+/* カードの本文も白で統一する */
 .cardMeta {
   display: flex;
   gap: var(--space-3);
   font-size: var(--text-sm);
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary);
 }
 
 .cardMemo {
   font-size: var(--text-sm);
-  color: var(--color-text-tertiary);
+  color: var(--color-text-primary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

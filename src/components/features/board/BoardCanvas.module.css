@@ -126,10 +126,10 @@
 }
 
 /* 選択中。季節チップと同じ「アクセントの枠＋淡い塗り」で揃える */
+/* 選択中は青塗り＋白文字（フィルタピルと同じ語彙） */
 .carpetBtnSelected {
-  color: var(--color-accent);
-  background: var(--color-accent-muted);
-  border-color: var(--color-accent);
+  color: #fff;
+  background: var(--color-accent);
 }
 
 /*

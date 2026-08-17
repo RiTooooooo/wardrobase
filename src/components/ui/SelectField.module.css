@@ -15,8 +15,8 @@
   padding: var(--space-3) var(--space-4);
   font-size: var(--text-base);
   color: var(--color-text-primary);
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border-input);
   border-radius: var(--radius-md);
   appearance: none;
   cursor: pointer;

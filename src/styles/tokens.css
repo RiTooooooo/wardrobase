@@ -10,21 +10,21 @@
 
 :root {
   /* ===== カラー: 背景 ===== */
-  --color-bg-base: #0c0d0e;
-  --color-bg-elevated: #141516;
-  --color-bg-surface: #1c1d1f;
-  --color-bg-overlay: #252628;
-  /* 固定ヘッダー用。背後のコンテンツが透ける半透明サーフェス（HIG: Materials） */
-  --color-bg-chrome: rgba(20, 21, 22, 0.72);
-
-  /* ===== カラー: アクセント（ロイヤルブルー） ===== */
   /*
-   * hsl(216, 100%, 48%)。彩度は100%のまま明度だけ調整しているので、
-   * 背景から浮きすぎず原色感も残る。白文字とのコントラストは 5.17:1。
-   * ホバーは明るくすると白文字のコントラストが落ちるため、深い方へ振る。
+   * developer.apple.com（ダーク）に合わせた黒基調。
+   * 地は純黒、面はそこから #161617 → #1d1d20 → #2a2a2d と持ち上げる。
    */
-  --color-accent: #0062f5;
-  --color-accent-hover: #0054d1;
+  --color-bg-base: #000000;
+  --color-bg-elevated: #161617;
+  --color-bg-surface: #1d1d20;
+  --color-bg-overlay: #2a2a2d;
+  /* 固定ヘッダー用。Apple のグローバルナビと同じ半透明（HIG: Materials） */
+  --color-bg-chrome: rgba(22, 22, 23, 0.8);
+
+  /* ===== カラー: アクセント（Apple のボタンブルー） ===== */
+  /* developer.apple.com のボタン・選択中ピルと同じ #0071e3。 */
+  --color-accent: #0071e3;
+  --color-accent-hover: #0077ed;
   /*
    * 選択中の淡い塗り。RGBを書き写すと accent を変えるたびに手で揃える必要があり、
    * 忘れると枠線と塗りで色が食い違う。accent から導出して自動で追従させる。
@@ -32,7 +32,8 @@
   --color-accent-muted: color-mix(in srgb, var(--color-accent) 16%, transparent);
 
   /* ===== カラー: テキスト ===== */
-  --color-text-primary: #ededed;
+  /* developer.apple.com の本文色 */
+  --color-text-primary: #f5f5f7;
   --color-text-secondary: #888888;
   /*
    * #555 では最も明るい背景（bg-surface）上で 2.3:1 しかなく、
@@ -44,6 +45,20 @@
   /* ===== カラー: ボーダー ===== */
   --color-border: #2a2b2d;
   --color-border-strong: #3a3b3d;
+  /*
+   * 黒地で輪郭をはっきり見せる白い枠。本文色の白を薄く敷く。
+   * 入力欄・リストカードなど「パキッと」見せたい輪郭はこれで統一する。
+   */
+  --color-border-bright: rgba(245, 245, 247, 0.5);
+  /* 入力欄（テキストボックス・プルダウン）の枠。フォーカス時は accent（青） */
+  --color-border-input: var(--color-border-bright);
+
+  /* ===== カラー: 入力欄 ===== */
+  /*
+   * developer.apple.com の検索欄と同じ、地の黒のままの背景。
+   * 面の色（bg-surface）で持ち上げず、白い枠だけで輪郭を作る。
+   */
+  --color-bg-input: #000000;
 
   /* ===== カラー: セマンティック ===== */
   --color-error: #e05555;

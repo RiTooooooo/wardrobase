@@ -3,7 +3,12 @@
   background: var(--color-bg-chrome);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--color-border);
+  /*
+   * developer.apple.com のグローバルナビと同じ、白の細い区切り線。
+   * 日付見出しの下線と同じ濃さで「薄い区切り」の語彙を揃える。
+   */
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-text-primary) 20%, transparent);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -50,12 +55,16 @@
   margin-left: auto;
 }
 
+/*
+ * ヘッダーはマウス操作が前提の幅でしか出ない（狭い画面はタブバーに切り替わる）
+ * ため、developer.apple.com と同じ小ささまで詰めてよい。
+ */
 .navLink {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: var(--space-2) var(--space-4);
-  font-size: var(--text-sm);
+  min-height: 32px;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
   font-weight: var(--font-medium);
   color: var(--color-text-secondary);
   /* 現在地の枠が付いたときに文字がずれないよう、常に枠の分を確保しておく */
@@ -72,11 +81,13 @@
   background: var(--color-bg-surface);
 }
 
-/* 現在地。フィルタのチップと同じ「アクセントの枠＋淡い塗り」で揃える */
+/* 現在地は枠や塗りを使わず、白い文字だけで示す（他は灰色に沈む） */
 .navLinkActive {
   color: var(--color-text-primary);
-  background: var(--color-accent-muted);
-  border-color: var(--color-accent);
+}
+
+.navLinkActive:hover {
+  background: transparent;
 }
 
 .trailing {

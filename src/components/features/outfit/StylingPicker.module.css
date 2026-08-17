@@ -19,7 +19,7 @@
 
 /*
  * 押すとアイテムが写るだけで、これ自体は選択状態を持たない。
- * 選択中に見えないよう、チップではなく枠線だけの見た目にしている。
+ * 選択中（青塗り）に見えないよう、非選択ピルと同じグレー塗りに留める。
  */
 .choice {
   display: inline-flex;
@@ -28,21 +28,18 @@
   min-height: 44px;
   padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  background: transparent;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  background: var(--color-bg-overlay);
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
   cursor: pointer;
   transition:
     color var(--duration-fast) var(--easing),
-    border-color var(--duration-fast) var(--easing),
     background var(--duration-fast) var(--easing);
 }
 
 .choice:hover:not(:disabled) {
-  color: var(--color-text-primary);
-  border-color: var(--color-accent);
-  background: var(--color-bg-surface);
+  background: var(--color-border-strong);
 }
 
 .choice:disabled {

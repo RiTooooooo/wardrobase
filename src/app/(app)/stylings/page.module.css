@@ -41,13 +41,14 @@
 .addButton {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: var(--space-2) var(--space-5);
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-normal);
   color: #fff;
   background: var(--color-accent);
-  border-radius: var(--radius-md);
+  /* developer.apple.com のボタンと同じカプセル形 */
+  border-radius: var(--radius-full);
   transition: background var(--duration-fast) var(--easing);
 }
 
@@ -58,13 +59,13 @@
 .secondaryButton {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: var(--space-2) var(--space-4);
+  min-height: 36px;
+  padding: var(--space-1) var(--space-4);
   font-size: var(--text-sm);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-normal);
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   transition:
     color var(--duration-fast) var(--easing),
     border-color var(--duration-fast) var(--easing);
@@ -99,19 +100,25 @@
   gap: var(--space-4);
 }
 
+/*
+ * カードは面で持ち上げず、地の黒のまま白い枠だけで輪郭を作る
+ * （入力欄と同じ、developer.apple.com の語彙）
+ */
 .card {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
   padding: var(--space-4);
-  background: var(--color-bg-elevated);
+  background: var(--color-bg-base);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-bright);
   transition: border-color var(--duration-fast) var(--easing);
 }
 
-.card:hover {
-  border-color: var(--color-border-strong);
+/* 入力欄のフォーカスと同じく、指した先は青で示す */
+.card:hover,
+.card:focus-visible {
+  border-color: var(--color-accent);
 }
 
 .cardName {

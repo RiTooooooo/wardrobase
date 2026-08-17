@@ -1,11 +1,16 @@
+/*
+ * developer.apple.com のボタン（「さらに表示」等）の実測値に合わせる。
+ * 高さ36px・フォント14px/400・パディング8×16px。
+ */
 .button {
-  min-height: 44px;
-  padding: var(--space-3) var(--space-6);
-  font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
   color: #fff;
   background: var(--color-accent);
-  border-radius: var(--radius-md);
+  /* developer.apple.com のボタンと同じカプセル形 */
+  border-radius: var(--radius-full);
   transition:
     background var(--duration-fast) var(--easing),
     opacity var(--duration-fast) var(--easing);

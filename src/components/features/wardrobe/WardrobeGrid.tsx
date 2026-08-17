@@ -58,7 +58,7 @@ function AddTile({ index }: { index: number }): ReactElement {
 
   return (
     <Link className={styles.addTile} href="/items/new" style={order}>
-      アイテムを追加
+      <span className={styles.addTileLabel}>アイテムを追加</span>
     </Link>
   );
 }

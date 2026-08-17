@@ -28,25 +28,26 @@
   gap: var(--space-2);
 }
 
+/* developer.apple.com のフィルタピルと同じ（WardrobeFilters のチップと同じ扱い） */
 .chip {
   min-height: 44px;
   padding: var(--space-2) var(--space-5);
   font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  background: var(--color-bg-overlay);
+  border: 1px solid transparent;
   border-radius: var(--radius-full);
   transition:
     color var(--duration-fast) var(--easing),
-    border-color var(--duration-fast) var(--easing);
+    background var(--duration-fast) var(--easing);
 }
 
 .chip:hover:not(:disabled) {
-  color: var(--color-text-primary);
-  border-color: var(--color-border-strong);
+  background: var(--color-border-strong);
 }
 
-.chipSelected {
-  color: var(--color-accent);
-  background: var(--color-accent-muted);
-  border-color: var(--color-accent);
+.chipSelected,
+.chipSelected:hover:not(:disabled) {
+  color: #fff;
+  background: var(--color-accent);
 }
