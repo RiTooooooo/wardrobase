@@ -35,13 +35,7 @@ export function StylingPicker({
 
   return (
     <div className={styles.wrapper}>
-      <span className={styles.label}>
-        スタイリングから選ぶ
-        <span className={styles.optional}>任意</span>
-      </span>
-      <p className={styles.hint}>
-        選ぶと構成アイテムが下に反映されます。反映後は自由に変更できます。
-      </p>
+      <span className={styles.label}>スタイリングから選ぶ</span>
       <div className={styles.list}>
         {stylings.map((styling) => (
           <button

@@ -4,10 +4,11 @@
   gap: var(--space-2);
 }
 
+/* 共通UI（TextField 等）のラベルと同じ色に揃える */
 .label {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
 }
 
 .optional {

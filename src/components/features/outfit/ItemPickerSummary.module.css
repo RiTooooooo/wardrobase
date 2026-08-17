@@ -1,0 +1,68 @@
+/*
+ * 選択中のサマリー。
+ * 一覧はカテゴリ区切りや絞り込みで流れていくため、選んだものはここで常に見せる。
+ */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+}
+
+/* 共通UI（TextField 等）のラベルと同じ色に揃える */
+.summaryLabel {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.summaryHint {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* 点数が増えたら横スクロールで受ける。縦に伸ばすとサマリーの意味がない */
+.summaryRow {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+}
+
+.summaryItem {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  cursor: pointer;
+  padding: 0;
+}
+
+.summaryItem:hover:not(:disabled) {
+  border-color: var(--color-error);
+}
+
+.summaryImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.summaryPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  text-align: center;
+  overflow: hidden;
+}
