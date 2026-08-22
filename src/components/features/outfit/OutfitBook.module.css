@@ -1,11 +1,93 @@
-/* ===== 日付検索 ===== */
+/* ===== 見出し行（タイトル・日付検索・記録ボタン） ===== */
 
-/* 本の上に置く検索行。目立たせず右へ寄せる */
-.search {
+.header {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.titleArea {
+  display: flex;
+  align-items: baseline;
   gap: var(--space-3);
+}
+
+/* 英語の大見出し＋日本語の補足という構成 */
+.title {
+  font-size: var(--text-5xl);
+  font-weight: var(--font-bold);
+  letter-spacing: -0.01em;
+}
+
+/* 件数の数字だけ大きく青くして、リズムを付ける */
+.countNumber {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-accent);
+}
+
+.count {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
+  color: #fff;
+  background: var(--color-accent);
+  /* developer.apple.com のボタンと同じカプセル形 */
+  border-radius: var(--radius-full);
+  transition:
+    background var(--duration-fast) var(--easing),
+    transform var(--duration-slow) var(--easing-out),
+    box-shadow var(--duration-slow) var(--easing-out);
+}
+
+/* ホバーでふわっと浮き、押した瞬間に沈む（Button コンポーネントと同じ動き） */
+.addButton:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift-sm);
+}
+
+.addButton:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.empty {
+  padding: var(--space-12);
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  text-align: center;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+}
+
+.emptyLink {
+  margin-left: var(--space-2);
+  color: var(--color-accent);
+}
+
+.emptyLink:hover {
+  text-decoration: underline;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.search {
+  position: relative;
 }
 
 .searchLabel {
@@ -32,9 +114,15 @@
   border-color: var(--color-accent);
 }
 
+/* 見出し行の高さを動かさないよう、入力欄の下に浮かせて出す */
 .searchEmpty {
-  font-size: var(--text-sm);
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
   color: var(--color-text-tertiary);
+  white-space: nowrap;
 }
 
 /*
@@ -78,6 +166,12 @@
 .pageSide {
   position: relative;
   min-height: 460px;
+  /*
+   * グリッドアイテムの min-width は既定で auto のため、中身（ポラロイドの列や
+   * 折り返さないメモ）の最小幅に引っ張られて列が 1fr を超え、本からはみ出す。
+   * 0 にして列幅を守り、あふれる文はカード側の省略に任せる。
+   */
+  min-width: 0;
   background: var(--color-bg-elevated);
 }
 
@@ -195,8 +289,8 @@
 
 /*
  * めくれかけの角（ドッグイア）。
- * ページの隅が三角に折れて下の紙が覗いている見た目のボタン。
- * 指すと折り目が育って「ここからめくれる」ことを伝える。
+ * 塗りではなく、折り返った紙の面と折り目の線だけで描く。
+ * 指すと折り目が少し育って「ここからめくれる」ことを伝える。
  */
 .curl {
   position: absolute;
@@ -205,57 +299,76 @@
   height: 44px;
   padding: 0;
   border: none;
+  background: transparent;
   cursor: pointer;
   overflow: hidden;
   z-index: 4;
-}
-
-.curl::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  transition: transform var(--duration-normal) var(--easing-out);
 }
 
 .curl:disabled {
   display: none;
 }
 
-.curlRight {
-  right: 0;
-  border-bottom-right-radius: var(--radius-sm);
+/* 折り返った紙。裏面はわずかに沈んだ白 */
+.curl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-base);
+  transition: transform var(--duration-normal) var(--easing-out);
 }
 
-/* 折り返った紙。対角のグラデーションで折り目と裏写りを描く */
+/* 折り目。1本の線で示す */
+.curl::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -22%;
+  width: 144%;
+  border-top: 1px solid var(--color-border-strong);
+  transition: transform var(--duration-normal) var(--easing-out);
+}
+
+.curlRight {
+  right: 0;
+}
+
+/* 右下の角。折り目は左下→右上に走り、その上側が折り返った紙 */
 .curlRight::before {
-  background: linear-gradient(
-    315deg,
-    var(--color-bg-base) 47%,
-    var(--color-bg-surface) 50%,
-    var(--color-bg-overlay) 68%,
-    var(--color-border-strong) 100%
-  );
+  clip-path: polygon(0 0, 100% 0, 0 100%);
   transform-origin: bottom right;
+}
+
+.curlRight::after {
+  transform: rotate(-45deg);
+  transform-origin: center;
 }
 
 .curlLeft {
   left: 0;
-  border-bottom-left-radius: var(--radius-sm);
 }
 
+/* 左下の角。折り目は左上→右下に走り、その上側が折り返った紙 */
 .curlLeft::before {
-  background: linear-gradient(
-    45deg,
-    var(--color-bg-base) 47%,
-    var(--color-bg-surface) 50%,
-    var(--color-bg-overlay) 68%,
-    var(--color-border-strong) 100%
-  );
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
   transform-origin: bottom left;
 }
 
+.curlLeft::after {
+  transform: rotate(45deg);
+  transform-origin: center;
+}
+
 .curl:hover::before {
-  transform: scale(1.35);
+  transform: scale(1.25);
+}
+
+.curlRight:hover::after {
+  transform: rotate(-45deg) scale(1.25);
+}
+
+.curlLeft:hover::after {
+  transform: rotate(45deg) scale(1.25);
 }
 
 .nav {
@@ -395,6 +508,19 @@
   padding: 2px;
 }
 
+/* 畳んだ残りの点数。写真と同じ枠の中に数字だけを置く */
+.cardThumbMore {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-overlay);
+}
+
 .cardBody {
   display: flex;
   flex-direction: column;
@@ -494,9 +620,12 @@
   box-shadow: none;
 }
 
-/* 上下の曲線とページ端の紙の束を避けて、中身を内側へ寄せる */
+/*
+ * 上下の曲線とページ端の紙の束を避けて、中身を内側へ寄せる。
+ * 下端はめくれかけの角（ドッグイア）が乗るぶん、さらに深めに取る。
+ */
 .coverShaped .pageContent {
-  padding: var(--space-8) var(--space-8) var(--space-10);
+  padding: var(--space-8) var(--space-8) calc(var(--space-12) + var(--space-8));
 }
 
 /* めくれかけの角は、下辺の曲線に掛からない位置まで持ち上げる */
@@ -536,7 +665,7 @@
   }
 
   .pageContent {
-    padding: var(--space-4) var(--space-3);
+    padding: var(--space-4) var(--space-3) var(--space-16);
     gap: var(--space-4);
   }
 

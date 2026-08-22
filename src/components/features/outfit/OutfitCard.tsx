@@ -24,6 +24,19 @@ export function OutfitCard({
   );
 }
 
+/*
+ * 4点までは全部並べ、5点以上は3枚+「+N」に畳む。
+ * 写真が横に並びすぎるとメモの幅が潰れてしまうため。
+ */
+const MAX_THUMBS = 3;
+
+function visibleThumbs(items: ThumbItem[]): ThumbItem[] {
+  if (items.length <= MAX_THUMBS + 1) {
+    return items;
+  }
+  return items.slice(0, MAX_THUMBS);
+}
+
 function CardThumbs({
   items,
 }: {
@@ -31,9 +44,12 @@ function CardThumbs({
 }): ReactElement | null {
   if (items.length === 0) return null;
 
+  const shown = visibleThumbs(items);
+  const rest = items.length - shown.length;
+
   return (
     <div className={styles.cardThumbs}>
-      {items.map((item, index) => (
+      {shown.map((item, index) => (
         <div key={index} className={styles.cardThumb}>
           {item.imageUrl ? (
             <img
@@ -47,6 +63,11 @@ function CardThumbs({
           )}
         </div>
       ))}
+      {rest > 0 ? (
+        <div className={styles.cardThumb}>
+          <span className={styles.cardThumbMore}>+{rest}</span>
+        </div>
+      ) : null}
     </div>
   );
 }

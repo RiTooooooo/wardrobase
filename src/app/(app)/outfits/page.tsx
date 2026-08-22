@@ -1,7 +1,6 @@
 import type { ReactElement } from "react";
 
 import { headers } from "next/headers";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { OutfitBook } from "@/components/features/outfit/OutfitBook";
@@ -84,33 +83,8 @@ export default async function OutfitListPage(): Promise<ReactElement> {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.titleArea}>
-          <h1 className={styles.title}>Outfits</h1>
-          <span className={styles.count}>
-            <span className={styles.countNumber}>{entries.length}</span> records
-          </span>
-        </div>
-        <Link className={styles.addButton} href="/outfits/new">
-          コーデを記録
-        </Link>
-      </header>
-      {groups.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <OutfitBook groups={groups} />
-      )}
+      <OutfitBook groups={groups} totalCount={entries.length} />
     </div>
   );
 }
 
-function EmptyState(): ReactElement {
-  return (
-    <p className={styles.empty}>
-      コーデ記録がまだありません。
-      <Link className={styles.emptyLink} href="/outfits/new">
-        最初のコーデを記録する
-      </Link>
-    </p>
-  );
-}
