@@ -1,8 +1,8 @@
 /*
  * Wardrobase デザイントークン
  *
- * UIコンセプト (wardrobase-ui-concept.png) から抽出。
- * ダーク基調・メンズ寄りのミニマルデザイン。
+ * 青×白のライト基調。
+ * 白地に大きな余白・明るいブルーのアクセント・濃紺のテキストで構成する。
  *
  * 色・余白・フォントサイズをハードコードせず、
  * すべてここで定義した変数を参照すること（conventions.md §8）。
@@ -11,59 +11,55 @@
 :root {
   /* ===== カラー: 背景 ===== */
   /*
-   * developer.apple.com（ダーク）に合わせた黒基調。
-   * 地は純黒、面はそこから #161617 → #1d1d20 → #2a2a2d と持ち上げる。
+   * 地はごく薄いブルーグレー、面（カード・パネル）は白。
+   * ダーク時代の「持ち上げるほど明るく」と逆で、白い面を
+   * 薄い地の上に置いて浮かせる。overlay はホバーや下層面に使う
+   * 一段沈んだブルーグレー。
    */
-  --color-bg-base: #000000;
-  --color-bg-elevated: #161617;
-  --color-bg-surface: #1d1d20;
-  --color-bg-overlay: #2a2a2d;
-  /* 固定ヘッダー用。Apple のグローバルナビと同じ半透明（HIG: Materials） */
-  --color-bg-chrome: rgba(22, 22, 23, 0.8);
+  --color-bg-base: #f5f6f8;
+  --color-bg-elevated: #ffffff;
+  --color-bg-surface: #ffffff;
+  --color-bg-overlay: #eef1f6;
+  /* 固定ヘッダー用の半透明白（HIG: Materials） */
+  --color-bg-chrome: rgba(255, 255, 255, 0.82);
 
-  /* ===== カラー: アクセント（Apple のボタンブルー） ===== */
-  /* developer.apple.com のボタン・選択中ピルと同じ #0071e3。 */
-  --color-accent: #0071e3;
-  --color-accent-hover: #0077ed;
+  /* ===== カラー: アクセント（明るいブルー） ===== */
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
   /*
    * 選択中の淡い塗り。RGBを書き写すと accent を変えるたびに手で揃える必要があり、
    * 忘れると枠線と塗りで色が食い違う。accent から導出して自動で追従させる。
    */
-  --color-accent-muted: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  --color-accent-muted: color-mix(in srgb, var(--color-accent) 10%, transparent);
 
   /* ===== カラー: テキスト ===== */
-  /* developer.apple.com の本文色 */
-  --color-text-primary: #f5f5f7;
-  --color-text-secondary: #888888;
-  /*
-   * #555 では最も明るい背景（bg-surface）上で 2.3:1 しかなく、
-   * WCAG AA の 4.5:1 に届かなかった。どの背景でも満たす値に引き上げている。
-   */
-  --color-text-tertiary: #848484;
-  --color-text-inverse: #0c0d0e;
+  /* 真っ黒ではなく濃紺寄りに寄せる */
+  --color-text-primary: #1a2333;
+  --color-text-secondary: #5a6472;
+  /* 最も薄い文字。白地で WCAG AA (4.5:1) を満たす値 */
+  --color-text-tertiary: #6b7280;
+  --color-text-inverse: #ffffff;
 
   /* ===== カラー: ボーダー ===== */
-  --color-border: #2a2b2d;
-  --color-border-strong: #3a3b3d;
+  --color-border: #e4e7ec;
+  --color-border-strong: #cdd3dc;
   /*
-   * 黒地で輪郭をはっきり見せる白い枠。本文色の白を薄く敷く。
+   * 白地で輪郭をはっきり見せる枠。本文の濃紺を薄く敷く。
    * 入力欄・リストカードなど「パキッと」見せたい輪郭はこれで統一する。
    */
-  --color-border-bright: rgba(245, 245, 247, 0.5);
+  --color-border-bright: rgba(26, 35, 51, 0.35);
   /* 入力欄（テキストボックス・プルダウン）の枠。フォーカス時は accent（青） */
-  --color-border-input: var(--color-border-bright);
+  --color-border-input: var(--color-border-strong);
 
   /* ===== カラー: 入力欄 ===== */
-  /*
-   * developer.apple.com の検索欄と同じ、地の黒のままの背景。
-   * 面の色（bg-surface）で持ち上げず、白い枠だけで輪郭を作る。
-   */
-  --color-bg-input: #000000;
+  /* 白い面の上でも沈まないよう、入力欄は常に白 */
+  --color-bg-input: #ffffff;
 
   /* ===== カラー: セマンティック ===== */
-  --color-error: #e05555;
-  --color-success: #4caf7c;
-  --color-warning: #d4a843;
+  /* 白地でコントラストが取れる濃さに調整 */
+  --color-error: #d92d20;
+  --color-success: #16794c;
+  --color-warning: #a15c07;
 
   /* ===== タイポグラフィ: フォント ===== */
   /* Geist は欧文のみ。日本語は次の Noto Sans JP に落ちる */
@@ -82,8 +78,8 @@
   /* ===== タイポグラフィ: ウェイト ===== */
   --font-normal: 400;
   --font-medium: 500;
-  /* 見出しの最大ウェイト。Apple 同様 Bold(700) ではなく Semibold(600) に留める */
-  --font-bold: 600;
+  /* 見出しは太く大きく。Bold(700) まで使う */
+  --font-bold: 700;
 
   /* ===== タイポグラフィ: 行間 ===== */
   --leading-tight: 1.25;
@@ -111,9 +107,10 @@
   --radius-full: 9999px;
 
   /* ===== シャドウ ===== */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.5);
+  /* 黒ではなく紺色を薄く落とし、白地で濁らないようにする */
+  --shadow-sm: 0 1px 2px rgba(16, 42, 90, 0.06);
+  --shadow-md: 0 2px 8px rgba(16, 42, 90, 0.08);
+  --shadow-lg: 0 8px 24px rgba(16, 42, 90, 0.12);
 
   /* ===== トランジション ===== */
   --duration-fast: 100ms;

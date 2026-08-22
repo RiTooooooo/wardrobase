@@ -7,6 +7,11 @@
  * 濃さはこの1箇所で調整できる。
  */
 .canvas {
+  /*
+   * カーペットを沈める色。テーマの背景色（ライト化で白になった）とは
+   * 無関係に、ブラックは常に暗く・ホワイトは常に白く沈める。
+   */
+  --carpet-tint: #17191d;
   --carpet-shade: 58%;
   --carpet-vignette: 45%;
   --carpet-image: url("/textures/carpet.jpg");
@@ -24,19 +29,19 @@
   margin: 0 var(--space-4) var(--space-4) 0;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  background-color: var(--color-bg-base);
+  background-color: var(--carpet-tint);
   background-image:
     /* 周辺を落として、中央に置いたアイテムへ視線を集める */
     radial-gradient(
       ellipse at 50% 45%,
       transparent 40%,
-      color-mix(in srgb, var(--color-bg-base) var(--carpet-vignette), transparent)
+      color-mix(in srgb, var(--carpet-tint) var(--carpet-vignette), transparent)
         100%
     ),
     /* 全体を暗く沈める層 */
     linear-gradient(
-      color-mix(in srgb, var(--color-bg-base) var(--carpet-shade), transparent),
-      color-mix(in srgb, var(--color-bg-base) var(--carpet-shade), transparent)
+      color-mix(in srgb, var(--carpet-tint) var(--carpet-shade), transparent),
+      color-mix(in srgb, var(--carpet-tint) var(--carpet-shade), transparent)
     ),
     var(--carpet-image);
   background-size: cover;
@@ -50,13 +55,14 @@
  * ホワイトは白さを見せるのが目的なので薄くする。
  */
 .canvasWhite {
+  --carpet-tint: #ffffff;
   --carpet-shade: 14%;
   /* 白地では周辺減光が「汚れ」に見えるため、気配だけ残す */
   --carpet-vignette: 18%;
   --carpet-image: url("/textures/carpet-white.jpg");
 }
 
-/* 白地の上では、暗い部屋向けの薄文字が読めないため文字色を落とす */
+/* 白いカーペットの上では、暗色向けの白文字が読めないため文字色を落とす */
 .canvasWhite .hint {
   color: rgba(0, 0, 0, 0.55);
 }
@@ -66,7 +72,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--color-text-secondary);
+  /* 暗いカーペットに直接載る文字。テーマの文字色（濃紺）では読めない */
+  color: rgba(255, 255, 255, 0.75);
   font-size: var(--text-sm);
   text-align: center;
   pointer-events: none;
