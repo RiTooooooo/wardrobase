@@ -52,7 +52,8 @@
 
 .line {
   stroke: var(--color-accent);
-  stroke-width: 1.2;
+  /* 白地では 1.2 だと存在感が薄い。家具の輪郭として立つ太さにする */
+  stroke-width: 2;
   stroke-linejoin: round;
   stroke-linecap: round;
   /* pathLength="1" により、線の実長に関係なく描画速度が揃う */

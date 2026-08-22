@@ -25,9 +25,3 @@
   color: var(--color-accent);
 }
 
-.tagline {
-  margin-top: calc(var(--space-4) * -1);
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  text-align: center;
-}
