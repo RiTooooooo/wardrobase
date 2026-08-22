@@ -4,7 +4,7 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   /*
-   * developer.apple.com のグローバルナビと同じ、白の細い区切り線。
+   * developer.apple.com のグローバルナビと同じ、細い区切り線。
    * 日付見出しの下線と同じ濃さで「薄い区切り」の語彙を揃える。
    */
   border-bottom: 1px solid

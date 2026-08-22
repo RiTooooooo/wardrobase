@@ -32,8 +32,8 @@
 }
 
 .title {
-  /* 他ページの見出しと歩調を合わせる。作業画面なので一段だけ控えめ */
-  font-size: var(--text-3xl);
+  /* 作業・詳細画面の見出しは一覧の大見出しより控えめにする */
+  font-size: var(--text-lg);
   font-weight: var(--font-bold);
   letter-spacing: -0.01em;
 }
