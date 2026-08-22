@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { WardrobeGrid } from "@/components/features/wardrobe/WardrobeGrid";
+import { WardrobeCloset } from "@/components/features/wardrobe/WardrobeCloset";
 import type { WardrobeItem } from "@/components/features/wardrobe/wardrobeTypes";
 import { findItemsByUser } from "@/infrastructure/prisma/itemRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
@@ -43,8 +43,10 @@ export default async function WardrobePage(): Promise<ReactElement> {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.titleArea}>
-          <h1 className={styles.title}>ワードローブ</h1>
-          <span className={styles.count}>{items.length} items</span>
+          <h1 className={styles.title}>Wardrobe</h1>
+          <span className={styles.count}>
+            <span className={styles.countNumber}>{items.length}</span> items
+          </span>
         </div>
         <Link className={styles.addButton} href="/items/new">
           アイテムを追加
@@ -58,7 +60,7 @@ export default async function WardrobePage(): Promise<ReactElement> {
           </Link>
         </p>
       ) : (
-        <WardrobeGrid items={wardrobeItems} />
+        <WardrobeCloset items={wardrobeItems} />
       )}
     </div>
   );

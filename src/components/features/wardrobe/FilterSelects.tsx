@@ -2,7 +2,6 @@
 
 import type { ReactElement } from "react";
 
-import { CATEGORIES, CATEGORY_LABELS } from "@/domain/item/category";
 import { SEASON_LABELS, SEASONS } from "@/domain/item/season";
 
 import styles from "./FilterSelects.module.css";
@@ -19,9 +18,7 @@ import styles from "./FilterSelects.module.css";
  */
 
 type Props = {
-  category: string | null;
   season: string | null;
-  onCategoryChange: (value: string | null) => void;
   onSeasonChange: (value: string | null) => void;
 };
 
@@ -37,28 +34,11 @@ function fromValue(value: string): string | null {
 }
 
 export function FilterSelects({
-  category,
   season,
-  onCategoryChange,
   onSeasonChange,
 }: Props): ReactElement {
   return (
     <div className={styles.selects}>
-      <label className={styles.field}>
-        <span className={styles.label}>カテゴリ</span>
-        <select
-          className={styles.select}
-          value={toValue(category)}
-          onChange={(e) => onCategoryChange(fromValue(e.target.value))}
-        >
-          <option value={ALL}>すべて</option>
-          {CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>
-              {CATEGORY_LABELS[cat]}
-            </option>
-          ))}
-        </select>
-      </label>
       <label className={styles.field}>
         <span className={styles.label}>季節</span>
         <select

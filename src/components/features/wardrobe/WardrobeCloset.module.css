@@ -1,0 +1,256 @@
+/*
+ * 白い塗りの家具として組む。
+ * 青は取っ手と「開いている段」だけに使い、面としては出しゃばらせない。
+ * 開けた引き出しの前板だけが青く塗られ、今どこを見ているかを示す。
+ */
+.closet {
+  /* 段の区切り。白い塗りの上の薄い影 */
+  --seam: var(--color-border);
+
+  display: flex;
+  flex-direction: column;
+  /*
+   * ページの残り高さちょうどの箱になる（flex: 1 は basis 0 なので、
+   * 中身の高さに引きずられず割り当て分に収まる）。
+   * 中身が収まらないときは、箱の中（carcass）がスクロールする。
+   * これで台輪（足元）はスクロール位置に関係なく常に見えている。
+   */
+  flex: 1;
+  min-height: 0;
+  animation: riseIn var(--duration-slower) var(--easing-out) 220ms backwards;
+}
+
+/* 天板。本体よりわずかに広く張り出させる。取っ手と同じ青で揃える */
+.cornice {
+  height: 12px;
+  margin: 0 calc(var(--space-1) * -1);
+  background: var(--color-accent);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+/* 台輪。天板と対にして家具の足元を締める。こちらも取っ手と同じ青 */
+.plinth {
+  height: 14px;
+  margin: 0 calc(var(--space-1) * -1);
+  background: var(--color-accent);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.carcass {
+  display: flex;
+  flex-direction: column;
+  /*
+   * クローゼット（.closet）が引き受けた高さを箱いっぱいに使う。
+   * 全部閉じていても背の低い棚にならず、引き出しが余りを分け合って伸びる。
+   * 中身が高さを超えるときは箱の中でスクロールする。
+   */
+  flex: 1;
+  min-height: 0;
+  background: var(--color-bg-elevated);
+  /* 左右の側板。天板・台輪と同じ青で家具の箱を閉じる */
+  border-left: 10px solid var(--color-accent);
+  border-right: 10px solid var(--color-accent);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.drawer {
+  display: flex;
+  flex-direction: column;
+  /* 余った高さは引き出し同士で等分する */
+  flex: 1;
+  border-bottom: 1px solid var(--seam);
+}
+
+.drawer:last-child {
+  border-bottom: none;
+}
+
+/* 引き出しの前板。引き出しが伸びたぶん前板も一緒に伸びる */
+.front {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  flex: 1;
+  min-height: 56px;
+  padding: var(--space-2) var(--space-5);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--easing),
+    color var(--duration-fast) var(--easing);
+}
+
+.front:hover {
+  background: var(--color-bg-overlay);
+}
+
+/*
+ * 取っ手。実際の引き出しと同じく前板の中央に置く。
+ * 左端に寄せるとアイコンに見えてしまい、家具としての見立てが弱まる。
+ * ラベルは最長4文字なので、中央でもラベル・点数と重ならない。
+ */
+.pull {
+  position: absolute;
+  left: 50%;
+  width: 40px;
+  height: 8px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  transform: translateX(-50%);
+  transition:
+    background var(--duration-slow) var(--easing),
+    transform var(--duration-slow) var(--easing);
+}
+
+.label {
+  flex: 1;
+  text-align: left;
+  font-weight: var(--font-medium);
+}
+
+.count {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 開いている段は文字を立て、取っ手を少し大きくして開口部を示す */
+.drawerOpen .front {
+  color: var(--color-text-primary);
+}
+
+.drawerOpen .pull {
+  transform: translateX(-50%) scale(1.15);
+}
+
+/*
+ * 0fr → 1fr のグリッド行で開閉する。
+ * max-height に決め打ちの数値を置かずに済み、中身が何段になっても破綻しない。
+ */
+.interior {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-slow) var(--easing);
+}
+
+.interiorInner {
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+}
+
+.drawerOpen .interior {
+  grid-template-rows: 1fr;
+}
+
+/*
+ * 「すべて」の段。服を横一列に並べ、引き出しの中を横に滑らせて眺める。
+ * スクロールバーは中身の下端に馴染む細さにする。
+ */
+.strip {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  scrollbar-width: thin;
+}
+
+.stripItem {
+  width: 170px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* タイルはカードと同じ縦横比になるよう、中身側で高さを持っている */
+.stripItem > * {
+  flex: 1;
+}
+
+/* 引き出しの中身。服が仕切りに沿って並ぶ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+/*
+ * 末尾の追加タイル。クローゼットの線画と同じく、
+ * 塗らずに線だけで「まだ入る余地がある」ことを示す。
+ * アイテムが無い引き出しでは唯一の中身になり、空状態の案内を兼ねる。
+ *
+ * 高さはカードと同じ構成（正方形の画像 + 情報欄）を ::before の
+ * padding-top で自前に作る（詳細は git 履歴の WardrobeGrid.module.css 参照）。
+ */
+.addTile {
+  position: relative;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  text-align: center;
+  border: 1px dashed color-mix(in srgb, var(--color-accent) 45%, transparent);
+  border-radius: var(--radius-xl);
+  transition:
+    color var(--duration-normal) var(--easing),
+    border-color var(--duration-normal) var(--easing),
+    background var(--duration-normal) var(--easing);
+}
+
+.addTile::before {
+  content: "";
+  display: block;
+  padding-top: calc(100% + 67px);
+}
+
+/* 高さは ::before が作るので、文字は全面に重ねて中央へ置く */
+.addTileLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.addTile:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-accent);
+  border-style: solid;
+  background: var(--color-bg-surface);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .front {
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4) var(--space-4);
+  }
+}
+
+/* CSS Modules は animation-name をスコープ化するため、使う側で定義する */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

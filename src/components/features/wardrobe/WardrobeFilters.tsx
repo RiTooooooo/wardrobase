@@ -2,7 +2,6 @@
 
 import type { CSSProperties, ReactElement } from "react";
 
-import { CATEGORIES, CATEGORY_LABELS } from "@/domain/item/category";
 import { SEASON_LABELS, SEASONS } from "@/domain/item/season";
 
 import { FilterSelects } from "./FilterSelects";
@@ -14,8 +13,8 @@ type Props = {
   onChange: (filters: Filters) => void;
 };
 
-/* 季節チップはカテゴリチップ（「すべて」+ 6件）の後に続く */
-const SEASON_STEP_OFFSET = CATEGORIES.length + 1;
+/* カテゴリは引き出し（WardrobeCloset）が担うため、チップは季節だけ */
+const SEASON_STEP_OFFSET = 0;
 const SEARCH_STEP = SEASON_STEP_OFFSET + SEASONS.length;
 
 function chipClass(isActive: boolean): string {
@@ -31,10 +30,6 @@ export function WardrobeFilters({
   filters,
   onChange,
 }: Props): ReactElement {
-  function setCategory(value: string | null): void {
-    onChange({ ...filters, category: value });
-  }
-
   function setSeason(value: string | null): void {
     onChange({ ...filters, season: value });
   }
@@ -43,17 +38,9 @@ export function WardrobeFilters({
     <div className={styles.wrapper}>
       {/* 狭い画面ではチップの代わりにプルダウンを出す（CSSで出し分ける） */}
       <FilterSelects
-        category={filters.category}
         season={filters.season}
-        onCategoryChange={setCategory}
         onSeasonChange={setSeason}
       />
-      <div className={`${styles.row} ${styles.chipRow}`}>
-        <CategoryChips
-          selected={filters.category}
-          onSelect={setCategory}
-        />
-      </div>
       <div className={styles.row}>
         <div className={styles.chipRow}>
           <SeasonChips
@@ -74,38 +61,6 @@ export function WardrobeFilters({
           onChange={(sort) => onChange({ ...filters, sort })}
         />
       </div>
-    </div>
-  );
-}
-
-function CategoryChips({
-  selected,
-  onSelect,
-}: {
-  selected: string | null;
-  onSelect: (v: string | null) => void;
-}): ReactElement {
-  return (
-    <div className={styles.chips}>
-      <button
-        type="button"
-        className={chipClass(selected === null)}
-        style={step(0)}
-        onClick={() => onSelect(null)}
-      >
-        すべて
-      </button>
-      {CATEGORIES.map((cat, i) => (
-        <button
-          key={cat}
-          type="button"
-          className={chipClass(selected === cat)}
-          style={step(i + 1)}
-          onClick={() => onSelect(selected === cat ? null : cat)}
-        >
-          {CATEGORY_LABELS[cat]}
-        </button>
-      ))}
     </div>
   );
 }
