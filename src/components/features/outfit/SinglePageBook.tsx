@@ -1,0 +1,100 @@
+"use client";
+
+import { useState } from "react";
+import type { ReactElement } from "react";
+
+import { BookNav } from "./BookNav";
+import { BookPage } from "./BookPage";
+import { chunkPages } from "./bookPaging";
+import type { Flip } from "./bookPaging";
+import type { DateGroup } from "./lookbookTypes";
+import styles from "./OutfitBook.module.css";
+import { sheetClassName } from "./SpreadBook";
+
+/*
+ * 狭い画面用の1ページ表示の本。
+ *
+ * 見開きにすると1ページの幅が足りないため、1画面に1ページだけを出す。
+ * めくりは見開き版と同じシート方式で、ページ全幅の紙が
+ * 綴じ（左端）を軸に返る。紙の裏は実物と同じく白紙にする。
+ */
+
+/* いま見えているページ。めくり中は「めくり終わり側」を下敷きにする */
+function visiblePage(
+  pages: DateGroup[][],
+  current: number,
+  flip: Flip | null,
+): DateGroup[] {
+  if (flip === null) {
+    return pages[current];
+  }
+  return pages[flip.base + 1];
+}
+
+export function SinglePageBook({
+  groups,
+}: {
+  groups: DateGroup[];
+}): ReactElement {
+  const [current, setCurrent] = useState(0);
+  const [flip, setFlip] = useState<Flip | null>(null);
+  const pages = chunkPages(groups);
+
+  const canPrev = flip === null && current > 0;
+  const canNext = flip === null && current < pages.length - 1;
+
+  function finishFlip(): void {
+    if (flip === null) return;
+    setCurrent(flip.dir === "next" ? flip.base + 1 : flip.base);
+    setFlip(null);
+  }
+
+  return (
+    <div className={styles.book}>
+      <div className={styles.cover}>
+        <div className={`${styles.spread} ${styles.spreadSingle}`}>
+          <div className={`${styles.pageSide} ${styles.pageRight}`}>
+            <BookPage groups={visiblePage(pages, current, flip)} />
+            <button
+              type="button"
+              className={`${styles.curl} ${styles.curlLeft}`}
+              aria-label="前のページへ戻る"
+              disabled={!canPrev}
+              onClick={() => setFlip({ base: current - 1, dir: "prev" })}
+            />
+            <button
+              type="button"
+              className={`${styles.curl} ${styles.curlRight}`}
+              aria-label="次のページをめくる"
+              disabled={!canNext}
+              onClick={() => setFlip({ base: current, dir: "next" })}
+            />
+          </div>
+          {flip !== null ? (
+            <div
+              className={`${sheetClassName(flip.dir)} ${styles.sheetFull}`}
+              onAnimationEnd={finishFlip}
+              aria-hidden="true"
+            >
+              <div className={styles.sheetFront}>
+                <BookPage groups={pages[flip.base]} />
+              </div>
+              {/* 紙の裏。実物の紙と同じく白紙 */}
+              <div className={styles.sheetBack}>
+                <BookPage groups={[]} />
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </div>
+      <BookNav
+        current={current}
+        total={pages.length}
+        canPrev={canPrev}
+        canNext={canNext}
+        onPrev={() => setFlip({ base: current - 1, dir: "prev" })}
+        onNext={() => setFlip({ base: current, dir: "next" })}
+      />
+    </div>
+  );
+}

@@ -1,0 +1,530 @@
+/*
+ * 1冊のルックブック。
+ * 紺の表紙の上に紙のページが乗り、右下に重なった紙の端が覗く。
+ * めくりは背表紙（左端）を支点にした回転で表現する。
+ */
+.book {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: riseIn var(--duration-slower) var(--easing-out) 140ms backwards;
+}
+
+/* 表紙。アクセントの鮮やかなブルー */
+.cover {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-accent) 88%, #ffffff),
+    var(--color-accent)
+  );
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+/* 見開き。中央の背を挟んで左右2ページ */
+.spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* めくりの回転に奥行きを付ける */
+  perspective: 2400px;
+}
+
+/* 狭い画面用。1ページだけを全幅で見せる */
+.spreadSingle {
+  grid-template-columns: 1fr;
+}
+
+.pageSide {
+  position: relative;
+  min-height: 460px;
+  background: var(--color-bg-elevated);
+}
+
+/*
+ * 背（中央の綴じ）に向かって紙が沈む影。
+ * 左右のページで影の向きを変え、1枚の紙が谷折りになって見えるようにする。
+ */
+.pageLeft {
+  border-radius: var(--radius-sm) 2px 2px var(--radius-sm);
+  background:
+    linear-gradient(to left, rgba(16, 42, 90, 0.12), transparent 56px),
+    var(--color-bg-elevated);
+  /* 下に重なっている残りのページの端（左側の束） */
+  box-shadow:
+    -3px 3px 0 -1px var(--color-bg-elevated),
+    -3px 3px 0 var(--color-border),
+    -6px 6px 0 -1px var(--color-bg-elevated),
+    -6px 6px 0 var(--color-border);
+}
+
+.pageRight {
+  border-radius: 2px var(--radius-sm) var(--radius-sm) 2px;
+  background:
+    linear-gradient(to right, rgba(16, 42, 90, 0.12), transparent 56px),
+    var(--color-bg-elevated);
+  /* 右側の束 */
+  box-shadow:
+    3px 3px 0 -1px var(--color-bg-elevated),
+    3px 3px 0 var(--color-border),
+    6px 6px 0 -1px var(--color-bg-elevated),
+    6px 6px 0 var(--color-border);
+}
+
+.pageContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  height: 100%;
+  padding: var(--space-6) var(--space-5);
+}
+
+/*
+ * めくれる1枚。右半分に重なり、背（左辺）を軸に回転する。
+ * 表は今の右ページ、裏は次の左ページ。
+ */
+.sheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  z-index: 5;
+}
+
+/* 1ページ表示ではシートがページ全幅になり、綴じ（左端）を軸に返る */
+.sheetFull {
+  left: 0;
+}
+
+.sheetTurnNext {
+  animation: flipNext 700ms var(--easing) both;
+}
+
+.sheetTurnPrev {
+  animation: flipPrev 700ms var(--easing) both;
+}
+
+@keyframes flipNext {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(-180deg);
+  }
+}
+
+@keyframes flipPrev {
+  from {
+    transform: rotateY(-180deg);
+  }
+
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+.sheetFront,
+.sheetBack {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 綴じ側（左辺）に紙面と同じ線 */
+.sheetFront {
+  background: var(--color-bg-elevated);
+  border-left: 1px solid var(--color-border-strong);
+}
+
+/*
+ * 裏面。180度回した状態で置き、シートの回転で表に出てくる。
+ * 綴じ側は反転の都合で要素の右辺になる。
+ */
+.sheetBack {
+  transform: rotateY(180deg);
+  background: var(--color-bg-elevated);
+  border-right: 1px solid var(--color-border-strong);
+}
+
+/*
+ * めくれかけの角（ドッグイア）。
+ * ページの隅が三角に折れて下の紙が覗いている見た目のボタン。
+ * 指すと折り目が育って「ここからめくれる」ことを伝える。
+ */
+.curl {
+  position: absolute;
+  bottom: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.curl::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transition: transform var(--duration-normal) var(--easing-out);
+}
+
+.curl:disabled {
+  display: none;
+}
+
+.curlRight {
+  right: 0;
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+/* 折り返った紙。対角のグラデーションで折り目と裏写りを描く */
+.curlRight::before {
+  background: linear-gradient(
+    315deg,
+    var(--color-bg-base) 47%,
+    var(--color-bg-surface) 50%,
+    var(--color-bg-overlay) 68%,
+    var(--color-border-strong) 100%
+  );
+  transform-origin: bottom right;
+}
+
+.curlLeft {
+  left: 0;
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.curlLeft::before {
+  background: linear-gradient(
+    45deg,
+    var(--color-bg-base) 47%,
+    var(--color-bg-surface) 50%,
+    var(--color-bg-overlay) 68%,
+    var(--color-border-strong) 100%
+  );
+  transform-origin: bottom left;
+}
+
+.curl:hover::before {
+  transform: scale(1.35);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.navButton {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition:
+    color var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing);
+}
+
+.navButton:hover:not(:disabled) {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+
+.navButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ノンブル。組版らしく数字の幅を揃える */
+.pageNumber {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.dateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation: riseIn var(--duration-slower) var(--easing-out)
+    calc(140ms + min(var(--index, 0), 8) * 90ms) backwards;
+}
+
+/* 日付はアルバムの章見出し。少し字間を空けてキャプションらしくする */
+.dateLabel {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-text-primary) 20%, transparent);
+}
+
+/*
+ * カードはルックブックの台紙。ページの上に、その日の服の
+ * ポラロイド写真が貼られているように見せる。
+ */
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--duration-slow) var(--easing-out),
+    box-shadow var(--duration-slow) var(--easing-out),
+    border-color var(--duration-normal) var(--easing);
+}
+
+/* 入力欄のフォーカスと同じく、指した先は青で示す */
+.card:hover,
+.card:focus-visible {
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
+.cardThumbs {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/*
+ * ポラロイド写真。白フチと厚い「あご」を持たせ、1枚ずつ傾けて
+ * アルバムに手貼りした感じにする。台紙（カード）を指すと
+ * 写真がまっすぐに起き上がり、見られていることに応える。
+ */
+.cardThumb {
+  --photo-tilt: -2deg;
+
+  width: 64px;
+  padding: 3px 3px 12px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  box-shadow: var(--shadow-sm);
+  transform: rotate(var(--photo-tilt));
+  transition: transform var(--duration-slow) var(--easing-out);
+}
+
+.cardThumb:nth-child(2n) {
+  --photo-tilt: 1.6deg;
+}
+
+.cardThumb:nth-child(3n) {
+  --photo-tilt: -0.7deg;
+}
+
+.card:hover .cardThumb,
+.card:focus-visible .cardThumb {
+  transform: rotate(0deg);
+}
+
+.cardThumbImage {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.cardThumbName {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  text-align: center;
+  padding: 2px;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.cardMeta {
+  display: flex;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+}
+
+.cardMemo {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== 開いた本のシルエット（見開き版のみ） ===== */
+
+.silhouetteDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/*
+ * シルエット版の表紙。四角い枠はやめ、切り抜いたレイヤーに任せる。
+ * 上下の曲線ぶん、内側の余白を広めに取る。
+ */
+.coverShaped {
+  position: relative;
+  padding: var(--space-8) var(--space-6) var(--space-10);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 表紙。本のシルエットに切り抜いた青い面 */
+.coverShape {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-accent) 88%, #ffffff),
+    var(--color-accent)
+  );
+  clip-path: url(#book-silhouette);
+  filter: drop-shadow(0 10px 24px rgba(16, 42, 90, 0.18));
+}
+
+/*
+ * 紙面。表紙より一回り小さい同じシルエット。
+ * 中央の綴じ影と、左右の紙の束（細い縦線の繰り返し）も
+ * この面に描く。
+ */
+.paperShape {
+  position: absolute;
+  inset: 10px 14px 16px;
+  background-color: var(--color-bg-elevated);
+  background-image:
+    /* 綴じ目。ぼかさず1本の線で示す */
+    linear-gradient(
+      var(--color-border-strong),
+      var(--color-border-strong)
+    ),
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-text-primary) 12%, transparent) 0 1px,
+      transparent 1px 4px
+    ),
+    repeating-linear-gradient(
+      to left,
+      color-mix(in srgb, var(--color-text-primary) 12%, transparent) 0 1px,
+      transparent 1px 4px
+    );
+  background-size:
+    1px 100%,
+    14px 100%,
+    14px 100%;
+  background-position:
+    center top,
+    left top,
+    right top;
+  background-repeat: no-repeat;
+  clip-path: url(#book-silhouette);
+}
+
+/* ページの面はシルエットのレイヤーが描くので、四角い面装飾は消す */
+.coverShaped .pageSide {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 上下の曲線とページ端の紙の束を避けて、中身を内側へ寄せる */
+.coverShaped .pageContent {
+  padding: var(--space-8) var(--space-8) var(--space-10);
+}
+
+/* めくれかけの角は、下辺の曲線に掛からない位置まで持ち上げる */
+.coverShaped .curlRight {
+  right: 10px;
+  bottom: 26px;
+}
+
+.coverShaped .curlLeft {
+  left: 10px;
+  bottom: 26px;
+}
+
+@media (max-width: 900px) {
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+}
+
+@media (max-width: 600px) {
+  .cover {
+    padding: var(--space-2) var(--space-3) var(--space-3);
+    border-radius: var(--radius-lg);
+    /*
+     * 表紙の丸みからページの角や紙の束の影がはみ出して見えるため、
+     * 狭い画面では表紙の内側で切り取る。
+     */
+    overflow: hidden;
+  }
+
+  .pageSide {
+    min-height: 300px;
+    /* 紙の束の段差は狭い画面では余白が無く、はみ出して崩れて見える */
+    box-shadow: none;
+  }
+
+  .pageContent {
+    padding: var(--space-4) var(--space-3);
+    gap: var(--space-4);
+  }
+
+  /* 狭い画面ではポラロイドを一回り小さく */
+  .cardThumb {
+    width: 44px;
+    padding: 2px 2px 8px;
+  }
+
+  .cardThumbs {
+    gap: var(--space-1);
+  }
+
+  .card {
+    padding: var(--space-3) var(--space-4);
+  }
+}
+
+/* CSS Modules は animation-name をスコープ化するため、使う側で定義する */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

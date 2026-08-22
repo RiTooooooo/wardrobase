@@ -25,7 +25,7 @@ import { GhostOverlay } from "./GhostOverlay";
 import styles from "./StylingBoard.module.css";
 import { useBoardItems } from "./useBoardItems";
 import { useDrag } from "./useDrag";
-import { useIsNarrow } from "./useIsNarrow";
+import { useIsNarrow } from "@/components/hooks/useIsNarrow";
 
 type ActionResult = { ok: true; id: string } | { ok: false; message: string };
 

@@ -23,10 +23,18 @@
   gap: var(--space-3);
 }
 
+/* 英語の大見出し＋日本語の補足という構成 */
 .title {
-  font-size: var(--text-3xl);
+  font-size: var(--text-5xl);
   font-weight: var(--font-bold);
   letter-spacing: -0.01em;
+}
+
+/* 件数の数字だけ大きく青くして、リズムを付ける */
+.countNumber {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-accent);
 }
 
 .count {
@@ -79,109 +87,4 @@
 
 .emptyLink:hover {
   text-decoration: underline;
-}
-
-.dateGroup {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-/* 日付は区切りの脇役なので、白ではなく一段引いた色に留める */
-.dateLabel {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-text-secondary);
-  padding-bottom: var(--space-1);
-  /* 区切りの気配だけ。カードの白枠より目立たせない */
-  border-bottom: 1px solid
-    color-mix(in srgb, var(--color-text-primary) 20%, transparent);
-}
-
-/*
- * 白い面をうっすら浮かせておき、ホバーでふわっと持ち上げる
- * （ワードローブのアイテムカードと同じ語彙）
- */
-.card {
-  display: flex;
-  gap: var(--space-4);
-  padding: var(--space-4);
-  background: var(--color-bg-surface);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
-  transition:
-    transform var(--duration-slow) var(--easing-out),
-    box-shadow var(--duration-slow) var(--easing-out),
-    border-color var(--duration-normal) var(--easing);
-}
-
-/* 入力欄のフォーカスと同じく、指した先は青で示す */
-.card:hover,
-.card:focus-visible {
-  border-color: var(--color-accent);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lift);
-}
-
-.cardThumbs {
-  display: flex;
-  gap: var(--space-1);
-  flex-shrink: 0;
-}
-
-.cardThumb {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  background: var(--color-bg-surface);
-}
-
-.cardThumbImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.cardThumbName {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  color: var(--color-text-tertiary);
-  text-align: center;
-  padding: 2px;
-}
-
-.cardBody {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  min-width: 0;
-}
-
-/* カードの本文も白で統一する */
-.cardMeta {
-  display: flex;
-  gap: var(--space-3);
-  font-size: var(--text-sm);
-  color: var(--color-text-primary);
-}
-
-.cardMemo {
-  font-size: var(--text-sm);
-  color: var(--color-text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* 狭い画面では左右32pxの余白が効きすぎるため詰める */
-@media (max-width: 600px) {
-  .page {
-    padding: var(--space-4);
-  }
 }

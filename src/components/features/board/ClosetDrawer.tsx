@@ -9,7 +9,7 @@ import type { Category } from "@/domain/item/category";
 import type { DrawerItem } from "./boardTypes";
 import styles from "./ClosetDrawer.module.css";
 import { DrawerCategory } from "./DrawerCategory";
-import { useIsNarrow } from "./useIsNarrow";
+import { useIsNarrow } from "@/components/hooks/useIsNarrow";
 
 /*
  * カテゴリを「引き出し」に見立てたクローゼット。

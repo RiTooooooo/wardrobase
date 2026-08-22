@@ -4,28 +4,18 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { OutfitBook } from "@/components/features/outfit/OutfitBook";
+import type {
+  DateGroup,
+  OutfitEntry,
+  ThumbItem,
+} from "@/components/features/outfit/lookbookTypes";
 import type { OutfitWithItems } from "@/infrastructure/prisma/outfitRepository";
 import { findOutfitsByUser } from "@/infrastructure/prisma/outfitRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
 import { auth } from "@/lib/auth";
 
 import styles from "./page.module.css";
-
-type ThumbItem = { name: string; imageUrl: string | null };
-
-type OutfitEntry = {
-  id: string;
-  dateLabel: string;
-  satisfaction: number | null;
-  weather: string | null;
-  memo: string | null;
-  items: ThumbItem[];
-};
-
-type DateGroup = {
-  label: string;
-  entries: OutfitEntry[];
-};
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString("ja-JP", {
@@ -84,8 +74,10 @@ export default async function OutfitListPage(): Promise<ReactElement> {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.titleArea}>
-          <h1 className={styles.title}>コーデ記録</h1>
-          <span className={styles.count}>{entries.length} records</span>
+          <h1 className={styles.title}>Outfits</h1>
+          <span className={styles.count}>
+            <span className={styles.countNumber}>{entries.length}</span> records
+          </span>
         </div>
         <Link className={styles.addButton} href="/outfits/new">
           コーデを記録
@@ -94,7 +86,7 @@ export default async function OutfitListPage(): Promise<ReactElement> {
       {groups.length === 0 ? (
         <EmptyState />
       ) : (
-        <OutfitTimeline groups={groups} />
+        <OutfitBook groups={groups} />
       )}
     </div>
   );
@@ -109,86 +101,4 @@ function EmptyState(): ReactElement {
       </Link>
     </p>
   );
-}
-
-function OutfitTimeline({
-  groups,
-}: {
-  groups: DateGroup[];
-}): ReactElement {
-  return (
-    <>
-      {groups.map((group) => (
-        <div key={group.label} className={styles.dateGroup}>
-          <span className={styles.dateLabel}>{group.label}</span>
-          {group.entries.map((entry) => (
-            <OutfitCard key={entry.id} entry={entry} />
-          ))}
-        </div>
-      ))}
-    </>
-  );
-}
-
-function OutfitCard({
-  entry,
-}: {
-  entry: OutfitEntry;
-}): ReactElement {
-  return (
-    <Link href={`/outfits/${entry.id}`} className={styles.card}>
-      <CardThumbs items={entry.items} />
-      <div className={styles.cardBody}>
-        <CardMeta entry={entry} />
-        {entry.memo !== null ? (
-          <span className={styles.cardMemo}>{entry.memo}</span>
-        ) : null}
-      </div>
-    </Link>
-  );
-}
-
-function CardThumbs({
-  items,
-}: {
-  items: ThumbItem[];
-}): ReactElement | null {
-  if (items.length === 0) return null;
-
-  return (
-    <div className={styles.cardThumbs}>
-      {items.map((item, index) => (
-        <div key={index} className={styles.cardThumb}>
-          {item.imageUrl ? (
-            <img
-              className={styles.cardThumbImage}
-              src={item.imageUrl}
-              alt={item.name}
-              loading="lazy"
-            />
-          ) : (
-            <span className={styles.cardThumbName}>{item.name}</span>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function CardMeta({
-  entry,
-}: {
-  entry: OutfitEntry;
-}): ReactElement | null {
-  const parts: string[] = [];
-  if (entry.satisfaction !== null) {
-    parts.push(`お気に入り度 ${entry.satisfaction}/5`);
-  }
-  if (entry.weather !== null) {
-    parts.push(entry.weather);
-  }
-
-  if (parts.length === 0) return null;
-
-  return <span className={styles.cardMeta}>{parts.join(" / ")}</span>;
 }
