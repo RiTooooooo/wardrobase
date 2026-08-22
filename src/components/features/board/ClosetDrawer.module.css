@@ -1,16 +1,10 @@
 /*
- * ログイン画面の線画と同じ語彙で家具を組む。
- * ただしここは実際に触るUIなので、線は服の写真より前に出ないよう
- * アクセントを薄めた色を使う（HIG: コンテンツ優先）。
+ * ワードローブのクローゼットと同じ、白い塗りの家具として組む。
+ * 青は天板・台輪・側板・取っ手だけに使い、面としては出しゃばらせない。
  */
 .closet {
-  /*
-   * ログイン画面のクローゼットと同じ青い線画で、アプリの世界観を揃える。
-   * 構造の線は薄く、開いている引き出しの取っ手だけ濃くすることで、
-   * 同じ青のままでも「どこが開いているか」が分かるようにしている。
-   */
-  --line: color-mix(in srgb, var(--color-accent) 55%, transparent);
-  --line-open: var(--color-accent);
+  /* 段の区切り。白い塗りの上の薄い影 */
+  --seam: var(--color-border);
 
   display: flex;
   flex-direction: column;
@@ -20,22 +14,20 @@
   overflow: hidden;
 }
 
-/* 天板。本体よりわずかに広く張り出させて家具らしくする */
+/* 天板。本体よりわずかに広く張り出させる。取っ手と同じ青で塗る */
 .cornice {
   height: 10px;
   margin: 0 calc(var(--space-1) * -1);
-  border: 1px solid var(--line);
-  border-bottom: none;
+  background: var(--color-accent);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   flex-shrink: 0;
 }
 
-/* 台輪。天板と対にして家具の上下を締める */
+/* 台輪。天板と対にして家具の足元を締める。こちらも青の塗り */
 .plinth {
   height: 12px;
   margin: 0 calc(var(--space-1) * -1) var(--space-3);
-  border: 1px solid var(--line);
-  border-top: none;
+  background: var(--color-accent);
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   flex-shrink: 0;
 }
@@ -45,7 +37,10 @@
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  border: 1px solid var(--line);
+  background: var(--color-bg-elevated);
+  /* 左右の側板。天板・台輪と同じ青で家具の箱を閉じる */
+  border-left: 6px solid var(--color-accent);
+  border-right: 6px solid var(--color-accent);
   overflow-y: auto;
 }
 
@@ -60,7 +55,7 @@
   font-weight: var(--font-bold);
   color: var(--color-text-primary);
   background: transparent;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--seam);
   flex-shrink: 0;
   /* 広い画面は横に並ぶので畳む必要がない。押せる見た目にしない */
   cursor: default;
@@ -80,7 +75,7 @@
 }
 
 .drawer {
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--seam);
 }
 
 .drawer:last-child {
@@ -104,7 +99,7 @@
 }
 
 .front:hover {
-  background: var(--color-bg-surface);
+  background: var(--color-bg-overlay);
 }
 
 /*
@@ -115,12 +110,10 @@
 .pull {
   width: 30px;
   height: 7px;
-  border: 1px solid var(--line);
+  background: var(--color-accent);
   border-radius: var(--radius-full);
   flex-shrink: 0;
-  transition:
-    border-color var(--duration-slow) var(--easing),
-    transform var(--duration-slow) var(--easing);
+  transition: transform var(--duration-slow) var(--easing);
 }
 
 .label {
@@ -143,7 +136,6 @@
 
 /* 開いている引き出しの取っ手は、手前に出た分だけわずかに大きく見える */
 .drawerOpen .pull {
-  border-color: var(--line-open);
   transform: scale(1.15);
 }
 
@@ -167,7 +159,7 @@
 
 .drawerOpen .interior {
   grid-template-rows: 1fr;
-  border-top-color: var(--line);
+  border-top-color: var(--seam);
 }
 
 @media (max-width: 900px) {

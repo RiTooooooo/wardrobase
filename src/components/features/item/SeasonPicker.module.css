@@ -28,10 +28,14 @@
   gap: var(--space-2);
 }
 
-/* developer.apple.com のフィルタピルと同じ（WardrobeFilters のチップと同じ扱い） */
+/* 季節は1文字なので、ピルではなく小さな正円で揃える */
 .chip {
-  min-height: 44px;
-  padding: var(--space-2) var(--space-5);
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--text-sm);
   color: var(--color-text-primary);
   background: var(--color-bg-overlay);
