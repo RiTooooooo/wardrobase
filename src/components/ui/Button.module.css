@@ -13,11 +13,21 @@
   border-radius: var(--radius-full);
   transition:
     background var(--duration-fast) var(--easing),
+    transform var(--duration-slow) var(--easing-out),
+    box-shadow var(--duration-slow) var(--easing-out),
     opacity var(--duration-fast) var(--easing);
 }
 
+/* ホバーでふわっと浮き、押した瞬間に沈む。触れる物であることを動きで伝える */
 .button:hover:not(:disabled) {
   background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift-sm);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .button:disabled {

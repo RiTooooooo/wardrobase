@@ -10,6 +10,8 @@
    */
   border-radius: var(--radius-xl);
   overflow: hidden;
+  /* 地の上に白い面をうっすら浮かせておき、ホバーでさらに持ち上げる */
+  box-shadow: var(--shadow-sm);
   /*
    * ヘッダー・フィルタに続いて、左上から順に現れる。
    * 枚数が増えても最後の1枚まで待たされないよう、ずれ幅は12番目で頭打ちにする。
@@ -18,9 +20,10 @@
    */
   animation: riseIn var(--duration-slower) var(--easing-out)
     calc(540ms + min(var(--index, 0), 12) * 55ms) backwards;
+  /* 浮き上がりは減速カーブでふわっと着地させる */
   transition:
-    transform var(--duration-normal) var(--easing),
-    box-shadow var(--duration-normal) var(--easing),
+    transform var(--duration-slow) var(--easing-out),
+    box-shadow var(--duration-slow) var(--easing-out),
     border-color var(--duration-normal) var(--easing),
     background var(--duration-normal) var(--easing);
 }
@@ -30,8 +33,7 @@
   background: var(--color-bg-overlay);
   border-color: var(--color-accent);
   transform: translateY(-4px);
-  box-shadow: 0 12px 28px
-    color-mix(in srgb, var(--color-accent) 22%, transparent);
+  box-shadow: var(--shadow-lift);
 }
 
 .imageWrapper {

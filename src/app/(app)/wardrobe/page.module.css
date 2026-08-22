@@ -50,12 +50,23 @@
   background: var(--color-accent);
   /* developer.apple.com のボタンと同じカプセル形 */
   border-radius: var(--radius-full);
-  transition: background var(--duration-fast) var(--easing);
+  transition:
+    background var(--duration-fast) var(--easing),
+    transform var(--duration-slow) var(--easing-out),
+    box-shadow var(--duration-slow) var(--easing-out);
   animation: riseIn var(--duration-slower) var(--easing-out) 55ms backwards;
 }
 
+/* ホバーでふわっと浮き、押した瞬間に沈む（Button コンポーネントと同じ動き） */
 .addButton:hover {
   background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift-sm);
+}
+
+.addButton:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .empty {

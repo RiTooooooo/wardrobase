@@ -45,11 +45,22 @@
   background: var(--color-accent);
   /* developer.apple.com のボタンと同じカプセル形 */
   border-radius: var(--radius-full);
-  transition: background var(--duration-fast) var(--easing);
+  transition:
+    background var(--duration-fast) var(--easing),
+    transform var(--duration-slow) var(--easing-out),
+    box-shadow var(--duration-slow) var(--easing-out);
 }
 
+/* ホバーでふわっと浮き、押した瞬間に沈む（Button コンポーネントと同じ動き） */
 .addButton:hover {
   background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift-sm);
+}
+
+.addButton:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .empty {
@@ -88,23 +99,29 @@
 }
 
 /*
- * カードは面で持ち上げず、地の黒のまま白い枠だけで輪郭を作る
- * （入力欄と同じ、developer.apple.com の語彙）
+ * 白い面をうっすら浮かせておき、ホバーでふわっと持ち上げる
+ * （ワードローブのアイテムカードと同じ語彙）
  */
 .card {
   display: flex;
   gap: var(--space-4);
   padding: var(--space-4);
-  background: var(--color-bg-base);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border-bright);
-  transition: border-color var(--duration-fast) var(--easing);
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--duration-slow) var(--easing-out),
+    box-shadow var(--duration-slow) var(--easing-out),
+    border-color var(--duration-normal) var(--easing);
 }
 
 /* 入力欄のフォーカスと同じく、指した先は青で示す */
 .card:hover,
 .card:focus-visible {
   border-color: var(--color-accent);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
 }
 
 .cardThumbs {
