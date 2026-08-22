@@ -15,12 +15,12 @@ export const CATEGORIES = [
 export type Category = (typeof CATEGORIES)[number];
 
 export const CATEGORY_LABELS: Record<Category, string> = {
-  TOPS: "トップス",
-  BOTTOMS: "ボトムス",
-  OUTER: "アウター",
-  SHOES: "シューズ",
-  BAG: "バッグ",
-  ACCESSORY: "小物",
+  TOPS: "Tops",
+  BOTTOMS: "Bottoms",
+  OUTER: "Outerwear",
+  SHOES: "Shoes",
+  BAG: "Bags",
+  ACCESSORY: "Accessories",
 };
 
 /**

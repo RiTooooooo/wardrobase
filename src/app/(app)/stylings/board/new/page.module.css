@@ -32,8 +32,10 @@
 }
 
 .title {
-  font-size: var(--text-lg);
+  /* 他ページの見出しと歩調を合わせる。作業画面なので一段だけ控えめ */
+  font-size: var(--text-3xl);
   font-weight: var(--font-bold);
+  letter-spacing: -0.01em;
 }
 
 /*

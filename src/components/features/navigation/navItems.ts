@@ -12,9 +12,9 @@ export type NavItem = {
 };
 
 export const NAV_ITEMS: readonly NavItem[] = [
-  { href: "/wardrobe", label: "ワードローブ", match: ["/wardrobe", "/items"] },
-  { href: "/stylings", label: "スタイリング", match: ["/stylings"] },
-  { href: "/outfits", label: "コーデ記録", match: ["/outfits"] },
+  { href: "/wardrobe", label: "Wardrobe", match: ["/wardrobe", "/items"] },
+  { href: "/stylings", label: "Styling", match: ["/stylings"] },
+  { href: "/outfits", label: "Outfits", match: ["/outfits"] },
 ];
 
 function isUnder(pathname: string, base: string): boolean {

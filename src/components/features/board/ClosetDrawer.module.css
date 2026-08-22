@@ -108,18 +108,16 @@
 }
 
 /*
- * 取っ手。実際の引き出しと同じく前板の中央に置く。
- * 左端に寄せるとアイコンに見えてしまい、家具としての見立てが弱まる。
- * カテゴリ名は最長4文字なので、中央でもラベル・点数と重ならない。
+ * 取っ手。
+ * カテゴリ名が英語になり（最長 Accessories）、狭い幅では中央置きだと
+ * ラベルと重なるため、点数の手前に寄せて置く。
  */
 .pull {
-  position: absolute;
-  left: 50%;
   width: 30px;
   height: 7px;
   border: 1px solid var(--line);
   border-radius: var(--radius-full);
-  transform: translateX(-50%);
+  flex-shrink: 0;
   transition:
     border-color var(--duration-slow) var(--easing),
     transform var(--duration-slow) var(--easing);
@@ -128,6 +126,8 @@
 .label {
   flex: 1;
   text-align: left;
+  /* DOM上は取っ手が先頭だが、見た目はラベル→取っ手→点数の順に置く */
+  order: -1;
 }
 
 .count {
@@ -141,13 +141,10 @@
   color: var(--color-text-primary);
 }
 
-/*
- * 開いている引き出しの取っ手は、手前に出た分だけわずかに大きく見える。
- * 中央寄せの translateX(-50%) を打ち消さないよう、拡大と併記する。
- */
+/* 開いている引き出しの取っ手は、手前に出た分だけわずかに大きく見える */
 .drawerOpen .pull {
   border-color: var(--line-open);
-  transform: translateX(-50%) scale(1.15);
+  transform: scale(1.15);
 }
 
 /*
