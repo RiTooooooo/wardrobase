@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import type { CSSProperties, ReactElement } from "react";
 
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -54,8 +54,10 @@ export default async function StylingListPage(): Promise<ReactElement> {
     <div className={styles.page}>
       <header className={styles.header}>
         <div className={styles.titleArea}>
-          <h1 className={styles.title}>スタイリング</h1>
-          <span className={styles.count}>{cards.length} styles</span>
+          <h1 className={styles.title}>Styling</h1>
+          <span className={styles.count}>
+            <span className={styles.countNumber}>{cards.length}</span> styles
+          </span>
         </div>
         <div className={styles.headerActions}>
           <Link className={styles.secondaryButton} href="/stylings/new">
@@ -93,11 +95,12 @@ function StylingGrid({
 }): ReactElement {
   return (
     <div className={styles.grid}>
-      {cards.map((card) => (
+      {cards.map((card, index) => (
         <Link
           key={card.id}
           href={`/stylings/${card.id}`}
           className={styles.card}
+          style={{ "--index": index } as CSSProperties}
         >
           <span className={styles.cardName}>{card.name}</span>
           <CardItemThumbs items={card.items} />

@@ -23,10 +23,18 @@
   gap: var(--space-3);
 }
 
+/* 英語の大見出し＋日本語の補足という構成 */
 .title {
-  font-size: var(--text-3xl);
+  font-size: var(--text-5xl);
   font-weight: var(--font-bold);
   letter-spacing: -0.01em;
+}
+
+/* 件数の数字だけ大きく青くして、リズムを付ける */
+.countNumber {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-accent);
 }
 
 .count {
@@ -121,33 +129,119 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--space-4);
+  /* タグの紐がカードの上へ突き出すぶん、行間を広めに取る */
+  row-gap: var(--space-8);
+  padding-top: var(--space-4);
 }
 
 /*
- * 白い面をうっすら浮かせておき、ホバーでふわっと持ち上げる
- * （ワードローブのアイテムカードと同じ語彙）
+ * スタイリングは服に付く「下げ札（ハングタグ）」として描く。
+ * ハトメと紐を持ち、1枚ずつわずかに傾けて吊るされているように見せる。
+ * 傾きは nth-child でずらし、並んだときの手作業感を出す。
  */
 .card {
+  --tilt: -1.8deg;
+
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: var(--space-4);
+  /* ハトメのぶん、上に余白を取る */
+  padding: var(--space-6) var(--space-4) var(--space-4);
   background: var(--color-bg-surface);
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
+  transform: rotate(var(--tilt));
+  /* 揺れの支点はハトメの位置 */
+  transform-origin: 21px 17px;
+  animation: tagIn var(--duration-slower) var(--easing-out)
+    calc(140ms + min(var(--index, 0), 8) * 70ms) backwards;
   transition:
-    transform var(--duration-slow) var(--easing-out),
     box-shadow var(--duration-slow) var(--easing-out),
     border-color var(--duration-normal) var(--easing);
 }
 
-/* 入力欄のフォーカスと同じく、指した先は青で示す */
+.card:nth-child(2n) {
+  --tilt: 1.4deg;
+}
+
+.card:nth-child(3n) {
+  --tilt: 0.5deg;
+}
+
+/* ハトメ。金具ではなく、やわらかいパステルブルーの輪にする */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-base);
+  border: 3px solid color-mix(in srgb, var(--color-accent) 55%, #ffffff);
+}
+
+/*
+ * 紐。ハトメからふんわりカーブして上へ抜ける糸。
+ * 円の枠線の上側だけを見せて弧を描く。
+ */
+.card::after {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 18px;
+  width: 30px;
+  height: 26px;
+  border: 2px solid transparent;
+  border-top-color: color-mix(in srgb, var(--color-accent) 70%, #ffffff);
+  border-radius: 50%;
+  transform: rotate(32deg);
+}
+
+/* 指した札は青い輪郭で示し、吊るされたまま小さく揺れる */
 .card:hover,
 .card:focus-visible {
   border-color: var(--color-accent);
-  transform: translateY(-4px);
   box-shadow: var(--shadow-lift);
+  animation: swing 900ms var(--easing);
+}
+
+/*
+ * 下げ札の揺れ。支点（ハトメ）を中心に振れ幅を減衰させ、
+ * 最後は元の傾きに戻って止まる。
+ */
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(var(--tilt));
+  }
+
+  20% {
+    transform: rotate(calc(var(--tilt) + 2.4deg));
+  }
+
+  50% {
+    transform: rotate(calc(var(--tilt) - 1.8deg));
+  }
+
+  80% {
+    transform: rotate(calc(var(--tilt) + 0.8deg));
+  }
+}
+
+/* 現れるときも傾いたまま浮き上がる（riseIn の下げ札版） */
+@keyframes tagIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) rotate(var(--tilt));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--tilt));
+  }
 }
 
 .cardName {
