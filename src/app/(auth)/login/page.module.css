@@ -1,3 +1,9 @@
+.demo {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
 .switch {
   display: flex;
   align-items: center;

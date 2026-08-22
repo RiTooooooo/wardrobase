@@ -1,9 +1,7 @@
 "use server";
 
-import { headers } from "next/headers";
-
 import { registerItem } from "@/application/item/registerItem";
-import { auth } from "@/lib/auth";
+import { requireWritableUserId } from "@/lib/actionSession";
 import { createItemSchema } from "@/schemas/item";
 
 export type CreateItemResult =
@@ -19,11 +17,9 @@ export type CreateItemResult =
 export async function createItemAction(
   input: unknown,
 ): Promise<CreateItemResult> {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await requireWritableUserId();
 
-  if (session === null) {
-    return { ok: false, message: "ログインが必要です" };
-  }
+  if ("error" in session) return session.error;
 
   const parsed = createItemSchema.safeParse(input);
 
@@ -32,11 +28,11 @@ export async function createItemAction(
   }
 
   const { imagePath } = parsed.data;
-  if (imagePath !== undefined && !imagePath.startsWith(`${session.user.id}/`)) {
+  if (imagePath !== undefined && !imagePath.startsWith(`${session.userId}/`)) {
     return { ok: false, message: "不正な画像パスです" };
   }
 
-  const id = await registerItem(session.user.id, parsed.data);
+  const id = await registerItem(session.userId, parsed.data);
 
   return { ok: true, id };
 }

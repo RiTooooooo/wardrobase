@@ -1,9 +1,7 @@
 "use server";
 
-import { headers } from "next/headers";
-
 import { updateStylingBoardUseCase } from "@/application/styling/updateStylingBoardUseCase";
-import { auth } from "@/lib/auth";
+import { requireWritableUserId } from "@/lib/actionSession";
 import type { BoardStylingInput } from "@/schemas/styling";
 import { boardStylingSchema } from "@/schemas/styling";
 
@@ -13,11 +11,9 @@ export async function updateStylingBoardAction(
   stylingId: string,
   input: unknown,
 ): Promise<ActionResult> {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await requireWritableUserId();
 
-  if (session === null) {
-    return { ok: false, message: "ログインが必要です" };
-  }
+  if ("error" in session) return session.error;
 
   const parsed = boardStylingSchema.safeParse(input);
 
@@ -27,7 +23,7 @@ export async function updateStylingBoardAction(
 
   const data: BoardStylingInput = parsed.data;
   const count = await updateStylingBoardUseCase(
-    session.user.id,
+    session.userId,
     stylingId,
     data,
   );

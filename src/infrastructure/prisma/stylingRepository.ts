@@ -1,6 +1,7 @@
 import type { Item, Styling, StylingItem } from "@/generated/prisma/client";
 
 import { prisma } from "./client";
+import { ownsAllItems } from "./itemOwnership";
 
 export type StylingWithItems = Styling & {
   items: Array<StylingItem & { item: Item }>;
@@ -52,20 +53,25 @@ export async function findStylingById(
   });
 }
 
+/** 他人のアイテムが混ざっていた場合は作成せず null を返す */
 export async function createStyling(
   userId: string,
   data: CreateStylingData,
-): Promise<Styling> {
-  return prisma.styling.create({
-    data: {
-      userId,
-      name: data.name,
-      seasons: data.seasons,
-      memo: data.memo ?? null,
-      items: {
-        create: data.itemIds.map((itemId) => ({ itemId })),
+): Promise<Styling | null> {
+  return prisma.$transaction(async (tx) => {
+    if (!(await ownsAllItems(tx, userId, data.itemIds))) return null;
+
+    return tx.styling.create({
+      data: {
+        userId,
+        name: data.name,
+        seasons: data.seasons,
+        memo: data.memo ?? null,
+        items: {
+          create: data.itemIds.map((itemId) => ({ itemId })),
+        },
       },
-    },
+    });
   });
 }
 
@@ -75,6 +81,8 @@ export async function updateStyling(
   data: CreateStylingData,
 ): Promise<number> {
   return prisma.$transaction(async (tx) => {
+    if (!(await ownsAllItems(tx, userId, data.itemIds))) return 0;
+
     const result = await tx.styling.updateMany({
       where: { id, userId, deletedAt: null },
       data: {
@@ -95,26 +103,33 @@ export async function updateStyling(
   });
 }
 
+/** 他人のアイテムが混ざっていた場合は作成せず null を返す */
 export async function createStylingWithBoard(
   userId: string,
   data: CreateStylingBoardData,
-): Promise<Styling> {
-  return prisma.styling.create({
-    data: {
-      userId,
-      name: data.name,
-      seasons: data.seasons,
-      memo: data.memo ?? null,
-      items: {
-        create: data.items.map((item) => ({
-          itemId: item.itemId,
-          positionX: item.x,
-          positionY: item.y,
-          zIndex: item.zIndex,
-          scale: item.scale,
-        })),
+): Promise<Styling | null> {
+  const itemIds = data.items.map((item) => item.itemId);
+
+  return prisma.$transaction(async (tx) => {
+    if (!(await ownsAllItems(tx, userId, itemIds))) return null;
+
+    return tx.styling.create({
+      data: {
+        userId,
+        name: data.name,
+        seasons: data.seasons,
+        memo: data.memo ?? null,
+        items: {
+          create: data.items.map((item) => ({
+            itemId: item.itemId,
+            positionX: item.x,
+            positionY: item.y,
+            zIndex: item.zIndex,
+            scale: item.scale,
+          })),
+        },
       },
-    },
+    });
   });
 }
 
@@ -123,7 +138,11 @@ export async function updateStylingBoard(
   id: string,
   data: CreateStylingBoardData,
 ): Promise<number> {
+  const itemIds = data.items.map((item) => item.itemId);
+
   return prisma.$transaction(async (tx) => {
+    if (!(await ownsAllItems(tx, userId, itemIds))) return 0;
+
     const result = await tx.styling.updateMany({
       where: { id, userId, deletedAt: null },
       data: {

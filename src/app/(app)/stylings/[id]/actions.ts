@@ -1,10 +1,8 @@
 "use server";
 
-import { headers } from "next/headers";
-
 import { updateStylingUseCase } from "@/application/styling/updateStylingUseCase";
 import { softDeleteStyling } from "@/infrastructure/prisma/stylingRepository";
-import { auth } from "@/lib/auth";
+import { requireWritableUserId } from "@/lib/actionSession";
 import type { CreateStylingInput } from "@/schemas/styling";
 import { createStylingSchema } from "@/schemas/styling";
 
@@ -14,11 +12,9 @@ export async function updateStylingAction(
   stylingId: string,
   input: unknown,
 ): Promise<ActionResult> {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await requireWritableUserId();
 
-  if (session === null) {
-    return { ok: false, message: "ログインが必要です" };
-  }
+  if ("error" in session) return session.error;
 
   const parsed = createStylingSchema.safeParse(input);
 
@@ -28,7 +24,7 @@ export async function updateStylingAction(
 
   const data: CreateStylingInput = parsed.data;
   const count = await updateStylingUseCase(
-    session.user.id,
+    session.userId,
     stylingId,
     data,
   );
@@ -41,13 +37,11 @@ export async function updateStylingAction(
 export async function deleteStylingAction(
   stylingId: string,
 ): Promise<ActionResult> {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await requireWritableUserId();
 
-  if (session === null) {
-    return { ok: false, message: "ログインが必要です" };
-  }
+  if ("error" in session) return session.error;
 
-  const count = await softDeleteStyling(session.user.id, stylingId);
+  const count = await softDeleteStyling(session.userId, stylingId);
 
   return count === 0
     ? { ok: false, message: "スタイリングが見つかりません" }

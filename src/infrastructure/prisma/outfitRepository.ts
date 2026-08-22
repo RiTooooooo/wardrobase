@@ -1,6 +1,8 @@
 import type { Item, Outfit } from "@/generated/prisma/client";
 
 import { prisma } from "./client";
+import { ownsAllItems } from "./itemOwnership";
+import type { TransactionClient } from "./itemOwnership";
 
 export type OutfitWithItems = Outfit & {
   items: Array<{ itemId: string; item: Item }>;
@@ -38,18 +40,32 @@ export async function findOutfitById(
   });
 }
 
+function toOutfitScalars(data: CreateOutfitData): {
+  wornOn: Date;
+  satisfaction: number | null;
+  weather: string | null;
+  memo: string | null;
+} {
+  return {
+    wornOn: data.wornOn,
+    satisfaction: data.satisfaction ?? null,
+    weather: data.weather ?? null,
+    memo: data.memo ?? null,
+  };
+}
+
+/** 他人のアイテムが混ざっていた場合は作成せず null を返す */
 export async function createOutfit(
   userId: string,
   data: CreateOutfitData,
-): Promise<Outfit> {
+): Promise<Outfit | null> {
   return prisma.$transaction(async (tx) => {
+    if (!(await ownsAllItems(tx, userId, data.itemIds))) return null;
+
     const outfit = await tx.outfit.create({
       data: {
         userId,
-        wornOn: data.wornOn,
-        satisfaction: data.satisfaction ?? null,
-        weather: data.weather ?? null,
-        memo: data.memo ?? null,
+        ...toOutfitScalars(data),
         items: {
           create: data.itemIds.map((itemId) => ({ itemId })),
         },
@@ -68,14 +84,11 @@ export async function updateOutfit(
   data: CreateOutfitData,
 ): Promise<number> {
   return prisma.$transaction(async (tx) => {
+    if (!(await ownsAllItems(tx, userId, data.itemIds))) return 0;
+
     const result = await tx.outfit.updateMany({
       where: { id, userId, deletedAt: null },
-      data: {
-        wornOn: data.wornOn,
-        satisfaction: data.satisfaction ?? null,
-        weather: data.weather ?? null,
-        memo: data.memo ?? null,
-      },
+      data: toOutfitScalars(data),
     });
 
     if (result.count === 0) return 0;
@@ -109,10 +122,6 @@ export async function softDeleteOutfit(
     return result.count;
   });
 }
-
-type TransactionClient = Parameters<
-  Parameters<typeof prisma.$transaction>[0]
->[0];
 
 async function createWearLogs(
   tx: TransactionClient,

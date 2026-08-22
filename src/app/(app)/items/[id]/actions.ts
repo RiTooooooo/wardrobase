@@ -1,26 +1,12 @@
 "use server";
 
-import { headers } from "next/headers";
-
 import { updateItemUseCase } from "@/application/item/updateItem";
 import { softDeleteItem } from "@/infrastructure/prisma/itemRepository";
-import { auth } from "@/lib/auth";
+import { requireWritableUserId } from "@/lib/actionSession";
 import type { CreateItemInput } from "@/schemas/item";
 import { createItemSchema } from "@/schemas/item";
 
 type ActionResult = { ok: true; id: string } | { ok: false; message: string };
-
-async function requireSession(): Promise<
-  { userId: string } | { error: ActionResult }
-> {
-  const session = await auth.api.getSession({ headers: await headers() });
-
-  if (session === null) {
-    return { error: { ok: false, message: "ログインが必要です" } };
-  }
-
-  return { userId: session.user.id };
-}
 
 function isOwnedImage(path: string | undefined, userId: string): boolean {
   return path === undefined || path.startsWith(`${userId}/`);
@@ -30,7 +16,7 @@ export async function updateItemAction(
   itemId: string,
   input: unknown,
 ): Promise<ActionResult> {
-  const session = await requireSession();
+  const session = await requireWritableUserId();
   if ("error" in session) return session.error;
 
   const parsed = createItemSchema.safeParse(input);
@@ -54,7 +40,7 @@ export async function updateItemAction(
 export async function deleteItemAction(
   itemId: string,
 ): Promise<ActionResult> {
-  const session = await requireSession();
+  const session = await requireWritableUserId();
   if ("error" in session) return session.error;
 
   const count = await softDeleteItem(session.userId, itemId);

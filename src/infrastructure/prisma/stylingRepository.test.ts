@@ -24,9 +24,11 @@ vi.mock("./client", () => ({
 }));
 
 import {
+  createStyling,
   findStylingById,
   findStylingsByUser,
   softDeleteStyling,
+  updateStylingBoard,
 } from "./stylingRepository";
 
 const USER_ID = "user-1";
@@ -73,6 +75,56 @@ describe("他人のデータを操作できないこと", () => {
     const count = await softDeleteStyling(USER_ID, "someone-elses-styling");
 
     expect(count).toBe(0);
+  });
+});
+
+describe("アイテムの所有チェック", () => {
+  function makeTx(ownedCount: number): Record<string, Record<string, ReturnType<typeof vi.fn>>> {
+    return {
+      item: { count: vi.fn().mockResolvedValue(ownedCount) },
+      styling: {
+        create: vi.fn().mockResolvedValue({ id: STYLING_ID }),
+        updateMany: vi.fn().mockResolvedValue({ count: 1 }),
+      },
+      stylingItem: { deleteMany: vi.fn(), createMany: vi.fn() },
+    };
+  }
+
+  function useTx(tx: ReturnType<typeof makeTx>): void {
+    mocks.$transaction.mockImplementation(
+      (fn: (t: unknown) => Promise<unknown>) => fn(tx),
+    );
+  }
+
+  it("他人のアイテムが混ざっていたら createStyling は作成せず null", async () => {
+    const tx = makeTx(1);
+    useTx(tx);
+
+    const result = await createStyling(USER_ID, {
+      name: "test",
+      itemIds: ["a", "b"],
+      seasons: [],
+    });
+
+    expect(result).toBeNull();
+    expect(tx.styling.create).not.toHaveBeenCalled();
+  });
+
+  it("他人のアイテムが混ざっていたら updateStylingBoard は更新せず 0", async () => {
+    const tx = makeTx(1);
+    useTx(tx);
+
+    const result = await updateStylingBoard(USER_ID, STYLING_ID, {
+      name: "test",
+      items: [
+        { itemId: "a", x: 0, y: 0, zIndex: 0, scale: 1 },
+        { itemId: "b", x: 0, y: 0, zIndex: 1, scale: 1 },
+      ],
+      seasons: [],
+    });
+
+    expect(result).toBe(0);
+    expect(tx.styling.updateMany).not.toHaveBeenCalled();
   });
 });
 

@@ -1,10 +1,8 @@
 "use server";
 
-import { headers } from "next/headers";
-
 import { updateOutfitUseCase } from "@/application/outfit/updateOutfitUseCase";
 import { softDeleteOutfit } from "@/infrastructure/prisma/outfitRepository";
-import { auth } from "@/lib/auth";
+import { requireWritableUserId } from "@/lib/actionSession";
 import type { CreateOutfitInput } from "@/schemas/outfit";
 import { createOutfitSchema } from "@/schemas/outfit";
 
@@ -14,11 +12,9 @@ export async function updateOutfitAction(
   outfitId: string,
   input: unknown,
 ): Promise<ActionResult> {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await requireWritableUserId();
 
-  if (session === null) {
-    return { ok: false, message: "ログインが必要です" };
-  }
+  if ("error" in session) return session.error;
 
   const parsed = createOutfitSchema.safeParse(input);
 
@@ -28,7 +24,7 @@ export async function updateOutfitAction(
 
   const data: CreateOutfitInput = parsed.data;
   const count = await updateOutfitUseCase(
-    session.user.id,
+    session.userId,
     outfitId,
     data,
   );
@@ -41,13 +37,11 @@ export async function updateOutfitAction(
 export async function deleteOutfitAction(
   outfitId: string,
 ): Promise<ActionResult> {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await requireWritableUserId();
 
-  if (session === null) {
-    return { ok: false, message: "ログインが必要です" };
-  }
+  if ("error" in session) return session.error;
 
-  const count = await softDeleteOutfit(session.user.id, outfitId);
+  const count = await softDeleteOutfit(session.userId, outfitId);
 
   return count === 0
     ? { ok: false, message: "コーデが見つかりません" }
