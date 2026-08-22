@@ -17,6 +17,13 @@ import { auth } from "@/lib/auth";
 
 import styles from "./page.module.css";
 
+function toIsoDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 function formatDate(date: Date): string {
   return date.toLocaleDateString("ja-JP", {
     year: "numeric",
@@ -38,6 +45,7 @@ async function toOutfitEntry(
   }
   return {
     id: outfit.id,
+    date: toIsoDate(outfit.wornOn),
     dateLabel: formatDate(outfit.wornOn),
     satisfaction: outfit.satisfaction,
     weather: outfit.weather,
@@ -53,7 +61,11 @@ function groupByDate(entries: OutfitEntry[]): DateGroup[] {
     if (last !== undefined && last.label === entry.dateLabel) {
       last.entries.push(entry);
     } else {
-      groups.push({ label: entry.dateLabel, entries: [entry] });
+      groups.push({
+        date: entry.date,
+        label: entry.dateLabel,
+        entries: [entry],
+      });
     }
   }
   return groups;

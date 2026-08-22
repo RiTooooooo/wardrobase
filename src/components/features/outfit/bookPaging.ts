@@ -36,3 +36,11 @@ export function toSpreads(groups: DateGroup[]): Spread[] {
   }
   return spreads;
 }
+
+/** 指定した日付（YYYY-MM-DD）の記録がどのグループにあるか。無ければ -1 */
+export function findGroupIndexByDate(
+  groups: DateGroup[],
+  date: string,
+): number {
+  return groups.findIndex((group) => group.date === date);
+}

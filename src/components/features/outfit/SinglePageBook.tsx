@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 
 import { BookNav } from "./BookNav";
 import { BookPage } from "./BookPage";
-import { chunkPages } from "./bookPaging";
+import { chunkPages, DAYS_PER_PAGE } from "./bookPaging";
 import type { Flip } from "./bookPaging";
 import type { DateGroup } from "./lookbookTypes";
 import styles from "./OutfitBook.module.css";
@@ -33,12 +33,26 @@ function visiblePage(
 
 export function SinglePageBook({
   groups,
+  focusGroup = null,
 }: {
   groups: DateGroup[];
+  /** このグループ番号が載っているページを開く（日付検索のジャンプ先） */
+  focusGroup?: number | null;
 }): ReactElement {
   const [current, setCurrent] = useState(0);
   const [flip, setFlip] = useState<Flip | null>(null);
   const pages = chunkPages(groups);
+  const lastPage = pages.length - 1;
+
+  useEffect(
+    function jumpToFocus(): void {
+      if (focusGroup === null) return;
+      const page = Math.floor(focusGroup / DAYS_PER_PAGE);
+      setCurrent(Math.min(page, lastPage));
+      setFlip(null);
+    },
+    [focusGroup, lastPage],
+  );
 
   const canPrev = flip === null && current > 0;
   const canNext = flip === null && current < pages.length - 1;

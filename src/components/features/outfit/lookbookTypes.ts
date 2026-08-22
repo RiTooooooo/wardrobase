@@ -7,6 +7,8 @@ export type ThumbItem = { name: string; imageUrl: string | null };
 
 export type OutfitEntry = {
   id: string;
+  /** 日付検索用の YYYY-MM-DD（ローカル時刻基準） */
+  date: string;
   dateLabel: string;
   satisfaction: number | null;
   weather: string | null;
@@ -15,6 +17,8 @@ export type OutfitEntry = {
 };
 
 export type DateGroup = {
+  /** 日付検索用の YYYY-MM-DD（ローカル時刻基準） */
+  date: string;
   label: string;
   entries: OutfitEntry[];
 };

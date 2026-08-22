@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 
 import { BookNav } from "./BookNav";
 import { BookPage } from "./BookPage";
 import { BookSilhouette } from "./BookSilhouette";
-import { toSpreads } from "./bookPaging";
+import { DAYS_PER_PAGE, toSpreads } from "./bookPaging";
 import type { Flip, Spread, TurnDirection } from "./bookPaging";
 import type { DateGroup } from "./lookbookTypes";
 import styles from "./OutfitBook.module.css";
@@ -41,10 +41,29 @@ export function sheetClassName(dir: TurnDirection): string {
   return `${styles.sheet} ${turn}`;
 }
 
-export function SpreadBook({ groups }: { groups: DateGroup[] }): ReactElement {
+export function SpreadBook({
+  groups,
+  focusGroup = null,
+}: {
+  groups: DateGroup[];
+  /** このグループ番号が載っている見開きを開く（日付検索のジャンプ先） */
+  focusGroup?: number | null;
+}): ReactElement {
   const [current, setCurrent] = useState(0);
   const [flip, setFlip] = useState<Flip | null>(null);
   const spreads = toSpreads(groups);
+  const lastSpread = spreads.length - 1;
+
+  useEffect(
+    function jumpToFocus(): void {
+      if (focusGroup === null) return;
+      const page = Math.floor(focusGroup / DAYS_PER_PAGE);
+      const spread = Math.floor(page / 2);
+      setCurrent(Math.min(spread, lastSpread));
+      setFlip(null);
+    },
+    [focusGroup, lastSpread],
+  );
 
   const canPrev = flip === null && current > 0;
   const canNext = flip === null && current < spreads.length - 1;
