@@ -14,11 +14,12 @@ import { PrismaClient } from "../src/generated/prisma/client";
  * DEMO_USER_EMAIL のアカウントへコピーする。画像も S3 上で複製する。
  * 実行のたびにデモ側の既存データを消してから入れ直す（何度でも実行できる）。
  *
- * 使い方（.env の環境変数を読み込んで実行）:
- *   npx tsx prisma/seed-demo.ts
+ * 使い方（ローカル: .env の環境変数を読み込んで実行）:
+ *   npm run seed:demo
  *
- * 本番に対して実行する場合は DATABASE_URL / S3_* / DEMO_USER_EMAIL を
- * 本番の値にした状態で同じコマンドを実行する。
+ * 本番: 接続情報（DATABASE_URL / S3_* / DEMO_USER_EMAIL）は
+ * Git管理外の .env.production.local に書き、SEED_CONFIRM=yes を付けて実行する:
+ *   DOTENV_CONFIG_PATH=.env.production.local SEED_CONFIRM=yes npm run seed:demo
  */
 
 function requireEnv(key: string): string {
@@ -216,11 +217,39 @@ async function copyOutfits(
   return copied;
 }
 
+/**
+ * ローカル以外の DB（=本番など）への実行は SEED_CONFIRM=yes を要求する。
+ * 「本番に向いていると気づかず実行してデモを消し飛ばす」事故の防止。
+ */
+function assertRemoteRunConfirmed(dbHost: string): void {
+  const isLocal = dbHost === "localhost" || dbHost === "127.0.0.1";
+
+  if (!isLocal && process.env.SEED_CONFIRM !== "yes") {
+    throw new Error(
+      `ローカル以外のDB（${dbHost}）への実行には SEED_CONFIRM=yes の指定が必要です。`,
+    );
+  }
+}
+
 async function main(): Promise<void> {
   const sourceEmail = process.env.SEED_SOURCE_EMAIL ?? "test@co.jp";
   const demoEmail = requireEnv("DEMO_USER_EMAIL");
+  const dbHost = new URL(requireEnv("DATABASE_URL")).hostname;
+
+  console.log(
+    `実行内容: DB=${dbHost} / コピー元=${sourceEmail} / 複製先(全削除)=${demoEmail}`,
+  );
+  assertRemoteRunConfirmed(dbHost);
+
   const sourceId = await findUserId(sourceEmail);
   const demoId = await findUserId(demoEmail);
+
+  // コピー元とデモが同一だと「先に全削除→空を複製」で元データを失うため必ず止める
+  if (sourceId === demoId) {
+    throw new Error(
+      `コピー元とデモが同一ユーザーです（${sourceEmail}）。SEED_SOURCE_EMAIL と DEMO_USER_EMAIL を確認してください。`,
+    );
+  }
 
   await wipeDemoData(demoId);
   const idMap = await copyItems(sourceId, demoId);

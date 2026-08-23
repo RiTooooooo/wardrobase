@@ -4,12 +4,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SignupForm } from "@/components/features/auth/SignupForm";
+import { isSignupOpen } from "@/lib/signupPolicy";
 
 import styles from "./page.module.css";
 
 export default function SignupPage(): ReactElement {
   // サインアップ封鎖時はページごと隠す。API 側は auth.ts の disableSignUp が塞ぐ
-  if (process.env.AUTH_DISABLE_SIGNUP === "true") {
+  // （本番は常時封鎖。判定は signupPolicy.ts に集約）
+  if (!isSignupOpen()) {
     notFound();
   }
 

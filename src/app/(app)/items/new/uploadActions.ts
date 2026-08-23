@@ -16,6 +16,12 @@ export type UploadUrlResult =
 // Supabase Storage のバケット側制限（5MB）と揃える
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
+// NaN・負数・Infinity の申告を弾く。なお申告値と実ファイルの一致は
+// ここでは保証できないため、実サイズはバケット側の5MB制限が最終防衛線
+function isValidFileSize(fileSize: number): boolean {
+  return Number.isFinite(fileSize) && fileSize > 0 && fileSize <= MAX_FILE_SIZE;
+}
+
 export async function getUploadUrlAction(
   contentType: string,
   fileSize: number,
@@ -28,7 +34,7 @@ export async function getUploadUrlAction(
     return { ok: false, message: "JPEG・PNG・WebP のみ対応しています" };
   }
 
-  if (fileSize > MAX_FILE_SIZE) {
+  if (!isValidFileSize(fileSize)) {
     return { ok: false, message: "ファイルサイズは5MB以下にしてください" };
   }
 

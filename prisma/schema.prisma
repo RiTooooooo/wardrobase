@@ -92,6 +92,17 @@ model Verification {
   @@map("verification")
 }
 
+/// better-auth のレート制限カウンタ（auth.ts の rateLimit.storage: "database"）。
+/// サーバーレスでインスタンス間のカウンタを共有するために DB に置く
+model RateLimit {
+  id          String @id @default(uuid())
+  key         String @unique
+  count       Int
+  lastRequest BigInt @map("last_request")
+
+  @@map("rate_limit")
+}
+
 // ============================================================
 // アプリケーションのドメインテーブル
 // ============================================================

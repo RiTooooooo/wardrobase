@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { LoginForm } from "@/components/features/auth/LoginForm";
 
+import { isSignupOpen } from "@/lib/signupPolicy";
+
 import { demoLoginAction } from "./demoActions";
 import styles from "./page.module.css";
 
@@ -16,7 +18,7 @@ function isDemoConfigured(): boolean {
 }
 
 export default function LoginPage(): ReactElement {
-  const signupDisabled = process.env.AUTH_DISABLE_SIGNUP === "true";
+  const signupDisabled = !isSignupOpen();
 
   return (
     <>

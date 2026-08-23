@@ -8,5 +8,6 @@
 export function isDemoEmail(email: string): boolean {
   const demoEmail = process.env.DEMO_USER_EMAIL ?? "";
 
-  return demoEmail !== "" && email === demoEmail;
+  // メールアドレスの大文字小文字の揺れで保護が外れないよう正規化して比較する
+  return demoEmail !== "" && email.toLowerCase() === demoEmail.toLowerCase();
 }

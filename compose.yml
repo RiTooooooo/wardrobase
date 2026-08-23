@@ -9,7 +9,7 @@ services:
       POSTGRES_DB: wardrobase
     ports:
       # ホスト側は5433（5432はローカルの別Postgresと衝突しやすいため）
-      - "5433:5432"
+      - "127.0.0.1:5433:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -28,8 +28,8 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     ports:
-      - "9000:9000"   # S3 API
-      - "9001:9001"   # 管理コンソール http://localhost:9001
+      - "127.0.0.1:9000:9000"   # S3 API
+      - "127.0.0.1:9001:9001"   # 管理コンソール http://localhost:9001
     volumes:
       - minio-data:/data
     healthcheck:
@@ -57,8 +57,8 @@ services:
     container_name: wardrobase-mailpit
     restart: unless-stopped
     ports:
-      - "1025:1025"   # SMTP
-      - "8025:8025"   # Web UI
+      - "127.0.0.1:1025:1025"   # SMTP
+      - "127.0.0.1:8025:8025"   # Web UI
 
 volumes:
   postgres-data:

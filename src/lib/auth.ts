@@ -9,6 +9,7 @@ import { nextCookies } from "better-auth/next-js";
 
 import { prisma } from "@/infrastructure/prisma/client";
 import { isDemoEmail } from "@/lib/demo";
+import { isSignupEmailAllowed, isSignupOpen } from "@/lib/signupPolicy";
 
 /**
  * デモアカウントに許可しない認証エンドポイント。
@@ -25,7 +26,28 @@ const DEMO_BLOCKED_AUTH_PATHS = new Set([
   "/delete-user",
 ]);
 
-const demoWriteGuard = createAuthMiddleware(async (ctx) => {
+function extractEmail(body: unknown): string {
+  if (typeof body !== "object" || body === null) return "";
+
+  const email = (body as { email?: unknown }).email;
+
+  return typeof email === "string" ? email : "";
+}
+
+/** サインアップ開放中でも、許可リストにないメールアドレスの登録は拒否する */
+function assertSignupEmailAllowed(path: string, body: unknown): void {
+  if (path !== "/sign-up/email") return;
+
+  if (!isSignupEmailAllowed(extractEmail(body))) {
+    throw new APIError("FORBIDDEN", {
+      message: "このメールアドレスでは登録できません",
+    });
+  }
+}
+
+const authGuard = createAuthMiddleware(async (ctx) => {
+  assertSignupEmailAllowed(ctx.path, ctx.body);
+
   if (!DEMO_BLOCKED_AUTH_PATHS.has(ctx.path)) return;
 
   const session = await getSessionFromCtx(ctx);
@@ -53,25 +75,26 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
-    // サインアップは本番では封じる（自分専用アプリのため）。
-    // 本人のアカウント作成時のみ Vercel 側で一時的に false にする。
-    disableSignUp: process.env.AUTH_DISABLE_SIGNUP === "true",
+    // 本番は環境変数に関係なく常に封鎖（アカウントは prisma/create-user.ts で作る）。
+    // 開発では AUTH_ALLOW_SIGNUP=true を明示したときだけ開く（fail-closed）
+    disableSignUp: !isSignupOpen(),
     // サインアップを封じているため他人のメールアドレスでの登録経路が無く、
     // メール確認は導入しない（導入するならメール送信基盤が先）。
     requireEmailVerification: false,
   },
 
   // 認証エンドポイントの総当たり対策。
-  // サーバーレスではインスタンスごとのメモリ保存なので完全ではないが、
-  // 単一インスタンスからの連打は抑止できる。
+  // サーバーレスではインスタンスごとにメモリが分かれてしまうため、
+  // カウンタを DB（rate_limits テーブル）に置いて全インスタンスで共有する。
   rateLimit: {
     enabled: true,
+    storage: "database",
     window: 60,
     max: 20,
   },
 
   hooks: {
-    before: demoWriteGuard,
+    before: authGuard,
   },
 
   // Server Component / Server Function から Cookie を書けるようにする。
