@@ -109,7 +109,6 @@ export function StylingForm({
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <TextField
         id="name" name="name" label="スタイリング名" type="text"
-        placeholder="仕事の日の定番"
         defaultValue={initialValues?.name}
         error={fieldErrors.name} disabled={isPending}
       />

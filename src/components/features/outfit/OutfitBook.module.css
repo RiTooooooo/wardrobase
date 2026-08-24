@@ -1,11 +1,11 @@
 /* ===== 見出し行（タイトル・日付検索・記録ボタン） ===== */
 
+/* タイトルの下に操作列を置く（3セクション共通のパターン） */
 .header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-4);
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
 }
 
 .titleArea {
@@ -14,16 +14,16 @@
   gap: var(--space-3);
 }
 
-/* 英語の大見出し＋日本語の補足という構成 */
+/* 英語の大見出し＋日本語の補足という構成。誇張せず 2rem で締める */
 .title {
-  font-size: var(--text-5xl);
+  font-size: var(--text-3xl);
   font-weight: var(--font-bold);
   letter-spacing: -0.01em;
 }
 
 /* 件数の数字だけ大きく青くして、リズムを付ける */
 .countNumber {
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   font-weight: var(--font-bold);
   color: var(--color-accent);
 }
@@ -139,6 +139,7 @@
 
 /* 表紙。アクセントの鮮やかなブルー */
 .cover {
+  position: relative;
   padding: var(--space-4) var(--space-5) var(--space-5);
   background: linear-gradient(
     135deg,
@@ -158,14 +159,69 @@
   perspective: 2400px;
 }
 
-/* 狭い画面用。1ページだけを全幅で見せる */
+/* 狭い画面用。1ページだけを全幅で見せる（リング綴じのバインダー） */
 .spreadSingle {
   grid-template-columns: 1fr;
 }
 
+/*
+ * スパイラルノートの針金綴じ。グレーの針金が紙の縁を巻き込み、
+ * 黒い先端が紙の上で留まる。ページのめくりはこの綴じ（左端）を
+ * 軸に返るため、意匠と動きが一致する。
+ */
+.binderRings {
+  position: absolute;
+  top: var(--space-5);
+  bottom: var(--space-5);
+  /* 表紙の左端から外側の背景まで針金を突き出す */
+  left: -12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ring {
+  position: relative;
+  width: 36px;
+  height: 15px;
+}
+
+/*
+ * 針金の輪。右端が下がる向きに傾け、輪の先が黒い留めの中へ入る。
+ * （逆向きに傾けると右端が浮いて、穴を通っていないように見える）
+ */
+.ring::before {
+  content: "";
+  position: absolute;
+  inset: 0 6px 0 0;
+  border: 3px solid #98a2b3;
+  border-radius: 50%;
+  transform: rotate(22deg);
+}
+
+/* 紙の上に見える針金の先端。輪の右端が下りてくる位置に重ねて刺す */
+.ring::after {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: -1px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: #1f2937;
+}
+
+/* リングが通るぶん左に綴じ代を、上にはひと呼吸の余白を取ってから記録を始める */
+.spreadSingle .pageContent {
+  padding-top: var(--space-8);
+  padding-left: var(--space-8);
+}
+
 .pageSide {
   position: relative;
-  min-height: 460px;
+  min-height: 400px;
   /*
    * グリッドアイテムの min-width は既定で auto のため、中身（ポラロイドの列や
    * 折り返さないメモ）の最小幅に引っ張られて列が 1fr を超え、本からはみ出す。
@@ -208,9 +264,9 @@
 .pageContent {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
   height: 100%;
-  padding: var(--space-6) var(--space-5);
+  padding: var(--space-5);
 }
 
 /*
@@ -233,12 +289,66 @@
   left: 0;
 }
 
+/*
+ * 1ページ表示のめくりは、紙が裏返る途中でふわっと消える（現れる）。
+ * 見開きと違い裏面に載せる実コンテンツが無く、白紙の裏を長く見せると
+ * 画面の大部分が白に覆われて滑らかさが失われるため。
+ */
+.sheetFull.sheetTurnNext {
+  animation-name: flipNextFade;
+}
+
+.sheetFull.sheetTurnPrev {
+  animation-name: flipPrevFade;
+}
+
+@keyframes flipNextFade {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotateY(-180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flipPrevFade {
+  0% {
+    transform: rotateY(-180deg);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  55% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* めくりはゆっくり持ち上がり、ふわりと着地する（本を扱う手つきの速度） */
 .sheetTurnNext {
-  animation: flipNext 700ms var(--easing) both;
+  animation: flipNext 1200ms cubic-bezier(0.45, 0.05, 0.15, 1) both;
 }
 
 .sheetTurnPrev {
-  animation: flipPrev 700ms var(--easing) both;
+  animation: flipPrev 1200ms cubic-bezier(0.45, 0.05, 0.15, 1) both;
 }
 
 @keyframes flipNext {
@@ -415,9 +525,9 @@
     calc(140ms + min(var(--index, 0), 8) * 90ms) backwards;
 }
 
-/* 日付はアルバムの章見出し。少し字間を空けてキャプションらしくする */
+/* 日付はアルバムの章見出し。小さめの字で少し字間を空け、キャプションらしくする */
 .dateLabel {
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
   font-weight: var(--font-medium);
   letter-spacing: 0.06em;
   color: var(--color-text-secondary);
@@ -557,6 +667,10 @@
  */
 .coverShaped {
   position: relative;
+  /*
+   * 上下は意図的に非対称。机の上の本を少し斜めから見る想定で、
+   * 手前（下）の縁を厚くすると自然な奥行きに見える。
+   */
   padding: var(--space-8) var(--space-6) var(--space-10);
   background: transparent;
   border-radius: 0;
@@ -583,6 +697,7 @@
  */
 .paperShape {
   position: absolute;
+  /* 上下非対称は意図的（斜めから見た本の奥行き。coverShaped と同じ理由） */
   inset: 10px 14px 16px;
   background-color: var(--color-bg-elevated);
   background-image:
@@ -628,7 +743,15 @@
   padding: var(--space-8) var(--space-8) calc(var(--space-12) + var(--space-8));
 }
 
-/* めくれかけの角は、下辺の曲線に掛からない位置まで持ち上げる */
+/*
+ * めくれかけの角は控えめな大きさにし、
+ * 下辺の曲線に掛からない位置まで持ち上げる。
+ */
+.coverShaped .curl {
+  width: 32px;
+  height: 32px;
+}
+
 .coverShaped .curlRight {
   right: 10px;
   bottom: 26px;
@@ -648,8 +771,24 @@
 }
 
 @media (max-width: 600px) {
+  /*
+   * 操作行はタイトルの下に1行で並べる。
+   * ラベルとボタンが縦に折れて「日付で開\nく」のような崩れになっていた。
+   */
+  /* 記録ボタンと日付入力は左に寄せて隣り合わせる（間延びさせない） */
+  .headerActions {
+    width: 100%;
+    gap: var(--space-3);
+  }
+
+  .addButton {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
   .cover {
-    padding: var(--space-2) var(--space-3) var(--space-3);
+    /* バインダーの青い縁は上下左右とも同じ厚みにする */
+    padding: var(--space-3);
     border-radius: var(--radius-lg);
     /*
      * 表紙の丸みからページの角や紙の束の影がはみ出して見えるため、
@@ -694,5 +833,56 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/*
+ * スパイラルバインダーの表紙（狭い画面の1ページ表示）。
+ * 針金を表紙の外までまたがせるため、はみ出しを許可する。
+ * 代わりに紙の角は紙自身の丸みで収める。
+ */
+.coverBinder {
+  overflow: visible;
+}
+
+.coverBinder .pageSide {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* バインダーの折れ目は控えめに。小さくして角から少し浮かせ、上に間を空ける */
+.coverBinder .curlRight {
+  width: 30px;
+  height: 30px;
+  right: 8px;
+  bottom: 12px;
+}
+
+/*
+ * 高さの低い画面（ノートPCなど）では、本全体が1画面に収まることを優先し、
+ * ポラロイドと余白を一回り詰める。狭い幅（スマホ）は対象外。
+ */
+@media (max-height: 880px) and (min-width: 601px) {
+  .cardThumb {
+    width: 48px;
+    padding: 2px 2px 9px;
+  }
+
+  .card {
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .pageContent {
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .dateGroup {
+    gap: var(--space-2);
+  }
+
+  .pageSide {
+    min-height: 320px;
   }
 }

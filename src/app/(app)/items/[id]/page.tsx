@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 
 import { headers } from "next/headers";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 import { CATEGORY_LABELS } from "@/domain/item/category";
@@ -43,8 +44,12 @@ export default async function ItemDetailPage({
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <ItemDetailActions itemId={id} />
+        <Link className={styles.back} href="/wardrobe">
+          ワードローブに戻る
+        </Link>
+        {/* 一覧ページと同じ文法: タイトルが先、操作列（主役1つ+テキスト脇役）が後 */}
         <h1 className={styles.title}>{item.name}</h1>
+        <ItemDetailActions itemId={id} />
       </div>
       <ItemImage imageUrl={imageUrl} name={item.name} />
       <ItemDetails item={item} />

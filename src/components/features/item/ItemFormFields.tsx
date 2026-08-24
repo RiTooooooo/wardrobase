@@ -31,7 +31,6 @@ export function NameField({ iv, errors, disabled }: {
   return (
     <TextField
       id="name" name="name" label="アイテム名" type="text"
-      placeholder="ヘビーウェイトTシャツ"
       defaultValue={iv?.name}
       error={errors.name} disabled={disabled}
     />
@@ -77,7 +76,6 @@ export function ColorBrandRow({ iv, errors, disabled }: {
       />
       <TextField
         id="brand" name="brand" label="ブランド" type="text" optional
-        placeholder="CIOTA"
         defaultValue={iv?.brand ?? undefined}
         error={errors.brand} disabled={disabled}
       />
@@ -93,7 +91,6 @@ export function PriceDateRow({ priceDef, dateDef, errors, disabled }: {
     <div className={styles.row}>
       <TextField
         id="price" name="price" label="購入価格（円）" type="number" optional
-        placeholder="12000"
         defaultValue={priceDef}
         error={errors.price} disabled={disabled}
       />

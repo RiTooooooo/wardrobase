@@ -48,9 +48,6 @@ export default async function WardrobePage(): Promise<ReactElement> {
             <span className={styles.countNumber}>{items.length}</span> items
           </span>
         </div>
-        <Link className={styles.addButton} href="/items/new">
-          アイテムを追加
-        </Link>
       </header>
       {items.length === 0 ? (
         <p className={styles.empty}>
@@ -60,7 +57,14 @@ export default async function WardrobePage(): Promise<ReactElement> {
           </Link>
         </p>
       ) : (
-        <WardrobeCloset items={wardrobeItems} />
+        <WardrobeCloset
+          items={wardrobeItems}
+          addAction={
+            <Link className={styles.addButton} href="/items/new">
+              アイテムを追加
+            </Link>
+          }
+        />
       )}
     </div>
   );

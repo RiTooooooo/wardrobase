@@ -1,7 +1,16 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  /* 操作列→コンテンツの間隔はページ共通の 24px リズムに揃える */
+  gap: var(--space-6);
+}
+
+/* 「アイテムを追加」と絞り込み（狭い画面のシートトリガー）を並べる1列 */
+.actionsRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
 }
 
 .row {
@@ -93,19 +102,13 @@
 }
 
 /*
- * 狭い画面ではプルダウン（FilterSelects）に置き換えるため、チップは出さない。
- * カテゴリ7個・季節4個が折り返して縦に4行を占めていた。
+ * 狭い画面では操作一式をシート（FilterSheet）に畳むため、
+ * チップ・検索・並び替えの行ごと出さない。
+ * 3段あった操作が1本のバーになり、クローゼットが先頭画面に入る。
  */
 @media (max-width: 600px) {
-  .chipRow {
+  .row {
     display: none;
-  }
-}
-
-@media (max-width: 600px) {
-  .searchInput {
-    max-width: none;
-    min-width: 0;
   }
 }
 

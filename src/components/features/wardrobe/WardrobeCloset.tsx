@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { CSSProperties, ReactElement } from "react";
+import type { CSSProperties, ReactElement, ReactNode } from "react";
 
 import Link from "next/link";
 
@@ -27,6 +27,8 @@ import type { WardrobeFilters as Filters, WardrobeItem } from "./wardrobeTypes";
 
 type Props = {
   items: WardrobeItem[];
+  /** フィルタ行の先頭に置く操作（「アイテムを追加」リンク）。1列にまとめるため */
+  addAction?: ReactNode;
 };
 
 /** 引き出しの識別子。カテゴリに加えて最上段の「すべて」を持つ */
@@ -40,9 +42,10 @@ const DEFAULT_FILTERS: Filters = {
   sort: "createdAt-desc",
 };
 
-export function WardrobeCloset({ items }: Props): ReactElement {
+export function WardrobeCloset({ items, addAction }: Props): ReactElement {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
-  const [openKey, setOpenKey] = useState<DrawerKey | null>("ALL");
+  /* 初期状態は全段閉じる。実際のクローゼットと同じく、自分の手で開ける */
+  const [openKey, setOpenKey] = useState<DrawerKey | null>(null);
   const filtered = useMemo(
     () => filterAndSort(items, filters),
     [items, filters],
@@ -55,7 +58,11 @@ export function WardrobeCloset({ items }: Props): ReactElement {
 
   return (
     <>
-      <WardrobeFilters filters={filters} onChange={setFilters} />
+      <WardrobeFilters
+        filters={filters}
+        onChange={setFilters}
+        addAction={addAction}
+      />
       <div className={styles.closet}>
         <div className={styles.cornice} aria-hidden="true" />
         <div className={styles.carcass}>

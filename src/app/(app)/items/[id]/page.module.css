@@ -114,17 +114,18 @@
   background: var(--color-accent-hover);
 }
 
+/* 破壊的操作は目立つカプセルにせず、赤い静かなテキストに留める */
 .deleteButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 36px;
-  padding: var(--space-2) var(--space-4);
+  padding: var(--space-1) var(--space-2);
   font-size: var(--text-sm);
   font-weight: var(--font-normal);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-md);
   background: transparent;
-  border: 1px solid var(--color-border);
+  border: none;
   color: var(--color-error);
   cursor: pointer;
   transition: background var(--duration-fast) var(--easing);

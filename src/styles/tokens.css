@@ -125,11 +125,11 @@
     color-mix(in srgb, var(--color-accent) 30%, transparent);
 
   /* ===== トランジション ===== */
-  --duration-fast: 100ms;
-  --duration-normal: 200ms;
-  --duration-slow: 300ms;
+  --duration-fast: 120ms;
+  --duration-normal: 260ms;
+  --duration-slow: 420ms;
   /* 表示時の演出など、動いたと分かってほしいもの */
-  --duration-slower: 450ms;
+  --duration-slower: 700ms;
   --easing: cubic-bezier(0.4, 0, 0.2, 1);
   /* 現れる動き。終わりが大きく減速し、到着した感じが出る */
   --easing-out: cubic-bezier(0.16, 1, 0.3, 1);

@@ -11,10 +11,21 @@
   color: var(--color-text-secondary);
 }
 
+/*
+ * 折り返して面積を取らず、1行に収めて横スクロールで送る。
+ * スタイリングが増えてもフォームの縦の長さが変わらない。
+ */
 .list {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--space-2);
+  overflow-x: auto;
+  padding-bottom: var(--space-1);
+  -webkit-overflow-scrolling: touch;
+}
+
+.list > * {
+  flex-shrink: 0;
 }
 
 /*
@@ -49,10 +60,4 @@
 
 .name {
   font-weight: var(--font-medium);
-}
-
-.count {
-  font-size: var(--text-xs);
-  color: var(--color-text-tertiary);
-  font-variant-numeric: tabular-nums;
 }

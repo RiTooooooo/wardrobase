@@ -46,7 +46,6 @@ export function StylingPicker({
             onClick={() => onApply(styling.itemIds)}
           >
             <span className={styles.name}>{styling.name}</span>
-            <span className={styles.count}>{styling.itemIds.length}点</span>
           </button>
         ))}
       </div>

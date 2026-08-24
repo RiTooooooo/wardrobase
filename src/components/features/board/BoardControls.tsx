@@ -75,7 +75,6 @@ export function BoardControls({
         name="board-name"
         label="スタイリング名"
         type="text"
-        placeholder="夏の定番コーデ"
         defaultValue={initialName}
         disabled={isPending}
       />

@@ -63,9 +63,12 @@ export function OutfitBook({ groups, totalCount }: Props): ReactElement {
           </span>
         </div>
         <div className={styles.headerActions}>
+          {/* 主役のボタンを先頭に置く（他セクションと同じ並び） */}
+          <Link className={styles.addButton} href="/outfits/new">
+            コーデを記録
+          </Link>
           <div className={styles.search}>
-            <label className={styles.searchLabel}>
-              日付で開く
+            <label className={styles.searchLabel} aria-label="日付で開く">
               <input
                 type="date"
                 className={styles.searchInput}
@@ -79,9 +82,6 @@ export function OutfitBook({ groups, totalCount }: Props): ReactElement {
               </span>
             ) : null}
           </div>
-          <Link className={styles.addButton} href="/outfits/new">
-            コーデを記録
-          </Link>
         </div>
       </header>
       {groups.length === 0 ? (

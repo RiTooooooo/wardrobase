@@ -5,7 +5,10 @@ import Link from "next/link";
 import type { OutfitEntry, ThumbItem } from "./lookbookTypes";
 import styles from "./OutfitBook.module.css";
 
-/* ルックブックの1記録。台紙にポラロイド写真とメモが並ぶ */
+/*
+ * ルックブックの1記録。台紙にポラロイド写真だけを並べる。
+ * メモ・お気に入り度・天気は詳細ページに任せ、一覧は写真に絞る。
+ */
 export function OutfitCard({
   entry,
 }: {
@@ -14,12 +17,6 @@ export function OutfitCard({
   return (
     <Link href={`/outfits/${entry.id}`} className={styles.card}>
       <CardThumbs items={entry.items} />
-      <div className={styles.cardBody}>
-        <CardMeta entry={entry} />
-        {entry.memo !== null ? (
-          <span className={styles.cardMemo}>{entry.memo}</span>
-        ) : null}
-      </div>
     </Link>
   );
 }
@@ -72,20 +69,3 @@ function CardThumbs({
   );
 }
 
-function CardMeta({
-  entry,
-}: {
-  entry: OutfitEntry;
-}): ReactElement | null {
-  const parts: string[] = [];
-  if (entry.satisfaction !== null) {
-    parts.push(`お気に入り度 ${entry.satisfaction}/5`);
-  }
-  if (entry.weather !== null) {
-    parts.push(entry.weather);
-  }
-
-  if (parts.length === 0) return null;
-
-  return <span className={styles.cardMeta}>{parts.join(" / ")}</span>;
-}

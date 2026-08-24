@@ -82,7 +82,7 @@ export function ItemPicker({
             disabled={disabled}
             onChange={(e) => handleFilterChange(e.target.value)}
           >
-            <option value={ALL}>すべて</option>
+            <option value={ALL}>All</option>
             {toChoices(items).map((category) => (
               <option key={category} value={category}>
                 {CATEGORY_LABELS[category]}

@@ -60,11 +60,11 @@ export default async function StylingListPage(): Promise<ReactElement> {
           </span>
         </div>
         <div className={styles.headerActions}>
-          <Link className={styles.secondaryButton} href="/stylings/new">
-            スタイリングを登録
-          </Link>
           <Link className={styles.addButton} href="/stylings/board/new">
             ボードで作成
+          </Link>
+          <Link className={styles.secondaryButton} href="/stylings/new">
+            スタイリングを登録
           </Link>
         </div>
       </header>

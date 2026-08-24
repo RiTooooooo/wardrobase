@@ -124,9 +124,7 @@
   color: var(--color-text-primary);
 }
 
-.drawerOpen .pull {
-  transform: translateX(-50%) scale(1.15);
-}
+/* 取っ手は開閉で動かさない（位置や大きさが変わると視線が揺れる） */
 
 /*
  * 0fr → 1fr のグリッド行で開閉する。

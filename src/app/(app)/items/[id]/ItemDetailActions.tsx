@@ -37,23 +37,18 @@ export function ItemDetailActions({ itemId }: Props): ReactElement {
   }
 
   return (
-    <>
-      <Link className={styles.back} href="/wardrobe">
-        ワードローブに戻る
+    <div className={styles.actions}>
+      <Link className={styles.editLink} href={`/items/${itemId}/edit`}>
+        編集する
       </Link>
-      <div className={styles.actions}>
-        <Link className={styles.editLink} href={`/items/${itemId}/edit`}>
-          編集する
-        </Link>
-        <button
-          type="button"
-          className={styles.deleteButton}
-          disabled={isPending}
-          onClick={handleDelete}
-        >
-          {isPending ? "削除中..." : "削除する"}
-        </button>
-      </div>
-    </>
+      <button
+        type="button"
+        className={styles.deleteButton}
+        disabled={isPending}
+        onClick={handleDelete}
+      >
+        {isPending ? "削除中..." : "削除する"}
+      </button>
+    </div>
   );
 }

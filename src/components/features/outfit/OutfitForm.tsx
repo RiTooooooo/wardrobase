@@ -144,8 +144,7 @@ export function OutfitForm({
         value={satisfaction} disabled={isPending} onSelect={setSatisfaction}
       />
       <TextField
-        id="weather" name="weather" label="天気メモ" type="text" optional
-        placeholder="晴れ・30℃"
+        id="weather" name="weather" label="天気" type="text" optional
         defaultValue={initialValues?.weather}
         error={fieldErrors.weather} disabled={isPending}
       />

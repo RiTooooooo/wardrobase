@@ -11,10 +11,15 @@ html {
   color-scheme: light;
 }
 
+/*
+ * 横はみ出しの抑止。hidden はスクロール基準を作ってしまい
+ * 子孫の position: sticky を無効化するため、clip を使う
+ * （clip はスクロールコンテナにならない）。
+ */
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {

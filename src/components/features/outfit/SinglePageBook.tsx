@@ -12,12 +12,17 @@ import styles from "./OutfitBook.module.css";
 import { sheetClassName } from "./SpreadBook";
 
 /*
- * 狭い画面用の1ページ表示の本。
+ * 狭い画面用の1ページ表示。左をリングで綴じたバインダーとして見せる。
  *
  * 見開きにすると1ページの幅が足りないため、1画面に1ページだけを出す。
  * めくりは見開き版と同じシート方式で、ページ全幅の紙が
- * 綴じ（左端）を軸に返る。紙の裏は実物と同じく白紙にする。
+ * 綴じ（左端のリング）を軸に返る。紙の裏は実物と同じく白紙にする。
+ * 折れ目（ドッグイア）は「次へ」の右下だけに置き、
+ * 前へ戻るのは下部ナビのボタンが担う（押すと逆回転で紙が戻ってくる）。
  */
+
+/* スパイラル綴じの針金の数 */
+const RING_COUNT = 10;
 
 /* いま見えているページ。めくり中は「めくり終わり側」を下敷きにする */
 function visiblePage(
@@ -65,17 +70,17 @@ export function SinglePageBook({
 
   return (
     <div className={styles.book}>
-      <div className={styles.cover}>
+      <div className={`${styles.cover} ${styles.coverBinder}`}>
+        {/* スパイラルの針金。表紙の縁をまたいで外まで巻き込む */}
+        <div className={styles.binderRings} aria-hidden="true">
+          {Array.from({ length: RING_COUNT }, (_, i) => (
+            <span key={i} className={styles.ring} />
+          ))}
+        </div>
         <div className={`${styles.spread} ${styles.spreadSingle}`}>
           <div className={`${styles.pageSide} ${styles.pageRight}`}>
             <BookPage groups={visiblePage(pages, current, flip)} />
-            <button
-              type="button"
-              className={`${styles.curl} ${styles.curlLeft}`}
-              aria-label="前のページへ戻る"
-              disabled={!canPrev}
-              onClick={() => setFlip({ base: current - 1, dir: "prev" })}
-            />
+            {/* 折れ目は「次へ」の右下だけ。前へ戻るのは下のボタンが担う */}
             <button
               type="button"
               className={`${styles.curl} ${styles.curlRight}`}

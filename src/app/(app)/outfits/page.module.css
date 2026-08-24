@@ -1,12 +1,16 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  /* タイトル→操作列→コンテンツの間隔は3セクション共通の 24px リズム */
+  gap: var(--space-6);
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  /* 上下に大きく余白を取り、詰め込まない */
-  padding: var(--space-12) var(--space-8) var(--space-16);
+  /*
+   * 本が1画面に収まることを優先し、上下の余白は控えめにする。
+   * （本の下端が見切れると「めくる」以前にページの存在に気づけない）
+   */
+  padding: var(--space-6) var(--space-8) var(--space-10);
 }
 
 @media (max-width: 600px) {

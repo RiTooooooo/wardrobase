@@ -35,7 +35,8 @@ export function ClosetDrawer({
   onDragStart,
   onPick,
 }: Props): ReactElement {
-  const [openCat, setOpenCat] = useState<Category | null>("TOPS");
+  /* 初期状態は全段閉じる。実際のクローゼットと同じく、自分の手で開ける */
+  const [openCat, setOpenCat] = useState<Category | null>(null);
   /*
    * 本体ごとの開閉。狭い画面では、閉じるとカーペットに高さを譲れる。
    * 広い画面は横に並ぶので畳む必要がなく、CSS 側で closetShut を無視する。
@@ -67,7 +68,7 @@ export function ClosetDrawer({
           aria-expanded={isCollapsible ? !isShut : undefined}
           onClick={() => setIsShut((prev) => !prev)}
         >
-          <span>クローゼット</span>
+          <span>Closet</span>
           <span className={styles.toggleHint} aria-hidden="true">
             {isShut ? "開く" : "閉じる"}
           </span>

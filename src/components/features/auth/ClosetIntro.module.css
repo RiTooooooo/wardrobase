@@ -1,13 +1,13 @@
 /*
  * タイムライン（.play が付いてから）
  *   0.00s  本体・天板が描かれる
- *   0.25s  開口部
- *   0.40s  台輪・脚
- *   0.55s  扉の外形
- *   0.80s  扉の鏡板
- *   1.05s  取っ手（1.35s に描き終わる）
- *   1.60s  扉が開く（間を 0.25s 置いてから）
- *   2.00s  ログインUIが現れる
+ *   0.35s  開口部
+ *   0.55s  台輪・脚
+ *   0.75s  扉の外形
+ *   1.10s  扉の鏡板
+ *   1.45s  取っ手（1.90s に描き終わる）
+ *   2.15s  扉が開く（間を 0.25s 置いてから）
+ *   2.75s  ログインUIが現れる
  *
  * 素の状態は「描き終わって扉が開いた完成形」にしてある。
  * JSが動かない環境でもフォームが必ず見えるようにするため。
@@ -62,7 +62,7 @@
 }
 
 .play .line {
-  animation: draw 0.75s var(--easing) backwards;
+  animation: draw 1s var(--easing) backwards;
 }
 
 @keyframes draw {
@@ -80,28 +80,28 @@
 }
 
 .play .drawInterior {
-  animation-duration: 0.55s;
-  animation-delay: 0.25s;
+  animation-duration: 0.75s;
+  animation-delay: 0.35s;
 }
 
 .play .drawBase {
-  animation-duration: 0.5s;
-  animation-delay: 0.4s;
-}
-
-.play .drawDoor {
-  animation-duration: 0.5s;
+  animation-duration: 0.7s;
   animation-delay: 0.55s;
 }
 
+.play .drawDoor {
+  animation-duration: 0.7s;
+  animation-delay: 0.75s;
+}
+
 .play .drawDoorPanel {
-  animation-duration: 0.4s;
-  animation-delay: 0.8s;
+  animation-duration: 0.55s;
+  animation-delay: 1.1s;
 }
 
 .play .drawHandle {
-  animation-duration: 0.3s;
-  animation-delay: 1.05s;
+  animation-duration: 0.45s;
+  animation-delay: 1.45s;
 }
 
 .door {
@@ -111,8 +111,8 @@
 }
 
 .play .door {
-  animation-duration: 0.85s;
-  animation-delay: 1.6s;
+  animation-duration: 1.15s;
+  animation-delay: 2.15s;
   animation-fill-mode: backwards;
   /* 開き終わりが減速する、ドアらしい効き方 */
   animation-timing-function: cubic-bezier(0.22, 0.9, 0.28, 1);
@@ -167,18 +167,20 @@
 }
 
 .play .content {
-  animation: reveal 0.65s var(--easing) 2s backwards;
+  /* 扉が開ききる頃、フォームが奥からゆっくり浮かび上がる */
+  animation: reveal 1.5s var(--easing-out) 2.75s backwards;
 }
 
+/* クローゼットの奥からせり出してくる印象を、わずかな縮小＋上昇で作る */
 @keyframes reveal {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(14px) scale(0.96);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -196,11 +198,11 @@
    * フォームが読みやすい状態で止まる。
    */
   .closet {
-    opacity: 0.3;
+    opacity: 0.18;
   }
 
   .play .closet {
-    animation: dim 0.7s var(--easing-out) 2s backwards;
+    animation: dim 1.2s var(--easing-out) 2.75s backwards;
   }
 
   .content {
@@ -214,7 +216,7 @@
    * 「クローゼットの中から取り出した」印象になる。
    */
   .play .content {
-    animation: emerge 0.7s var(--easing-out) 2s backwards;
+    animation: emerge 1.2s var(--easing-out) 2.75s backwards;
   }
 }
 
@@ -237,7 +239,7 @@
   }
 
   to {
-    opacity: 0.3;
+    opacity: 0.18;
   }
 }
 
