@@ -12,7 +12,8 @@
     "check": "npm run lint && npm run test:run && npm run build",
     "postinstall": "prisma generate",
     "user:create": "tsx prisma/create-user.ts",
-    "seed:demo": "tsx prisma/seed-demo.ts"
+    "seed:demo": "tsx prisma/seed-demo.ts",
+    "transfer:demo": "tsx prisma/transfer-demo.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1100.0",
