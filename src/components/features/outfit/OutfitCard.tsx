@@ -2,6 +2,8 @@ import type { ReactElement } from "react";
 
 import Link from "next/link";
 
+import { FadeInImage } from "@/components/ui/FadeInImage";
+
 import type { OutfitEntry, ThumbItem } from "./lookbookTypes";
 import styles from "./OutfitBook.module.css";
 
@@ -49,11 +51,10 @@ function CardThumbs({
       {shown.map((item, index) => (
         <div key={index} className={styles.cardThumb}>
           {item.imageUrl ? (
-            <img
+            <FadeInImage
               className={styles.cardThumbImage}
               src={item.imageUrl}
               alt={item.name}
-              loading="lazy"
             />
           ) : (
             <span className={styles.cardThumbName}>{item.name}</span>
