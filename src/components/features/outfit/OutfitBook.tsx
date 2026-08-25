@@ -75,6 +75,12 @@ export function OutfitBook({ groups, totalCount }: Props): ReactElement {
                 value={searchDate}
                 onChange={handleDateChange}
               />
+              {/* iOS Safari は空の date input に何も表示しないため、文字を重ねる */}
+              {searchDate === "" ? (
+                <span className={styles.searchPlaceholder} aria-hidden="true">
+                  日付で開く
+                </span>
+              ) : null}
             </label>
             {notFound ? (
               <span className={styles.searchEmpty}>
