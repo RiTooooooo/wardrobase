@@ -51,17 +51,76 @@
   height: 100%;
 }
 
+.content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-10);
+  flex-wrap: wrap;
+}
+
+/*
+ * 情報欄は服に付く「商品の下げ札」として描く。
+ * スタイリング一覧の下げ札と同じ言語（ハトメ・糸・わずかな傾き）で、
+ * ここでは中央上にハトメを置き、糸が上へ抜ける。
+ */
 .details {
-  max-width: 720px;
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  /* 糸のぶん上に間を空ける */
+  margin-top: var(--space-6);
+  padding: var(--space-10) var(--space-6) var(--space-6);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  transform: rotate(0.8deg);
+}
+
+/* ハトメ。下げ札と同じ、やわらかいパステルブルーの輪 */
+.details::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-base);
+  border: 3px solid color-mix(in srgb, var(--color-accent) 55%, #ffffff);
+  transform: translateX(-50%);
+}
+
+/* 紐。ハトメからふんわりカーブして上へ抜ける糸 */
+.details::after {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: calc(50% - 6px);
+  width: 30px;
+  height: 28px;
+  border: 2px solid transparent;
+  border-top-color: color-mix(in srgb, var(--color-accent) 70%, #ffffff);
+  border-radius: 50%;
+  transform: rotate(24deg);
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  /* タグの印字らしく、項目ごとに点線で区切る */
+  padding-bottom: var(--space-3);
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.field:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .fieldLabel {

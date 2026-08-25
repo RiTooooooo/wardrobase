@@ -1,9 +1,11 @@
+import { ViewTransition } from "react";
 import type { ReactElement } from "react";
 
 import { headers } from "next/headers";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
+import { FadeInImage } from "@/components/ui/FadeInImage";
 import { CATEGORY_LABELS } from "@/domain/item/category";
 import type { Color } from "@/domain/item/color";
 import { COLOR_META } from "@/domain/item/color";
@@ -51,27 +53,40 @@ export default async function ItemDetailPage({
         <h1 className={styles.title}>{item.name}</h1>
         <ItemDetailActions itemId={id} />
       </div>
-      <ItemImage imageUrl={imageUrl} name={item.name} />
-      <ItemDetails item={item} />
+      {/* 広い画面では写真の隣に、商品の下げ札のような情報カードを並べる */}
+      <div className={styles.content}>
+        <ItemImage id={id} imageUrl={imageUrl} name={item.name} />
+        <ItemDetails item={item} />
+      </div>
     </div>
   );
 }
 
+/* ワードローブの開いた引き出しのカードから、写真がモーフして辿り着く */
 function ItemImage({
+  id,
   imageUrl,
   name,
 }: {
+  id: string;
   imageUrl: string | null;
   name: string;
 }): ReactElement {
   return (
-    <div className={styles.imageWrapper}>
-      {imageUrl ? (
-        <img className={styles.image} src={imageUrl} alt={name} />
-      ) : (
-        <div className={styles.placeholder} />
-      )}
-    </div>
+    <ViewTransition name={`item-image-${id}`} share="morph">
+      <div className={styles.imageWrapper}>
+        {imageUrl ? (
+          <FadeInImage
+            className={styles.image}
+            src={imageUrl}
+            alt={name}
+            loading="eager"
+          />
+        ) : (
+          <div className={styles.placeholder} />
+        )}
+      </div>
+    </ViewTransition>
   );
 }
 
