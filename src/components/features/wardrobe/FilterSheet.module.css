@@ -89,6 +89,21 @@
     gap: var(--space-2);
   }
 
+  /* 検索と並び替えを半々で横に並べる */
+  .sectionRow {
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .sectionRow .section {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sectionRow select {
+    width: 100%;
+  }
+
   .label {
     font-size: var(--text-xs);
     color: var(--color-text-secondary);
@@ -113,17 +128,33 @@
     border-color: var(--color-accent);
   }
 
-  .done {
-    min-height: 48px;
+  /* シートの見出し行。タイトルと完了ボタンを両端に置く */
+  .sheetHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sheetTitle {
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
-    color: #fff;
-    background: var(--color-accent);
-    border-radius: var(--radius-full);
+    color: var(--color-text-primary);
+  }
+
+  /* iOS のシートと同じ、右上の静かなテキストボタン */
+  .done {
+    min-height: 44px;
+    padding: 0 var(--space-2);
+    /* 右端の文字を端に揃えつつ、当たり判定は広く取る */
+    margin-right: calc(var(--space-2) * -1);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-accent);
+    border-radius: var(--radius-md);
   }
 
   .done:active {
-    background: var(--color-accent-hover);
+    background: var(--color-bg-surface);
   }
 }
 

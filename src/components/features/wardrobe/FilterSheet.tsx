@@ -73,6 +73,39 @@ export function FilterSheet({ filters, onChange }: Props): ReactElement {
             aria-label="絞り込みと並び替え"
           >
             <div className={styles.handle} aria-hidden="true" />
+            {/* iOS のシートに倣い、完了は右上のテキストボタンに置く */}
+            <div className={styles.sheetHeader}>
+              <span className={styles.sheetTitle}>絞り込み・並び替え</span>
+              <button
+                type="button"
+                className={styles.done}
+                onClick={() => setOpen(false)}
+              >
+                完了
+              </button>
+            </div>
+            {/* 検索と並び替えは1行に並べ、シートの背を低く保つ */}
+            <div className={styles.sectionRow}>
+              <div className={styles.section}>
+                <span className={styles.label}>検索</span>
+                <input
+                  className={styles.searchInput}
+                  type="text"
+                  placeholder="ブランド・メモで検索"
+                  value={filters.query}
+                  onChange={(e) =>
+                    onChange({ ...filters, query: e.target.value })
+                  }
+                />
+              </div>
+              <div className={styles.section}>
+                <span className={styles.label}>並び替え</span>
+                <SortSelect
+                  value={filters.sort}
+                  onChange={(sort) => onChange({ ...filters, sort })}
+                />
+              </div>
+            </div>
             <div className={styles.section}>
               <span className={styles.label}>季節</span>
               <SeasonChips
@@ -80,30 +113,6 @@ export function FilterSheet({ filters, onChange }: Props): ReactElement {
                 onSelect={(season) => onChange({ ...filters, season })}
               />
             </div>
-            <div className={styles.section}>
-              <span className={styles.label}>検索</span>
-              <input
-                className={styles.searchInput}
-                type="text"
-                placeholder="ブランド・メモで検索"
-                value={filters.query}
-                onChange={(e) => onChange({ ...filters, query: e.target.value })}
-              />
-            </div>
-            <div className={styles.section}>
-              <span className={styles.label}>並び替え</span>
-              <SortSelect
-                value={filters.sort}
-                onChange={(sort) => onChange({ ...filters, sort })}
-              />
-            </div>
-            <button
-              type="button"
-              className={styles.done}
-              onClick={() => setOpen(false)}
-            >
-              完了
-            </button>
           </div>
         </div>
       )}
