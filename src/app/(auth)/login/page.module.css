@@ -24,18 +24,35 @@
   }
 }
 
-/* リンクと同じ佇まいの送信ボタン。当たり判定は44pxを確保する */
-.demoLink {
+/* ログインボタンと同じ寸法の枠線カプセル。塗りが無いぶん一歩引いて見える */
+.demoButton {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
-  padding: 0 var(--space-2);
+  min-width: 160px;
+  padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
   color: var(--color-accent);
+  background: var(--color-bg-base);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-full);
+  transition:
+    background var(--duration-fast) var(--easing),
+    transform var(--duration-slow) var(--easing-out),
+    box-shadow var(--duration-slow) var(--easing-out);
 }
 
-.demoLink:hover {
-  text-decoration: underline;
+/* 塗りボタンと同じ、ふわっと浮く応答 */
+.demoButton:hover {
+  background: var(--color-bg-surface);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift-sm);
+}
+
+.demoButton:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .switch {

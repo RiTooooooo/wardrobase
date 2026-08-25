@@ -23,13 +23,14 @@ export default function LoginPage(): ReactElement {
     <>
       <LoginForm />
       {/*
-        デモと新規登録はログインの脇役。狭い画面ではクローゼットの外
-        （台輪の下）に出し、線画と文字が重ならないようにする。
+        アカウントを持たない訪問者にはデモが主要な入り口。
+        塗り（ログイン）に対する枠線カプセルで、目立たせつつ主従を保つ。
+        狭い画面ではクローゼットの外（台輪の下）に出す。
       */}
       <div className={styles.footer}>
         {isDemoConfigured() && (
           <form className={styles.demo} action={demoLoginAction}>
-            <button type="submit" className={styles.demoLink}>
+            <button type="submit" className={styles.demoButton}>
               デモを見る
             </button>
           </form>
