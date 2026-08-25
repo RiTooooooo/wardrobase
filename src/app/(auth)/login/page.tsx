@@ -2,7 +2,6 @@ import type { ReactElement } from "react";
 
 import Link from "next/link";
 
-import { Button } from "@/components/ui/Button";
 import { LoginForm } from "@/components/features/auth/LoginForm";
 
 import { isSignupOpen } from "@/lib/signupPolicy";
@@ -23,19 +22,27 @@ export default function LoginPage(): ReactElement {
   return (
     <>
       <LoginForm />
-      {isDemoConfigured() && (
-        <form className={styles.demo} action={demoLoginAction}>
-          <Button type="submit">デモを見る</Button>
-        </form>
-      )}
-      {!signupDisabled && (
-        <p className={styles.switch}>
-          アカウントをお持ちでない方は
-          <Link className={styles.link} href="/signup">
-            新規登録
-          </Link>
-        </p>
-      )}
+      {/*
+        デモと新規登録はログインの脇役。狭い画面ではクローゼットの外
+        （台輪の下）に出し、線画と文字が重ならないようにする。
+      */}
+      <div className={styles.footer}>
+        {isDemoConfigured() && (
+          <form className={styles.demo} action={demoLoginAction}>
+            <button type="submit" className={styles.demoLink}>
+              デモを見る
+            </button>
+          </form>
+        )}
+        {!signupDisabled && (
+          <p className={styles.switch}>
+            アカウントをお持ちでない方は
+            <Link className={styles.link} href="/signup">
+              新規登録
+            </Link>
+          </p>
+        )}
+      </div>
     </>
   );
 }

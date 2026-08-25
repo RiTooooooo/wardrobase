@@ -4,10 +4,21 @@
   gap: var(--space-5);
 }
 
-/* 送信ボタンは入力欄の幅いっぱいに伸ばさず、カプセル形のまま中央に置く */
+/* 入力欄はボタンと同じカプセル形にして、フォーム全体の言語を揃える */
+.form input {
+  border-radius: var(--radius-full);
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+}
+
+/*
+ * 送信ボタンは全幅に伸ばさず、小さめのカプセルを中央に置く。
+ * ログイン画面と同じ構成に揃える。
+ */
 .form > button {
   align-self: center;
-  min-width: 120px;
+  min-height: 44px;
+  min-width: 160px;
   margin-top: var(--space-2);
 }
 

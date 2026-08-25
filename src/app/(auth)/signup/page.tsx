@@ -18,12 +18,15 @@ export default function SignupPage(): ReactElement {
   return (
     <>
       <SignupForm />
-      <p className={styles.switch}>
-        すでにアカウントをお持ちの方は
-        <Link className={styles.link} href="/login">
-          ログイン
-        </Link>
-      </p>
+      {/* 狭い画面ではクローゼットの外（台輪の下）に出す。ログイン画面と同じ */}
+      <div className={styles.footer}>
+        <p className={styles.switch}>
+          すでにアカウントをお持ちの方は
+          <Link className={styles.link} href="/login">
+            ログイン
+          </Link>
+        </p>
+      </div>
     </>
   );
 }

@@ -1,3 +1,23 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/*
+ * 狭い画面ではクローゼットが小さく、脇役の文字が線画に重なるため、
+ * フッターごと台輪の下へ出す（ログイン画面と同じ算出式）。
+ */
+@media (max-width: 600px) {
+  .footer {
+    position: absolute;
+    /* 台輪の下端とフォームの下端の低い方に付ける（フォームが背高な画面対応） */
+    top: calc(max(50% + var(--closet-width) * 0.52, 100%) + var(--space-3));
+    left: 0;
+    right: 0;
+  }
+}
+
 .switch {
   display: flex;
   align-items: center;
