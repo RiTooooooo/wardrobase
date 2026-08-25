@@ -4,6 +4,13 @@
   gap: var(--space-5);
 }
 
+/* 送信ボタンは入力欄の幅いっぱいに伸ばさず、カプセル形のまま中央に置く */
+.form > button {
+  align-self: center;
+  min-width: 120px;
+  margin-top: var(--space-2);
+}
+
 .formError {
   font-size: var(--text-sm);
   color: var(--color-error);
