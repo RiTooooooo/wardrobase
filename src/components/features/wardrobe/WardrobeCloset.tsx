@@ -1,15 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { CSSProperties, ReactElement, ReactNode } from "react";
-
-import Link from "next/link";
+import type { ReactElement, ReactNode } from "react";
 
 import { CATEGORIES, CATEGORY_LABELS, isCategory } from "@/domain/item/category";
 import type { Category } from "@/domain/item/category";
 
-import { ItemCard } from "./ItemCard";
 import { filterAndSort } from "./wardrobeFilter";
+import { Drawer } from "./WardrobeDrawer";
 import { WardrobeFilters } from "./WardrobeFilters";
 import styles from "./WardrobeCloset.module.css";
 import type { WardrobeFilters as Filters, WardrobeItem } from "./wardrobeTypes";
@@ -87,96 +85,6 @@ export function WardrobeCloset({ items, addAction }: Props): ReactElement {
         <div className={styles.plinth} aria-hidden="true" />
       </div>
     </>
-  );
-}
-
-function Drawer({
-  label,
-  items,
-  isOpen,
-  layout,
-  onToggle,
-}: {
-  label: string;
-  items: WardrobeItem[];
-  isOpen: boolean;
-  layout: "grid" | "strip";
-  onToggle: () => void;
-}): ReactElement {
-  const className = isOpen
-    ? `${styles.drawer} ${styles.drawerOpen}`
-    : styles.drawer;
-
-  return (
-    <div className={className}>
-      <button
-        type="button"
-        className={styles.front}
-        onClick={onToggle}
-        aria-expanded={isOpen}
-      >
-        {/* 引き出しの取っ手。家具に見せるための造形 */}
-        <span className={styles.pull} aria-hidden="true" />
-        <span className={styles.label}>{label}</span>
-        <span className={styles.count}>{items.length}</span>
-      </button>
-      {/*
-        開閉をアニメーションさせるため、閉じていても描画したまま高さを潰す。
-        閉じた引き出しの中身をキーボードで掴めてしまわないよう inert にする。
-      */}
-      <div className={styles.interior} inert={!isOpen}>
-        <div className={styles.interiorInner}>
-          {layout === "strip" ? (
-            <StripContent items={items} />
-          ) : (
-            <GridContent items={items} />
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* カテゴリの引き出し。仕切りに沿って服が並ぶ */
-function GridContent({ items }: { items: WardrobeItem[] }): ReactElement {
-  return (
-    <div className={styles.grid}>
-      {items.map((item, index) => (
-        <ItemCard key={item.id} item={item} index={index} />
-      ))}
-      <AddTile index={items.length} />
-    </div>
-  );
-}
-
-/* 「すべて」の段。横に滑らせて全アイテムを眺める */
-function StripContent({ items }: { items: WardrobeItem[] }): ReactElement {
-  return (
-    <div className={styles.strip}>
-      {items.map((item, index) => (
-        <div key={item.id} className={styles.stripItem}>
-          <ItemCard item={item} index={index} />
-        </div>
-      ))}
-      <div className={styles.stripItem}>
-        <AddTile index={items.length} />
-      </div>
-    </div>
-  );
-}
-
-/*
- * 引き出し末尾の追加タイル。
- * 線だけの描画で「この引き出しにはまだ入る余地がある」ことを示す。
- * アイテムが1つも無い引き出しでは、これが唯一の中身になり空状態を兼ねる。
- */
-function AddTile({ index }: { index: number }): ReactElement {
-  const order = { "--index": index } as CSSProperties;
-
-  return (
-    <Link className={styles.addTile} href="/items/new" style={order}>
-      <span className={styles.addTileLabel}>アイテムを追加</span>
-    </Link>
   );
 }
 

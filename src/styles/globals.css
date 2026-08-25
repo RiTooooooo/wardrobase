@@ -81,6 +81,49 @@ img {
  */
 
 /*
+ * ページ間の View Transitions。
+ * ::view-transition-* は疑似要素のためCSS Modulesに置けず、ここで定義する。
+ *
+ * page-fade: (app)/layout.tsx が本文に付けるクロスフェード。
+ * 出は素早く、入りは出を待ってからゆっくり（注意を奪い合わせない）。
+ */
+::view-transition-old(.page-fade) {
+  animation: 150ms var(--easing) both vt-fade reverse;
+}
+
+::view-transition-new(.page-fade) {
+  animation: 240ms var(--easing-out) 90ms both vt-fade;
+}
+
+/*
+ * morph: 一覧の写真が詳細ページの写真へ形を変えながら移動する。
+ * 中間で軽くぼかし、拡大縮小の補間の粗さを隠す。
+ */
+::view-transition-group(.morph) {
+  animation-duration: 400ms;
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: vt-morph-blur;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vt-morph-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+
+/*
  * OSで「視差効果を減らす」を有効にしている人には動きを出さない。
  * 各コンポーネントで個別に書かず、ここで一括して打ち消す。
  * 完全に0にすると遷移完了イベントが発火しない実装が壊れるため、
@@ -95,5 +138,13 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* View Transitions の疑似要素は * に含まれないため個別に打ち消す */
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
   }
 }

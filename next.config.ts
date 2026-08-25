@@ -39,6 +39,10 @@ function contentSecurityPolicy(): string {
 }
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // React の <ViewTransition> によるページ間アニメーションを使う
+    viewTransition: true,
+  },
   headers() {
     return Promise.resolve([
       {

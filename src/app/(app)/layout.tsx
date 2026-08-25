@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import type { ReactElement, ReactNode } from "react";
 
 import { AppHeader } from "@/components/features/navigation/AppHeader";
@@ -13,7 +14,10 @@ export default function AppLayout({
   return (
     <>
       <AppHeader />
-      <main className={styles.main}>{children}</main>
+      {/* ページ間はクロスフェードで繋ぐ（globals.css の .page-fade） */}
+      <ViewTransition default="page-fade">
+        <main className={styles.main}>{children}</main>
+      </ViewTransition>
       <BottomNav />
     </>
   );
