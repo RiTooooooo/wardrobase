@@ -16,7 +16,7 @@
 
 /* 天板。本体よりわずかに広く張り出させる。取っ手と同じ青で塗る */
 .cornice {
-  height: 10px;
+  height: 7px;
   margin: 0 calc(var(--space-1) * -1);
   background: var(--color-accent);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
@@ -25,7 +25,7 @@
 
 /* 台輪。天板と対にして家具の足元を締める。こちらも青の塗り */
 .plinth {
-  height: 12px;
+  height: 8px;
   margin: 0 calc(var(--space-1) * -1) var(--space-3);
   background: var(--color-accent);
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);

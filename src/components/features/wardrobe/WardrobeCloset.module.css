@@ -1,11 +1,11 @@
 /*
- * 白い塗りの家具として組む。
- * 青は取っ手と「開いている段」だけに使い、面としては出しゃばらせない。
- * 開けた引き出しの前板だけが青く塗られ、今どこを見ているかを示す。
+ * 青い線画のたんすとして組む（ログイン画面・ルックブックと同じ語彙）。
+ * 天板・側板・台輪・引き出しの前板をすべて細い青線で描き、
+ * 開いている引き出しは手前に引き出されて一回り大きく見える。
  */
 .closet {
-  /* 段の区切り。白い塗りの上の薄い影 */
-  --seam: var(--color-border);
+  /* 線画の線。家具の輪郭・前板・取っ手を同じ太さで揃える（本の線画と同じ細さ） */
+  --line-width: 1.5px;
 
   display: flex;
   flex-direction: column;
@@ -17,28 +17,60 @@
    */
   flex: 1;
   min-height: 0;
+  /* 横に広い画面では家具らしい幅に留め、中央に置く */
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
   animation: riseIn var(--duration-slower) var(--easing-out) 220ms backwards;
 }
 
-/* 天板。本体よりわずかに広く張り出させる。取っ手と同じ青で揃える */
+/* 天板。青く塗った板を本体より広く張り出させる（本の表紙と同じバランス） */
 .cornice {
-  height: 12px;
-  margin: 0 calc(var(--space-1) * -1);
+  height: 8px;
+  margin: 0 calc(var(--space-3) * -1);
+  border-radius: var(--radius-sm);
   background: var(--color-accent);
-  border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
-/* 台輪。天板と対にして家具の足元を締める。こちらも取っ手と同じ青 */
+/*
+ * 台輪。青く塗った帯の両端に、脚を少しだけ覗かせる（一体の造形）。
+ * 帯の下辺は角を丸めない。丸めると脚との継ぎ目に白い隙間が生まれ、
+ * 脚が離れて浮いているように見えてしまう。
+ */
 .plinth {
-  height: 14px;
-  margin: 0 calc(var(--space-1) * -1);
+  position: relative;
+  height: 8px;
+  margin: 0 calc(var(--space-3) * -1) 7px;
   background: var(--color-accent);
-  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+/* 脚。上端を台輪に1px食い込ませて、一枚の板として繋げる */
+.plinth::before,
+.plinth::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  width: 44px;
+  height: 8px;
+  background: var(--color-accent);
+}
+
+.plinth::before {
+  left: 0;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.plinth::after {
+  right: 0;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
 }
 
 .carcass {
   display: flex;
   flex-direction: column;
+  /* 最初と最後の前板にも、前板同士と同じ間隔を空ける */
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
   /*
    * クローゼット（.closet）が引き受けた高さを箱いっぱいに使う。
    * 全部閉じていても背の低い棚にならず、引き出しが余りを分け合って伸びる。
@@ -47,9 +79,9 @@
   flex: 1;
   min-height: 0;
   background: var(--color-bg-elevated);
-  /* 左右の側板。天板・台輪と同じ青で家具の箱を閉じる */
-  border-left: 10px solid var(--color-accent);
-  border-right: 10px solid var(--color-accent);
+  /* 側板。青く塗った板で箱を閉じる（天板・台輪と同じ薄さ） */
+  border-left: 7px solid var(--color-accent);
+  border-right: 7px solid var(--color-accent);
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -59,34 +91,36 @@
   flex-direction: column;
   /* 余った高さは引き出し同士で等分する */
   flex: 1;
-  border-bottom: 1px solid var(--seam);
+  padding: var(--space-1) var(--space-4);
 }
 
-.drawer:last-child {
-  border-bottom: none;
-}
-
-/* 引き出しの前板。引き出しが伸びたぶん前板も一緒に伸びる */
+/*
+ * 引き出しの前板。角の丸い輪郭線の板として描く。
+ * 引き出しが伸びたぶん前板も一緒に伸びる。
+ */
 .front {
   position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  width: 100%;
   flex: 1;
-  min-height: 56px;
+  min-height: 44px;
   padding: var(--space-2) var(--space-5);
-  background: transparent;
+  background: var(--color-bg-elevated);
+  border: var(--line-width) solid var(--color-accent);
+  border-radius: var(--radius-md);
+  /* 前板の文字は家具の線から一歩引いたグレーにする（線画は青、情報は墨） */
   color: var(--color-text-secondary);
   font-size: var(--text-sm);
   cursor: pointer;
   transition:
     background var(--duration-fast) var(--easing),
-    color var(--duration-fast) var(--easing);
+    margin var(--duration-slow) var(--easing),
+    box-shadow var(--duration-slow) var(--easing);
 }
 
 .front:hover {
-  background: var(--color-bg-overlay);
+  background: var(--color-accent-muted);
 }
 
 /*
@@ -97,14 +131,11 @@
 .pull {
   position: absolute;
   left: 50%;
-  width: 40px;
-  height: 8px;
+  width: 72px;
+  height: 5px;
   background: var(--color-accent);
   border-radius: var(--radius-full);
   transform: translateX(-50%);
-  transition:
-    background var(--duration-slow) var(--easing),
-    transform var(--duration-slow) var(--easing);
 }
 
 .label {
@@ -119,9 +150,13 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* 開いている段は文字を立て、取っ手を少し大きくして開口部を示す */
+/*
+ * 開いている引き出しは手前に引き出された見立て。
+ * 左右の余白を詰めて一回り大きくし、浮いた影を落とす。
+ */
 .drawerOpen .front {
-  color: var(--color-text-primary);
+  margin: 0 calc(var(--space-2) * -1);
+  box-shadow: var(--shadow-md);
 }
 
 /* 取っ手は開閉で動かさない（位置や大きさが変わると視線が揺れる） */
@@ -229,8 +264,19 @@
 }
 
 @media (max-width: 600px) {
-  .front {
+  /* 低い画面向けの詰めは広い画面だけ。スマホは元の高さ・間隔で組む */
+  .drawer {
     padding: var(--space-2) var(--space-4);
+  }
+
+  .front {
+    min-height: 56px;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  /* 狭い前板では取っ手も短く */
+  .pull {
+    width: 40px;
   }
 
   .grid {
