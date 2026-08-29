@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { ReactElement } from "react";
+import type { AnimationEvent, ReactElement } from "react";
 
 import { BookNav } from "./BookNav";
 import { BookPage } from "./BookPage";
@@ -68,7 +68,13 @@ export function SpreadBook({
   const canPrev = flip === null && current > 0;
   const canNext = flip === null && current < spreads.length - 1;
 
-  function finishFlip(): void {
+  function finishFlip(e: AnimationEvent<HTMLDivElement>): void {
+    /*
+     * シートの中身（カードの登場アニメーション等）の animationend も
+     * バブリングで届く。シート自身の回転が終わったときだけ確定しないと、
+     * めくりの途中でシートが外れてしまう。
+     */
+    if (e.target !== e.currentTarget) return;
     if (flip === null) return;
     setCurrent(flip.dir === "next" ? flip.base + 1 : flip.base);
     setFlip(null);
@@ -79,11 +85,9 @@ export function SpreadBook({
   return (
     <div className={styles.book}>
       <div className={`${styles.cover} ${styles.coverShaped}`}>
+        {/* 本の線画。めくりの3D描画と干渉しないよう、
+            spread の祖先ではなく後ろに敷く背景レイヤーにしている */}
         <BookSilhouette />
-        {/* 本の形に切り抜いた表紙と紙面。めくりの3D描画と干渉しないよう
-            spread の祖先ではなく、後ろに敷く兄弟レイヤーにしている */}
-        <div className={styles.coverShape} aria-hidden="true" />
-        <div className={styles.paperShape} aria-hidden="true" />
         <div className={styles.spread}>
           <div className={`${styles.pageSide} ${styles.pageLeft}`}>
             <BookPage groups={shown.left} />

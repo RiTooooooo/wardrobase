@@ -175,16 +175,16 @@
 }
 
 /*
- * スパイラルノートの針金綴じ。グレーの針金が紙の縁を巻き込み、
- * 黒い先端が紙の上で留まる。ページのめくりはこの綴じ（左端）を
- * 軸に返るため、意匠と動きが一致する。
+ * リング綴じ。紙のハトメ穴に横長の輪がくぐっている線画で描く。
+ * 楕円の輪の右端がハトメの下に隠れることで「穴を通っている」ように見せる。
+ * ページのめくりはこの綴じ（左端）を軸に返るため、意匠と動きが一致する。
  */
 .binderRings {
   position: absolute;
-  top: var(--space-5);
-  bottom: var(--space-5);
-  /* 表紙の左端から外側の背景まで針金を突き出す */
-  left: -12px;
+  top: var(--space-6);
+  bottom: var(--space-6);
+  /* ハトメが紙の中に乗り、輪が紙の縁の外へ垂れ下がる位置 */
+  left: -14px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -192,41 +192,23 @@
   z-index: 5;
 }
 
-.ring {
-  position: relative;
-  width: 36px;
-  height: 15px;
-}
-
 /*
- * 針金の輪。右端が下がる向きに傾け、輪の先が黒い留めの中へ入る。
- * （逆向きに傾けると右端が浮いて、穴を通っていないように見える）
+ * 楕円の輪 → 穴（白抜き）→ 輪の手前側の弧、の順に重ねる。
+ * 穴の白塗りが輪の奥側を隠し、手前の弧だけ上に描き直すことで
+ * 輪が穴をくぐり抜けているように見える。
  */
-.ring::before {
-  content: "";
-  position: absolute;
-  inset: 0 6px 0 0;
-  border: 3px solid #98a2b3;
-  border-radius: 50%;
-  transform: rotate(22deg);
-}
-
-/* 紙の上に見える針金の先端。輪の右端が下りてくる位置に重ねて刺す */
-.ring::after {
-  content: "";
-  position: absolute;
-  right: 3px;
-  bottom: -1px;
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  background: #1f2937;
+.ring {
+  width: 40px;
+  height: 24px;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2024'%3E%20%3Cellipse%20cx='20'%20cy='12'%20rx='11'%20ry='6'%20fill='none'%20stroke='%232563eb'%20stroke-width='1.75'%20transform='rotate(-8%2020%2012)'/%3E%20%3Ccircle%20cx='31'%20cy='11'%20r='4'%20fill='%23ffffff'%20stroke='%232563eb'%20stroke-width='1.5'/%3E%20%3Cpath%20d='M30.8,11%20A11,6%200%200%201%2027.1,16.6'%20fill='none'%20stroke='%232563eb'%20stroke-width='1.75'%20stroke-linecap='round'%20transform='rotate(-8%2020%2012)'/%3E%20%3C/svg%3E")
+    no-repeat left center / auto 100%;
 }
 
 /* リングが通るぶん左に綴じ代を、上にはひと呼吸の余白を取ってから記録を始める */
 .spreadSingle .pageContent {
-  padding-top: var(--space-8);
+  padding-top: var(--space-6);
   padding-left: var(--space-8);
+  gap: var(--space-3);
 }
 
 .pageSide {
@@ -409,8 +391,8 @@
 
 /*
  * めくれかけの角（ドッグイア）。
- * 塗りではなく、折り返った紙の面と折り目の線だけで描く。
- * 指すと折り目が少し育って「ここからめくれる」ことを伝える。
+ * 白い紙のめくれと青い折り目の線で、本の線画と同じ語彙で描く。
+ * 指すと角がひとまわり育って「ここからめくれる」ことを伝える。
  */
 .curl {
   position: absolute;
@@ -419,76 +401,30 @@
   height: 44px;
   padding: 0;
   border: none;
-  background: transparent;
+  background: transparent no-repeat center / 100% 100%;
   cursor: pointer;
-  overflow: hidden;
   z-index: 4;
+  transition: transform var(--duration-normal) var(--easing-out);
 }
 
 .curl:disabled {
   display: none;
 }
 
-/* 折り返った紙。裏面はわずかに沈んだ白 */
-.curl::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--color-bg-base);
-  transition: transform var(--duration-normal) var(--easing-out);
-}
-
-/* 折り目。1本の線で示す */
-.curl::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: -22%;
-  width: 144%;
-  border-top: 1px solid var(--color-border-strong);
-  transition: transform var(--duration-normal) var(--easing-out);
-}
-
 .curlRight {
   right: 0;
-}
-
-/* 右下の角。折り目は左下→右上に走り、その上側が折り返った紙 */
-.curlRight::before {
-  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%20%3Cpath%20d='M0,0%20H30%20Q40,0%2038,9%20Q29,30%209,38%20Q0,40%200,30%20Z'%20fill='%23eef3fd'/%3E%20%3Cpath%20d='M38,9%20Q29,30%209,38'%20fill='none'%20stroke='%232563eb'%20stroke-width='1.25'%20stroke-linecap='round'/%3E%20%3C/svg%3E");
   transform-origin: bottom right;
-}
-
-.curlRight::after {
-  transform: rotate(-45deg);
-  transform-origin: center;
 }
 
 .curlLeft {
   left: 0;
-}
-
-/* 左下の角。折り目は左上→右下に走り、その上側が折り返った紙 */
-.curlLeft::before {
-  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%20%3Cpath%20d='M40,0%20H10%20Q0,0%202,9%20Q11,30%2031,38%20Q40,40%2040,30%20Z'%20fill='%23eef3fd'/%3E%20%3Cpath%20d='M2,9%20Q11,30%2031,38'%20fill='none'%20stroke='%232563eb'%20stroke-width='1.25'%20stroke-linecap='round'/%3E%20%3C/svg%3E");
   transform-origin: bottom left;
 }
 
-.curlLeft::after {
-  transform: rotate(45deg);
-  transform-origin: center;
-}
-
-.curl:hover::before {
-  transform: scale(1.25);
-}
-
-.curlRight:hover::after {
-  transform: rotate(-45deg) scale(1.25);
-}
-
-.curlLeft:hover::after {
-  transform: rotate(45deg) scale(1.25);
+.curl:hover {
+  transform: scale(1.18);
 }
 
 .nav {
@@ -665,97 +601,66 @@
 
 /* ===== 開いた本のシルエット（見開き版のみ） ===== */
 
-.silhouetteDefs {
+/* 本の線画。中身の高さに合わせて伸び、線の太さは一定に保つ */
+.bookArt {
   position: absolute;
-  width: 0;
-  height: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bookArt path {
+  vector-effect: non-scaling-stroke;
 }
 
 /*
- * シルエット版の表紙。四角い枠はやめ、切り抜いたレイヤーに任せる。
- * 上下の曲線ぶん、内側の余白を広めに取る。
+ * 線画版の本。
+ * ログイン画面のクローゼットと同じ細い青線のイラスト（BookSilhouette）を
+ * 背景に敷き、その紙面の内側に中身を載せる。
  */
 .coverShaped {
   position: relative;
   /*
-   * 上下は意図的に非対称。机の上の本を少し斜めから見る想定で、
-   * 手前（下）の縁を厚くすると自然な奥行きに見える。
+   * 線画の曲線（上辺の山・下辺のたわみ・紙の重なり）に中身が
+   * 掛からないよう、上下と左右に余白を取る。下は意図的に厚め
+   * （紙の重なりと背表紙のぶん）。
    */
-  padding: var(--space-8) var(--space-6) var(--space-10);
+  padding: var(--space-12) 80px 120px;
   background: transparent;
   border-radius: 0;
   box-shadow: none;
 }
 
-/* 表紙。本のシルエットに切り抜いた青い面 */
-.coverShape {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--color-accent) 88%, #ffffff),
-    var(--color-accent)
-  );
-  clip-path: url(#book-silhouette);
-  filter: drop-shadow(0 10px 24px rgba(16, 42, 90, 0.18));
-}
-
-/*
- * 紙面。表紙より一回り小さい同じシルエット。
- * 中央の綴じ影と、左右の紙の束（細い縦線の繰り返し）も
- * この面に描く。
- */
-.paperShape {
-  position: absolute;
-  /* 上下非対称は意図的（斜めから見た本の奥行き。coverShaped と同じ理由） */
-  inset: 10px 14px 16px;
-  background-color: var(--color-bg-elevated);
-  background-image:
-    /* 綴じ目。ぼかさず1本の線で示す */
-    linear-gradient(
-      var(--color-border-strong),
-      var(--color-border-strong)
-    ),
-    repeating-linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-text-primary) 12%, transparent) 0 1px,
-      transparent 1px 4px
-    ),
-    repeating-linear-gradient(
-      to left,
-      color-mix(in srgb, var(--color-text-primary) 12%, transparent) 0 1px,
-      transparent 1px 4px
-    );
-  background-size:
-    1px 100%,
-    14px 100%,
-    14px 100%;
-  background-position:
-    center top,
-    left top,
-    right top;
-  background-repeat: no-repeat;
-  clip-path: url(#book-silhouette);
-}
-
-/* ページの面はシルエットのレイヤーが描くので、四角い面装飾は消す */
+/* ページの面は線画が描くので、四角い面装飾は消す */
 .coverShaped .pageSide {
   background: none;
   border-radius: 0;
   box-shadow: none;
 }
 
-/*
- * 上下の曲線とページ端の紙の束を避けて、中身を内側へ寄せる。
- * 下端はめくれかけの角（ドッグイア）が乗るぶん、さらに深めに取る。
- */
+/* めくれる紙は白い紙＋薄い青線の縁（線画の語彙） */
+.coverShaped .sheetFront,
+.coverShaped .sheetBack {
+  background: var(--color-bg-elevated);
+  border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+}
+
+.coverShaped .sheetFront {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.coverShaped .sheetBack {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+/* 中身は紙面の内側へ。上は紙の山なりから離し、下はめくれかけの角のぶんも空ける */
 .coverShaped .pageContent {
-  padding: var(--space-8) var(--space-8) calc(var(--space-12) + var(--space-8));
+  padding: var(--space-10) var(--space-6) var(--space-12);
 }
 
 /*
- * めくれかけの角は控えめな大きさにし、
- * 下辺の曲線に掛からない位置まで持ち上げる。
+ * めくれかけの角は控えめな大きさにし、本文の外——紙の下の余白へ置く。
+ * 線画の紙の角に寄り、紙の一部がめくれているように見える。
  */
 .coverShaped .curl {
   width: 32px;
@@ -763,13 +668,141 @@
 }
 
 .coverShaped .curlRight {
-  right: 10px;
-  bottom: 26px;
+  right: -20px;
+  bottom: -34px;
 }
 
 .coverShaped .curlLeft {
-  left: 10px;
-  bottom: 26px;
+  left: -20px;
+  bottom: -34px;
+}
+
+/* ===== スマホのリングノート様式 ===== */
+
+/* 日付ごとの区切りは点線で（手帳の罫の語彙） */
+.notebook .dateGroup:not(:last-child) {
+  border-bottom: 1px dashed var(--color-border-strong);
+  padding-bottom: var(--space-4);
+}
+
+/* 日付スタンプ */
+.nbHead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+/* 日付の下に引く短い罫。手帳の日付欄の仕切り線 */
+.nbHead::after {
+  content: "";
+  width: 52px;
+  height: 1px;
+  margin-top: var(--space-1);
+  background: color-mix(in srgb, var(--color-text-primary) 35%, transparent);
+}
+
+.nbMonth {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: 0.3em;
+  color: var(--color-accent);
+}
+
+/* 曜日と年の列は数字と同じ高さに伸ばし、上下の端を数字に揃える */
+.nbRow {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+}
+
+/* 日は本文と同じ書体の大きな数字。大きいぶん細い字重で軽く見せる */
+.nbDay {
+  font-size: 2.75rem;
+  font-weight: 300;
+  line-height: 0.9;
+  color: var(--color-accent);
+}
+
+.nbSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+
+.nbWeekday {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.nbYear {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+/* 年の前の小さな青い点（モックの意匠） */
+.nbYear::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* カードの箱をやめ、ポラロイドとキャプションを紙面に直接置く */
+.notebook .card {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.notebook .card:hover,
+.notebook .card:focus-visible {
+  transform: none;
+  box-shadow: none;
+  border: none;
+}
+
+/*
+ * ノート様式のポラロイドは大きく伸ばし、縁を少し重ねて散らし貼りにする。
+ * 枚数が多い日は flex で均等に縮み、行からあふれない。
+ */
+.notebook .cardThumbs {
+  width: 100%;
+  gap: 0;
+  padding-top: var(--space-1);
+}
+
+.notebook .cardThumb {
+  flex: 1 1 0;
+  width: auto;
+  max-width: 88px;
+  min-width: 0;
+  padding: 4px 4px 12px;
+  box-shadow: 0 3px 10px rgba(16, 42, 90, 0.1);
+}
+
+.notebook .cardThumb + .cardThumb {
+  margin-left: -10px;
+}
+
+/* 偶数枚目を少し持ち上げ、上に重ねて手貼りの乱れを出す */
+.notebook .cardThumb:nth-child(2n) {
+  transform: rotate(var(--photo-tilt)) translateY(-6px);
+  z-index: 1;
+}
+
+.notebook .card:hover .cardThumb,
+.notebook .card:focus-visible .cardThumb {
+  transform: rotate(0deg) translateY(0);
 }
 
 @media (max-width: 900px) {
@@ -869,12 +902,23 @@
  * 針金を表紙の外までまたがせるため、はみ出しを許可する。
  * 代わりに紙の角は紙自身の丸みで収める。
  */
+/*
+ * ノートは表紙の箱を持たない。紙の左端は上のボタン列と揃え、
+ * リングは紙の縁から外（ページの余白）へはみ出させる。
+ */
 .coverBinder {
   overflow: visible;
+  padding: var(--space-1);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
 }
 
+/* 紙は細い青線の1枚。角は大きめに丸める（モック準拠） */
 .coverBinder .pageSide {
-  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-accent);
+  border-radius: 22px;
   overflow: hidden;
 }
 

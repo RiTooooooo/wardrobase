@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { ReactElement } from "react";
+import type { AnimationEvent, ReactElement } from "react";
 
 import { BookNav } from "./BookNav";
 import { BookPage } from "./BookPage";
@@ -21,8 +21,8 @@ import { sheetClassName } from "./SpreadBook";
  * 前へ戻るのは下部ナビのボタンが担う（押すと逆回転で紙が戻ってくる）。
  */
 
-/* スパイラル綴じの針金の数 */
-const RING_COUNT = 10;
+/* 綴じリングの数（システム手帳と同じ6穴） */
+const RING_COUNT = 6;
 
 /* いま見えているページ。めくり中は「めくり終わり側」を下敷きにする */
 function visiblePage(
@@ -62,7 +62,9 @@ export function SinglePageBook({
   const canPrev = flip === null && current > 0;
   const canNext = flip === null && current < pages.length - 1;
 
-  function finishFlip(): void {
+  function finishFlip(e: AnimationEvent<HTMLDivElement>): void {
+    /* シートの中身の animationend もバブリングで届くため、自身の回転完了だけ拾う */
+    if (e.target !== e.currentTarget) return;
     if (flip === null) return;
     setCurrent(flip.dir === "next" ? flip.base + 1 : flip.base);
     setFlip(null);
@@ -71,7 +73,7 @@ export function SinglePageBook({
   return (
     <div className={styles.book}>
       <div className={`${styles.cover} ${styles.coverBinder}`}>
-        {/* スパイラルの針金。表紙の縁をまたいで外まで巻き込む */}
+        {/* スパイラルのコイル。紙の縁をまたいで外まで巻き込む */}
         <div className={styles.binderRings} aria-hidden="true">
           {Array.from({ length: RING_COUNT }, (_, i) => (
             <span key={i} className={styles.ring} />
@@ -79,7 +81,10 @@ export function SinglePageBook({
         </div>
         <div className={`${styles.spread} ${styles.spreadSingle}`}>
           <div className={`${styles.pageSide} ${styles.pageRight}`}>
-            <BookPage groups={visiblePage(pages, current, flip)} />
+            <BookPage
+              variant="notebook"
+              groups={visiblePage(pages, current, flip)}
+            />
             {/* 折れ目は「次へ」の右下だけ。前へ戻るのは下のボタンが担う */}
             <button
               type="button"
@@ -96,7 +101,7 @@ export function SinglePageBook({
               aria-hidden="true"
             >
               <div className={styles.sheetFront}>
-                <BookPage groups={pages[flip.base]} />
+                <BookPage variant="notebook" groups={pages[flip.base]} />
               </div>
               {/* 紙の裏。実物の紙と同じく白紙 */}
               <div className={styles.sheetBack}>
