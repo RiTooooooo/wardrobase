@@ -16,5 +16,7 @@
 @media (max-width: 600px) {
   .page {
     padding: var(--space-4);
+    /* ファーストビューで本の上端まで見えるよう、縦の間隔を詰める */
+    gap: var(--space-5);
   }
 }

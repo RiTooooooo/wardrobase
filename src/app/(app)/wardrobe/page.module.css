@@ -118,11 +118,34 @@
 
 /* 狭い画面では左右32pxの余白が効きすぎるため詰める */
 @media (max-width: 600px) {
+  /* 下の家具・本を圧縮したのに合わせ、ヘッダー帯も一段小さく釣り合わせる */
+  .title {
+    font-size: var(--text-xl);
+  }
+
+  .countNumber {
+    font-size: var(--text-base);
+  }
+
+  /* 上下の呼吸は保ち、文字を一段小さくして軽くする */
+  .addButton {
+    min-height: 36px;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+
   .page {
     padding: var(--space-4);
+    /* ファーストビューで全体像が見えるよう、縦の間隔を詰める */
+    gap: var(--space-5);
     height: auto;
     min-height: 0;
   }
+
+  /* デスクトップの大見出しは持て余すため一段落とす */
+  .title {
+    font-size: var(--text-2xl);
+  
 
   /*
    * 件数は最上段の引き出し（All 12）と重複するため、狭い画面では出さない。

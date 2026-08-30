@@ -204,11 +204,13 @@
     no-repeat left center / auto 100%;
 }
 
-/* リングが通るぶん左に綴じ代を、上にはひと呼吸の余白を取ってから記録を始める */
+/* リングが通るぶん左に綴じ代を広めに、上にはひと呼吸の余白を取ってから記録を始める */
 .spreadSingle .pageContent {
+  /* 上下は同じ余白にして、ページの呼吸を揃える */
   padding-top: var(--space-6);
-  padding-left: var(--space-8);
-  gap: var(--space-3);
+  padding-bottom: var(--space-6);
+  padding-left: var(--space-10);
+  gap: var(--space-2);
 }
 
 .pageSide {
@@ -682,7 +684,7 @@
 /* 日付ごとの区切りは点線で（手帳の罫の語彙） */
 .notebook .dateGroup:not(:last-child) {
   border-bottom: 1px dashed var(--color-border-strong);
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
 }
 
 /* 日付スタンプ */
@@ -698,7 +700,7 @@
   content: "";
   width: 52px;
   height: 1px;
-  margin-top: var(--space-1);
+  margin-top: 2px;
   background: color-mix(in srgb, var(--color-text-primary) 35%, transparent);
 }
 
@@ -710,25 +712,31 @@
 }
 
 /* 曜日と年の列は数字と同じ高さに伸ばし、上下の端を数字に揃える */
+/* 数字と脇のテキストは中央で揃え、行の高さを数字に合わせる */
 .nbRow {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   gap: var(--space-3);
 }
 
-/* 日は本文と同じ書体の大きな数字。大きいぶん細い字重で軽く見せる */
+/*
+ * 日は本文と同じ書体の大きな数字。大きいぶん細い字重で軽く見せる。
+ * 等幅数字（tabular-nums）にして、11 と 14 で幅が揺れないようにする。
+ */
 .nbDay {
-  font-size: 2.75rem;
+  font-size: 1.75rem;
   font-weight: 300;
   line-height: 0.9;
   color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+  min-width: 2ch;
 }
 
 .nbSide {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 2px 0;
+  justify-content: center;
+  gap: 2px;
 }
 
 .nbWeekday {
@@ -784,7 +792,7 @@
 .notebook .cardThumb {
   flex: 1 1 0;
   width: auto;
-  max-width: 88px;
+  max-width: 60px;
   min-width: 0;
   padding: 4px 4px 12px;
   box-shadow: 0 3px 10px rgba(16, 42, 90, 0.1);
@@ -814,6 +822,28 @@
 }
 
 @media (max-width: 600px) {
+  /* 下の家具・本を圧縮したのに合わせ、ヘッダー帯も一段小さく釣り合わせる */
+  .title {
+    font-size: var(--text-xl);
+  }
+
+  .countNumber {
+    font-size: var(--text-base);
+  }
+
+  /* 上下の呼吸は保ち、文字を一段小さくして軽くする */
+  .addButton {
+    min-height: 36px;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  .searchInput {
+    height: 36px;
+    font-size: var(--text-xs);
+  }
+
+
   /*
    * 操作行はタイトルの下に1行で並べる。
    * ラベルとボタンが縦に折れて「日付で開\nく」のような崩れになっていた。
