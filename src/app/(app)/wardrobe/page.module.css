@@ -58,14 +58,14 @@
 .addButton {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: var(--space-2) var(--space-4);
+  /* 文字サイズは据え置き、上下にほどよい呼吸を持たせる */
+  min-height: 38px;
+  padding: 10px var(--space-4);
   font-size: var(--text-sm);
   font-weight: var(--font-normal);
   color: #fff;
   background: var(--color-accent);
-  /* developer.apple.com のボタンと同じカプセル形 */
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-button);
   transition:
     background var(--duration-fast) var(--easing),
     transform var(--duration-slow) var(--easing-out),

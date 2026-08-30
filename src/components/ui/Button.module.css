@@ -3,14 +3,15 @@
  * 高さ36px・フォント14px/400・パディング8×16px。
  */
 .button {
-  min-height: 36px;
-  padding: var(--space-2) var(--space-4);
+  /* 文字サイズは据え置き、上下にほどよい呼吸を持たせる */
+  min-height: 38px;
+  padding: 10px var(--space-4);
   font-size: var(--text-sm);
   font-weight: var(--font-normal);
-  color: #fff;
+  color: var(--color-on-accent);
   background: var(--color-accent);
-  /* developer.apple.com のボタンと同じカプセル形 */
-  border-radius: var(--radius-full);
+  /* 角丸控えめの四角寄り。ログイン画面のボタンと言語を揃える */
+  border-radius: var(--radius-button);
   transition:
     background var(--duration-fast) var(--easing),
     transform var(--duration-slow) var(--easing-out),

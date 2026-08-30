@@ -36,14 +36,14 @@
 .addButton {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
-  padding: var(--space-2) var(--space-4);
+  /* 文字サイズは据え置き、上下にほどよい呼吸を持たせる */
+  min-height: 38px;
+  padding: 10px var(--space-4);
   font-size: var(--text-sm);
   font-weight: var(--font-normal);
   color: #fff;
   background: var(--color-accent);
-  /* developer.apple.com のボタンと同じカプセル形 */
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-button);
   transition:
     background var(--duration-fast) var(--easing),
     transform var(--duration-slow) var(--easing-out),
@@ -200,7 +200,7 @@
 .ring {
   width: 40px;
   height: 24px;
-  background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2024'%3E%20%3Cellipse%20cx='20'%20cy='12'%20rx='11'%20ry='6'%20fill='none'%20stroke='%232563eb'%20stroke-width='1.75'%20transform='rotate(-8%2020%2012)'/%3E%20%3Ccircle%20cx='31'%20cy='11'%20r='4'%20fill='%23ffffff'%20stroke='%232563eb'%20stroke-width='1.5'/%3E%20%3Cpath%20d='M30.8,11%20A11,6%200%200%201%2027.1,16.6'%20fill='none'%20stroke='%232563eb'%20stroke-width='1.75'%20stroke-linecap='round'%20transform='rotate(-8%2020%2012)'/%3E%20%3C/svg%3E")
+  background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2024'%3E%20%3Cellipse%20cx='20'%20cy='12'%20rx='11'%20ry='6'%20fill='none'%20stroke='%231b74ff'%20stroke-width='1.75'%20transform='rotate(-8%2020%2012)'/%3E%20%3Ccircle%20cx='31'%20cy='11'%20r='4'%20fill='%23ffffff'%20stroke='%231b74ff'%20stroke-width='1.5'/%3E%20%3Cpath%20d='M30.8,11%20A11,6%200%200%201%2027.1,16.6'%20fill='none'%20stroke='%231b74ff'%20stroke-width='1.75'%20stroke-linecap='round'%20transform='rotate(-8%2020%2012)'/%3E%20%3C/svg%3E")
     no-repeat left center / auto 100%;
 }
 
@@ -413,13 +413,13 @@
 
 .curlRight {
   right: 0;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%20%3Cpath%20d='M0,0%20H30%20Q40,0%2038,9%20Q29,30%209,38%20Q0,40%200,30%20Z'%20fill='%23eef3fd'/%3E%20%3Cpath%20d='M38,9%20Q29,30%209,38'%20fill='none'%20stroke='%232563eb'%20stroke-width='1.25'%20stroke-linecap='round'/%3E%20%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%20%3Cpath%20d='M0,0%20H30%20Q40,0%2038,9%20Q29,30%209,38%20Q0,40%200,30%20Z'%20fill='%23eef3fd'/%3E%20%3Cpath%20d='M38,9%20Q29,30%209,38'%20fill='none'%20stroke='%231b74ff'%20stroke-width='1.25'%20stroke-linecap='round'/%3E%20%3C/svg%3E");
   transform-origin: bottom right;
 }
 
 .curlLeft {
   left: 0;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%20%3Cpath%20d='M40,0%20H10%20Q0,0%202,9%20Q11,30%2031,38%20Q40,40%2040,30%20Z'%20fill='%23eef3fd'/%3E%20%3Cpath%20d='M2,9%20Q11,30%2031,38'%20fill='none'%20stroke='%232563eb'%20stroke-width='1.25'%20stroke-linecap='round'/%3E%20%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2040%2040'%3E%20%3Cpath%20d='M40,0%20H10%20Q0,0%202,9%20Q11,30%2031,38%20Q40,40%2040,30%20Z'%20fill='%23eef3fd'/%3E%20%3Cpath%20d='M2,9%20Q11,30%2031,38'%20fill='none'%20stroke='%231b74ff'%20stroke-width='1.25'%20stroke-linecap='round'/%3E%20%3C/svg%3E");
   transform-origin: bottom left;
 }
 
@@ -440,7 +440,7 @@
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-button);
   transition:
     color var(--duration-fast) var(--easing),
     border-color var(--duration-fast) var(--easing);
