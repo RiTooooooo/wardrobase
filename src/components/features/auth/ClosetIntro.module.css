@@ -52,7 +52,7 @@
 
 .line {
   stroke: var(--color-accent);
-  /* 青地の白線はよく通るので、細めでも輪郭が立つ */
+  /* 白地の青線。細めの線で軽さを保つ */
   stroke-width: 1.5;
   stroke-linejoin: round;
   stroke-linecap: round;

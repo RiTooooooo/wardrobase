@@ -1,7 +1,6 @@
 /*
- * ログイン/新規登録は「青いキャンバスに白い要素」の反転画面。
- * 中の部品（クローゼットの線・フォーム・リンク・ボタン）は共通トークンを
- * 参照しているため、ここでトークンごと白系に差し替えて一括で反転させる。
+ * ログイン/新規登録は白いキャンバスに青い線画のクローゼット。
+ * 色は共通トークンをそのまま使う（ここでは上書きしない）。
  */
 .container {
   display: flex;
@@ -9,45 +8,12 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-6);
-  /*
-   * キャンバスの青。トークンの accent と同値。
-   * 下で --color-accent を白に上書きするため直接指定する。
-   */
-  background: #1b74ff;
-
-  --color-accent: #ffffff;
-  --color-accent-hover: rgba(255, 255, 255, 0.88);
-  --color-on-accent: #1b74ff;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: rgba(255, 255, 255, 0.85);
-  --color-text-tertiary: rgba(255, 255, 255, 0.7);
-  --color-bg-base: transparent;
-  --color-bg-surface: rgba(255, 255, 255, 0.14);
-  --color-border-input: rgba(255, 255, 255, 0.9);
-  --color-error: #ffe2de;
-
-  /*
-   * 文字色は body から「計算済みの濃紺」が継承されてくるため、
-   * 変数の上書きだけでは効かない。ここで宣言し直して白を継承させる。
-   */
-  color: var(--color-text-primary);
 }
 
-/* 参考サイトのボタンに合わせ、字はミディアム・角丸は控えめの四角寄りに */
+/* ボタンは字をミディアムに、角丸は控えめの四角寄りに揃える */
 .container button {
   font-weight: var(--font-medium);
   border-radius: var(--radius-button);
-}
-
-/* 白い入力欄の中の文字は、白系トークンではなく濃紺に戻す。枠は少し太く */
-.container input {
-  color: #1a2333;
-  border-width: 1.5px;
-}
-
-/* 白い入力欄のフォーカスは、白枠では見えないため濃紺の枠で示す */
-.container input:focus {
-  border-color: rgba(26, 35, 51, 0.55);
 }
 
 /* 幅は ClosetIntro 側が扉の内側に合わせて決めるため、ここでは指定しない */
@@ -59,9 +25,8 @@
 }
 
 .logo {
-  font-size: var(--text-4xl);
-  /* 大きくしたぶんウェイトは落とし、線の細いロックアップにする */
-  font-weight: var(--font-medium);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
   letter-spacing: -0.02em;
   text-align: center;
 }
