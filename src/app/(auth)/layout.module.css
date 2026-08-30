@@ -59,8 +59,9 @@
 }
 
 .logo {
-  font-size: var(--text-2xl);
-  font-weight: var(--font-bold);
+  font-size: var(--text-4xl);
+  /* 大きくしたぶんウェイトは落とし、線の細いロックアップにする */
+  font-weight: var(--font-medium);
   letter-spacing: -0.02em;
   text-align: center;
 }
