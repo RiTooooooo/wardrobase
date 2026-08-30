@@ -5,7 +5,7 @@
  */
 .closet {
   /* 線画の線。家具の輪郭・前板・取っ手を同じ太さで揃える（本の線画と同じ細さ） */
-  --line-width: 1.5px;
+  --line-width: 1px;
 
   display: flex;
   flex-direction: column;
@@ -27,7 +27,6 @@
 /* 天板。青く塗った板を本体より広く張り出させる（本の表紙と同じバランス） */
 .cornice {
   height: 8px;
-  margin: 0 calc(var(--space-3) * -1);
   border-radius: var(--radius-sm);
   background: var(--color-accent);
 }
@@ -40,7 +39,7 @@
 .plinth {
   position: relative;
   height: 8px;
-  margin: 0 calc(var(--space-3) * -1) 7px;
+  margin: 0 0 7px;
   background: var(--color-accent);
 }
 
@@ -78,6 +77,8 @@
    */
   flex: 1;
   min-height: 0;
+  /* 天板・台輪より一段狭くして、家具の張り出しを作る（全体はコンテンツ幅に収まる） */
+  margin: 0 var(--space-3);
   background: var(--color-bg-elevated);
   /* 側板。青く塗った板で箱を閉じる（天板・台輪と同じ薄さ） */
   border-left: 7px solid var(--color-accent);
