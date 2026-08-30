@@ -321,9 +321,37 @@
     gap: var(--space-5);
   }
 
-  /* デスクトップの大見出しは持て余すため一段落とす */
-  .title {
-    font-size: var(--text-2xl);
-  
+  /*
+   * スマホは1画面になるべく多くの札が入るよう、札を一回り小さくする。
+   * ただし縦の間隔は詰めない——紐がカードの上へ約22pxはみ出すため、
+   * 間隔を削ると上の札に触れてしまう。
+   */
+  .grid {
+    gap: var(--space-3);
+    row-gap: var(--space-8);
+    padding-top: var(--space-8);
+  }
 
+  /* 上はハトメ（下端20px）と名前が触れないよう、ひと回り厚く取る */
+  .card {
+    gap: var(--space-3);
+    padding: var(--space-6) var(--space-4) var(--space-4);
+  }
+
+  /* 札が小さくなるぶん、ハトメもひとまわり縮めて釣り合わせる */
+  .card::before {
+    top: 8px;
+    left: 12px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .cardName {
+    font-size: var(--text-sm);
+  }
+
+  .cardThumb {
+    width: 44px;
+    height: 44px;
+  }
 }
