@@ -7,6 +7,8 @@ interface ButtonProps {
   children: ReactNode;
   disabled?: boolean;
   onClick?: () => void;
+  /** フォームの外に置くとき、送信先のフォーム id を指す（HTML の form 属性） */
+  form?: string;
 }
 
 export function Button({
@@ -14,6 +16,7 @@ export function Button({
   children,
   disabled,
   onClick,
+  form,
 }: ButtonProps): ReactElement {
   return (
     <button
@@ -21,6 +24,7 @@ export function Button({
       type={type}
       disabled={disabled}
       onClick={onClick}
+      form={form}
     >
       {children}
     </button>

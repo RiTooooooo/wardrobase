@@ -4,22 +4,28 @@
   gap: var(--space-5);
 }
 
-/* 入力欄はボタンと同じカプセル形にして、フォーム全体の言語を揃える */
+/* 入力欄はボタンと同じ、角丸控えめの四角寄りにして言語を揃える */
 .form input {
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-lg);
   padding-left: var(--space-5);
   padding-right: var(--space-5);
 }
 
 /*
- * 送信ボタンは全幅に伸ばさず、小さめのカプセルを中央に置く。
- * 脇役（デモ・新規登録）はテキストリンクなので、唯一のボタンとして立つ。
+ * 主ボタン（ログイン）と脇役（デモ）を1列に並べる。
+ * 参考サイトの「塗り＋枠線」のペアと同じ構図。
  */
-.form > button {
-  align-self: center;
-  min-height: 44px;
-  min-width: 160px;
-  margin-top: var(--space-2);
+.actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.actions button {
+  min-height: 48px;
+  min-width: 150px;
 }
 
 .formError {

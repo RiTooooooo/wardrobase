@@ -6,7 +6,7 @@
 
 /* 入力欄はボタンと同じカプセル形にして、フォーム全体の言語を揃える */
 .form input {
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-lg);
   padding-left: var(--space-5);
   padding-right: var(--space-5);
 }
