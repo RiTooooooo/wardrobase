@@ -17,10 +17,8 @@
    */
   flex: 1;
   min-height: 0;
-  /* 横に広い画面では家具らしい幅に留め、中央に置く */
+  /* 見出しやフィルタと左右を揃え、コンテンツ幅いっぱいに使う */
   width: 100%;
-  max-width: 960px;
-  margin-inline: auto;
   animation: riseIn var(--duration-slower) var(--easing-out) 220ms backwards;
 }
 
@@ -265,13 +263,18 @@
 }
 
 @media (max-width: 600px) {
-  /* 低い画面向けの詰めは広い画面だけ。スマホは元の高さ・間隔で組む */
+  /*
+   * スマホは引き出しを固定高にし、7段と台輪までファーストビューに収める。
+   * flex の等分で伸ばすと1段が高くなりすぎ、家具の全体像が見えない。
+   */
   .drawer {
-    padding: var(--space-2) var(--space-4);
+    flex: none;
+    padding: var(--space-1) var(--space-4);
   }
 
   .front {
-    min-height: 56px;
+    flex: none;
+    min-height: 52px;
     padding: var(--space-2) var(--space-4);
   }
 
