@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wardrobase 案A モック一覧</title>
+<!-- wardrobe / styling / outfits.html を srcdoc として埋め込んだ一覧ページ（このファイル単体で開ける）。3ファイルを変更したら埋め込みが古くなるため再生成すること -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root {
+  --bg: #f5f6f8; --ink: #1a2333; --sub: #5a6472; --muted: #8a93a2;
+  --line: #e4e7ec; --accent: #1b74ff;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; padding-bottom: 96px; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.page { max-width: 1120px; margin: 0 auto; padding: 48px 32px 0; }
+h1 { margin: 0; font-family: var(--serif); font-size: 46px; font-weight: 500; line-height: 1.05; }
+.subtitle { margin-top: 10px; font-size: 13.5px; color: var(--sub); }
+section { margin-top: 60px; }
+h2 { margin: 0; display: flex; align-items: baseline; gap: 12px; font-size: 19px; font-weight: 700; }
+h2 .en { font-family: var(--serif); font-size: 19px; font-weight: 500; color: var(--muted); }
+h2 .open { margin-left: auto; font-size: 12.5px; font-weight: 400; color: var(--accent); }
+h2 .open:hover { text-decoration: underline; }
+.row { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 36px; align-items: flex-start; }
+.label { margin-bottom: 10px; font-size: 11px; letter-spacing: 0.14em; color: var(--muted); }
+.shell { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #ffffff; box-shadow: 0 8px 24px rgba(26, 35, 51, 0.06); }
+iframe.scaler { display: block; border: 0; transform-origin: top left; }
+.pc .shell { width: 720px; height: 450px; }
+.pc iframe.scaler { width: 1440px; height: 900px; transform: scale(0.5); }
+.sp .shell { width: 273px; height: 591px; }
+.sp iframe.scaler { width: 390px; height: 844px; transform: scale(0.7); }
+@media (max-width: 800px) {
+  .page { padding: 32px 20px 0; }
+  h1 { font-size: 34px; }
+  .row { gap: 28px; }
+  .pc .shell { width: 350px; height: 219px; }
+  .pc iframe.scaler { transform: scale(0.243); }
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <h1>Mockups</h1>
+  <div class="subtitle">wardrobase 案A（ミニマル・エディトリアル）— 3画面 × PC / スマホ。フレーム内はスクロールできます。</div>
+
+<section>
+  <h2><span class="ja">クローゼット</span><span class="en">Wardrobe</span><a class="open" href="wardrobe.html">単体で開く</a></h2>
+  <div class="row">
+    <div class="device pc">
+      <div class="label">PC（1440px）</div>
+      <div class="shell"><iframe class="scaler" title="クローゼット（PC）" srcdoc="<!doctype html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>Wardrobe — wardrobase 案Aモック</title>
+<!-- 案A（ミニマル・エディトリアル）デザインモック。PC/スマホ両対応の静的HTML。ブレークポイントはアプリ本体と同じ600px -->
+<link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap&quot;>
+<style>
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --tile: #eef1f6;
+  --ink: #1a2333; --sub: #5a6472; --muted: #8a93a2; --faint: #b4bcc9;
+  --line: #e4e7ec; --line-soft: #dfe3ea;
+  --accent: #1b74ff; --accent-hover: #0d5fe8;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; height: 64px; display: flex; align-items: center; }
+.logo { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.nav { margin-left: auto; display: flex; gap: 4px; }
+.nav a { height: 44px; padding: 0 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 13px; color: var(--sub); border-radius: 10px; }
+.nav a:hover { color: var(--ink); }
+.nav a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+.nav a.active { color: var(--ink); font-weight: 700; }
+.nav a.active .dot { background: var(--accent); }
+.logout { margin-left: 28px; font-size: 12.5px; color: var(--muted); }
+.header .icon-btn { display: none; }
+
+.icon-btn { width: 44px; height: 44px; border: 1px solid var(--line-soft); border-radius: 22px; background: transparent; display: flex; align-items: center; justify-content: center; color: var(--sub); cursor: pointer; }
+.icon-btn:hover { border-color: var(--faint); color: var(--ink); }
+
+.page { max-width: 1240px; margin: 0 auto; padding: 40px 48px 80px; }
+.title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+h1 { margin: 0; font-family: var(--serif); font-size: 52px; font-weight: 500; line-height: 1.05; }
+.subtitle { margin-top: 10px; font-size: 14px; color: var(--sub); }
+.title-actions { display: flex; align-items: center; gap: 12px; }
+.btn-primary { height: 44px; padding: 0 22px; border: none; border-radius: 22px; background: var(--accent); color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 6px 16px rgba(27, 116, 255, 0.25); transition: background 120ms ease; }
+.btn-primary:hover { background: var(--accent-hover); }
+
+.chips { margin-top: 28px; display: flex; gap: 10px; }
+.chip { height: 44px; padding: 0 20px; border-radius: 22px; border: 1px solid var(--line-soft); background: transparent; color: var(--sub); font-family: var(--sans); font-size: 13px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: border-color 120ms ease, color 120ms ease; }
+.chip:hover { border-color: var(--faint); color: var(--ink); }
+.chip .n { color: #98a1b0; }
+.chip.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.chip.active .n { color: #aeb6c4; }
+.chip.disabled { border-color: #e9edf3; color: var(--faint); cursor: default; }
+.chip.disabled .n { color: #ccd3dd; }
+
+.grid { margin-top: 32px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px 24px; }
+.item { cursor: pointer; }
+.item .tile { aspect-ratio: 14 / 15; background: var(--tile); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #4d586b; transition: box-shadow 160ms ease; }
+.item:hover .tile { box-shadow: inset 0 0 0 1px var(--accent); }
+.item svg { width: 42%; height: auto; }
+.item .name { margin-top: 12px; font-size: 14px; font-weight: 500; }
+.item .cat { margin-top: 3px; font-size: 11.5px; color: var(--muted); }
+
+.fab { display: none; }
+.tabbar { display: none; }
+
+@media (max-width: 600px) {
+  .header-inner { padding: 0 20px; height: 60px; }
+  .nav, .logout { display: none; }
+  .header .icon-btn { display: flex; margin-left: auto; }
+  .page { padding: 20px 20px 140px; }
+  h1 { font-size: 42px; }
+  .subtitle { margin-top: 8px; font-size: 13px; }
+  .title-actions { display: none; }
+  .chips { margin-top: 22px; gap: 8px; overflow-x: auto; margin-left: -20px; margin-right: -20px; padding: 0 20px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { padding: 0 18px; }
+  .grid { margin-top: 26px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; }
+  .item svg { width: 55%; }
+  .item .name { margin-top: 10px; font-size: 13px; }
+  .item .cat { font-size: 11px; }
+
+  .fab { display: flex; position: fixed; right: 20px; bottom: calc(88px + env(safe-area-inset-bottom)); width: 56px; height: 56px; border: none; border-radius: 28px; background: var(--accent); color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(27, 116, 255, 0.35); cursor: pointer; z-index: 20; }
+  .fab:hover { background: var(--accent-hover); }
+
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: calc(72px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--bg); border-top: 1px solid var(--line); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 10.5px; color: #9aa3b2; }
+  .tabbar a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+  .tabbar a.active { color: var(--ink); font-weight: 500; }
+  .tabbar a.active .dot { background: var(--accent); }
+}
+</style>
+</head>
+<body>
+
+<header class=&quot;header&quot;>
+  <div class=&quot;header-inner&quot;>
+    <a class=&quot;logo&quot; href=&quot;wardrobe.html&quot;>wardro<span>base</span></a>
+    <nav class=&quot;nav&quot;>
+      <a class=&quot;active&quot; href=&quot;wardrobe.html&quot;><span>クローゼット</span><span class=&quot;dot&quot;></span></a>
+      <a href=&quot;styling.html&quot;><span>スタイリング</span><span class=&quot;dot&quot;></span></a>
+      <a href=&quot;outfits.html&quot;><span>コーデ</span><span class=&quot;dot&quot;></span></a>
+    </nav>
+    <a class=&quot;logout&quot; href=&quot;#&quot;>ログアウト</a>
+    <button class=&quot;icon-btn&quot; type=&quot;button&quot; aria-label=&quot;アイテムを検索&quot;>
+      <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;6.5&quot;/><path d=&quot;M16 16 L20.5 20.5&quot;/></svg>
+    </button>
+  </div>
+</header>
+
+<main class=&quot;page&quot;>
+  <div class=&quot;title-row&quot;>
+    <div>
+      <h1>Wardrobe</h1>
+      <div class=&quot;subtitle&quot;>全12点のアイテム</div>
+    </div>
+    <div class=&quot;title-actions&quot;>
+      <button class=&quot;btn-primary&quot; type=&quot;button&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+        アイテムを追加
+      </button>
+    </div>
+  </div>
+
+  <div class=&quot;chips&quot;>
+    <button class=&quot;chip active&quot; type=&quot;button&quot;>すべて<span class=&quot;n&quot;>12</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>トップス<span class=&quot;n&quot;>4</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>ボトムス<span class=&quot;n&quot;>3</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>アウター<span class=&quot;n&quot;>2</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>シューズ<span class=&quot;n&quot;>2</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>バッグ<span class=&quot;n&quot;>1</span></button>
+    <button class=&quot;chip disabled&quot; type=&quot;button&quot; disabled>アクセサリー<span class=&quot;n&quot;>0</span></button>
+  </div>
+
+  <div class=&quot;grid&quot;>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+      <div class=&quot;name&quot;>白Tシャツ</div>
+      <div class=&quot;cat&quot;>トップス</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+      <div class=&quot;name&quot;>デニムパンツ</div>
+      <div class=&quot;cat&quot;>ボトムス</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+      <div class=&quot;name&quot;>ネイビーシャツ</div>
+      <div class=&quot;cat&quot;>トップス</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M11 19 L37 19 L39.5 41 L8.5 41 Z&quot;/><path d=&quot;M18 19 C18 10.5 30 10.5 30 19&quot;/></svg></div>
+      <div class=&quot;name&quot;>レザートート</div>
+      <div class=&quot;cat&quot;>バッグ</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+      <div class=&quot;name&quot;>スニーカー</div>
+      <div class=&quot;cat&quot;>シューズ</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+      <div class=&quot;name&quot;>チノパンツ</div>
+      <div class=&quot;cat&quot;>ボトムス</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M18 7 L9 11 L6 39 L14 39 L15 21 L15 41 L33 41 L33 21 L34 39 L42 39 L39 11 L30 7 C28 12 20 12 18 7 Z&quot;/><path d=&quot;M24 13 L24 41&quot;/></svg></div>
+      <div class=&quot;name&quot;>トレンチコート</div>
+      <div class=&quot;cat&quot;>アウター</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 7 L31 7 L31 24 C36.5 26 41 28.5 41 33 L41 39 L17 39 Z&quot;/><path d=&quot;M17 24 L31 24&quot;/></svg></div>
+      <div class=&quot;name&quot;>ショートブーツ</div>
+      <div class=&quot;cat&quot;>シューズ</div>
+    </div>
+  </div>
+</main>
+
+<button class=&quot;fab&quot; type=&quot;button&quot; aria-label=&quot;アイテムを追加&quot;>
+  <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+</button>
+
+<nav class=&quot;tabbar&quot;>
+  <a class=&quot;active&quot; href=&quot;wardrobe.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;5&quot; y=&quot;3&quot; width=&quot;14&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M12 3 L12 21&quot;/><path d=&quot;M9.5 11 L9.5 13.5&quot;/><path d=&quot;M14.5 11 L14.5 13.5&quot;/></svg>
+    <span>クローゼット</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a href=&quot;styling.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 4 a2.4 2.4 0 1 1 2.4 2.4 C13.2 6.8 12 7.5 12 9.2 L3.8 16.6 A1.2 1.2 0 0 0 4.6 18.7 L19.4 18.7 A1.2 1.2 0 0 0 20.2 16.6 L12 9.2&quot;/></svg>
+    <span>スタイリング</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a href=&quot;outfits.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;6&quot; y=&quot;3&quot; width=&quot;13&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M6 7.5 L4 7.5&quot;/><path d=&quot;M6 12 L4 12&quot;/><path d=&quot;M6 16.5 L4 16.5&quot;/></svg>
+    <span>コーデ</span><span class=&quot;dot&quot;></span>
+  </a>
+</nav>
+
+</body>
+</html>
+"></iframe></div>
+    </div>
+    <div class="device sp">
+      <div class="label">スマホ（390px）</div>
+      <div class="shell"><iframe class="scaler" title="クローゼット（スマホ）" srcdoc="<!doctype html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>Wardrobe — wardrobase 案Aモック</title>
+<!-- 案A（ミニマル・エディトリアル）デザインモック。PC/スマホ両対応の静的HTML。ブレークポイントはアプリ本体と同じ600px -->
+<link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap&quot;>
+<style>
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --tile: #eef1f6;
+  --ink: #1a2333; --sub: #5a6472; --muted: #8a93a2; --faint: #b4bcc9;
+  --line: #e4e7ec; --line-soft: #dfe3ea;
+  --accent: #1b74ff; --accent-hover: #0d5fe8;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; height: 64px; display: flex; align-items: center; }
+.logo { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.nav { margin-left: auto; display: flex; gap: 4px; }
+.nav a { height: 44px; padding: 0 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 13px; color: var(--sub); border-radius: 10px; }
+.nav a:hover { color: var(--ink); }
+.nav a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+.nav a.active { color: var(--ink); font-weight: 700; }
+.nav a.active .dot { background: var(--accent); }
+.logout { margin-left: 28px; font-size: 12.5px; color: var(--muted); }
+.header .icon-btn { display: none; }
+
+.icon-btn { width: 44px; height: 44px; border: 1px solid var(--line-soft); border-radius: 22px; background: transparent; display: flex; align-items: center; justify-content: center; color: var(--sub); cursor: pointer; }
+.icon-btn:hover { border-color: var(--faint); color: var(--ink); }
+
+.page { max-width: 1240px; margin: 0 auto; padding: 40px 48px 80px; }
+.title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+h1 { margin: 0; font-family: var(--serif); font-size: 52px; font-weight: 500; line-height: 1.05; }
+.subtitle { margin-top: 10px; font-size: 14px; color: var(--sub); }
+.title-actions { display: flex; align-items: center; gap: 12px; }
+.btn-primary { height: 44px; padding: 0 22px; border: none; border-radius: 22px; background: var(--accent); color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 6px 16px rgba(27, 116, 255, 0.25); transition: background 120ms ease; }
+.btn-primary:hover { background: var(--accent-hover); }
+
+.chips { margin-top: 28px; display: flex; gap: 10px; }
+.chip { height: 44px; padding: 0 20px; border-radius: 22px; border: 1px solid var(--line-soft); background: transparent; color: var(--sub); font-family: var(--sans); font-size: 13px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: border-color 120ms ease, color 120ms ease; }
+.chip:hover { border-color: var(--faint); color: var(--ink); }
+.chip .n { color: #98a1b0; }
+.chip.active { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.chip.active .n { color: #aeb6c4; }
+.chip.disabled { border-color: #e9edf3; color: var(--faint); cursor: default; }
+.chip.disabled .n { color: #ccd3dd; }
+
+.grid { margin-top: 32px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px 24px; }
+.item { cursor: pointer; }
+.item .tile { aspect-ratio: 14 / 15; background: var(--tile); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #4d586b; transition: box-shadow 160ms ease; }
+.item:hover .tile { box-shadow: inset 0 0 0 1px var(--accent); }
+.item svg { width: 42%; height: auto; }
+.item .name { margin-top: 12px; font-size: 14px; font-weight: 500; }
+.item .cat { margin-top: 3px; font-size: 11.5px; color: var(--muted); }
+
+.fab { display: none; }
+.tabbar { display: none; }
+
+@media (max-width: 600px) {
+  .header-inner { padding: 0 20px; height: 60px; }
+  .nav, .logout { display: none; }
+  .header .icon-btn { display: flex; margin-left: auto; }
+  .page { padding: 20px 20px 140px; }
+  h1 { font-size: 42px; }
+  .subtitle { margin-top: 8px; font-size: 13px; }
+  .title-actions { display: none; }
+  .chips { margin-top: 22px; gap: 8px; overflow-x: auto; margin-left: -20px; margin-right: -20px; padding: 0 20px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { padding: 0 18px; }
+  .grid { margin-top: 26px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; }
+  .item svg { width: 55%; }
+  .item .name { margin-top: 10px; font-size: 13px; }
+  .item .cat { font-size: 11px; }
+
+  .fab { display: flex; position: fixed; right: 20px; bottom: calc(88px + env(safe-area-inset-bottom)); width: 56px; height: 56px; border: none; border-radius: 28px; background: var(--accent); color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(27, 116, 255, 0.35); cursor: pointer; z-index: 20; }
+  .fab:hover { background: var(--accent-hover); }
+
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: calc(72px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--bg); border-top: 1px solid var(--line); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 10.5px; color: #9aa3b2; }
+  .tabbar a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+  .tabbar a.active { color: var(--ink); font-weight: 500; }
+  .tabbar a.active .dot { background: var(--accent); }
+}
+</style>
+</head>
+<body>
+
+<header class=&quot;header&quot;>
+  <div class=&quot;header-inner&quot;>
+    <a class=&quot;logo&quot; href=&quot;wardrobe.html&quot;>wardro<span>base</span></a>
+    <nav class=&quot;nav&quot;>
+      <a class=&quot;active&quot; href=&quot;wardrobe.html&quot;><span>クローゼット</span><span class=&quot;dot&quot;></span></a>
+      <a href=&quot;styling.html&quot;><span>スタイリング</span><span class=&quot;dot&quot;></span></a>
+      <a href=&quot;outfits.html&quot;><span>コーデ</span><span class=&quot;dot&quot;></span></a>
+    </nav>
+    <a class=&quot;logout&quot; href=&quot;#&quot;>ログアウト</a>
+    <button class=&quot;icon-btn&quot; type=&quot;button&quot; aria-label=&quot;アイテムを検索&quot;>
+      <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;6.5&quot;/><path d=&quot;M16 16 L20.5 20.5&quot;/></svg>
+    </button>
+  </div>
+</header>
+
+<main class=&quot;page&quot;>
+  <div class=&quot;title-row&quot;>
+    <div>
+      <h1>Wardrobe</h1>
+      <div class=&quot;subtitle&quot;>全12点のアイテム</div>
+    </div>
+    <div class=&quot;title-actions&quot;>
+      <button class=&quot;btn-primary&quot; type=&quot;button&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+        アイテムを追加
+      </button>
+    </div>
+  </div>
+
+  <div class=&quot;chips&quot;>
+    <button class=&quot;chip active&quot; type=&quot;button&quot;>すべて<span class=&quot;n&quot;>12</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>トップス<span class=&quot;n&quot;>4</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>ボトムス<span class=&quot;n&quot;>3</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>アウター<span class=&quot;n&quot;>2</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>シューズ<span class=&quot;n&quot;>2</span></button>
+    <button class=&quot;chip&quot; type=&quot;button&quot;>バッグ<span class=&quot;n&quot;>1</span></button>
+    <button class=&quot;chip disabled&quot; type=&quot;button&quot; disabled>アクセサリー<span class=&quot;n&quot;>0</span></button>
+  </div>
+
+  <div class=&quot;grid&quot;>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+      <div class=&quot;name&quot;>白Tシャツ</div>
+      <div class=&quot;cat&quot;>トップス</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+      <div class=&quot;name&quot;>デニムパンツ</div>
+      <div class=&quot;cat&quot;>ボトムス</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+      <div class=&quot;name&quot;>ネイビーシャツ</div>
+      <div class=&quot;cat&quot;>トップス</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M11 19 L37 19 L39.5 41 L8.5 41 Z&quot;/><path d=&quot;M18 19 C18 10.5 30 10.5 30 19&quot;/></svg></div>
+      <div class=&quot;name&quot;>レザートート</div>
+      <div class=&quot;cat&quot;>バッグ</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+      <div class=&quot;name&quot;>スニーカー</div>
+      <div class=&quot;cat&quot;>シューズ</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+      <div class=&quot;name&quot;>チノパンツ</div>
+      <div class=&quot;cat&quot;>ボトムス</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M18 7 L9 11 L6 39 L14 39 L15 21 L15 41 L33 41 L33 21 L34 39 L42 39 L39 11 L30 7 C28 12 20 12 18 7 Z&quot;/><path d=&quot;M24 13 L24 41&quot;/></svg></div>
+      <div class=&quot;name&quot;>トレンチコート</div>
+      <div class=&quot;cat&quot;>アウター</div>
+    </div>
+    <div class=&quot;item&quot;>
+      <div class=&quot;tile&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 7 L31 7 L31 24 C36.5 26 41 28.5 41 33 L41 39 L17 39 Z&quot;/><path d=&quot;M17 24 L31 24&quot;/></svg></div>
+      <div class=&quot;name&quot;>ショートブーツ</div>
+      <div class=&quot;cat&quot;>シューズ</div>
+    </div>
+  </div>
+</main>
+
+<button class=&quot;fab&quot; type=&quot;button&quot; aria-label=&quot;アイテムを追加&quot;>
+  <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+</button>
+
+<nav class=&quot;tabbar&quot;>
+  <a class=&quot;active&quot; href=&quot;wardrobe.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;5&quot; y=&quot;3&quot; width=&quot;14&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M12 3 L12 21&quot;/><path d=&quot;M9.5 11 L9.5 13.5&quot;/><path d=&quot;M14.5 11 L14.5 13.5&quot;/></svg>
+    <span>クローゼット</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a href=&quot;styling.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 4 a2.4 2.4 0 1 1 2.4 2.4 C13.2 6.8 12 7.5 12 9.2 L3.8 16.6 A1.2 1.2 0 0 0 4.6 18.7 L19.4 18.7 A1.2 1.2 0 0 0 20.2 16.6 L12 9.2&quot;/></svg>
+    <span>スタイリング</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a href=&quot;outfits.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;6&quot; y=&quot;3&quot; width=&quot;13&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M6 7.5 L4 7.5&quot;/><path d=&quot;M6 12 L4 12&quot;/><path d=&quot;M6 16.5 L4 16.5&quot;/></svg>
+    <span>コーデ</span><span class=&quot;dot&quot;></span>
+  </a>
+</nav>
+
+</body>
+</html>
+"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="ja">スタイリング</span><span class="en">Styling</span><a class="open" href="styling.html">単体で開く</a></h2>
+  <div class="row">
+    <div class="device pc">
+      <div class="label">PC（1440px）</div>
+      <div class="shell"><iframe class="scaler" title="スタイリング（PC）" srcdoc="<!doctype html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>Styling — wardrobase 案Aモック</title>
+<!-- 案A（ミニマル・エディトリアル）デザインモック。PC/スマホ両対応の静的HTML。ブレークポイントはアプリ本体と同じ600px -->
+<link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap&quot;>
+<style>
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --tile: #eef1f6;
+  --ink: #1a2333; --sub: #5a6472; --muted: #8a93a2; --faint: #b4bcc9;
+  --line: #e4e7ec; --line-soft: #dfe3ea;
+  --accent: #1b74ff; --accent-hover: #0d5fe8;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; height: 64px; display: flex; align-items: center; }
+.logo { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.nav { margin-left: auto; display: flex; gap: 4px; }
+.nav a { height: 44px; padding: 0 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 13px; color: var(--sub); border-radius: 10px; }
+.nav a:hover { color: var(--ink); }
+.nav a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+.nav a.active { color: var(--ink); font-weight: 700; }
+.nav a.active .dot { background: var(--accent); }
+.logout { margin-left: 28px; font-size: 12.5px; color: var(--muted); }
+.header .icon-btn { display: none; }
+
+.icon-btn { width: 44px; height: 44px; border: 1px solid var(--line-soft); border-radius: 22px; background: transparent; display: flex; align-items: center; justify-content: center; color: var(--sub); cursor: pointer; }
+.icon-btn:hover { border-color: var(--faint); color: var(--ink); }
+
+.page { max-width: 1240px; margin: 0 auto; padding: 40px 48px 80px; }
+.title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+h1 { margin: 0; font-family: var(--serif); font-size: 52px; font-weight: 500; line-height: 1.05; }
+.subtitle { margin-top: 10px; font-size: 14px; color: var(--sub); }
+.title-actions { display: flex; align-items: center; gap: 12px; }
+.btn-primary { height: 44px; padding: 0 22px; border: none; border-radius: 22px; background: var(--accent); color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 6px 16px rgba(27, 116, 255, 0.25); transition: background 120ms ease; }
+.btn-primary:hover { background: var(--accent-hover); }
+
+.styles { margin-top: 36px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.style-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; cursor: pointer; transition: border-color 140ms ease, box-shadow 160ms ease; }
+.style-card:hover { border-color: var(--accent); box-shadow: 0 8px 20px rgba(26, 35, 51, 0.06); }
+.style-head { display: flex; align-items: center; justify-content: space-between; }
+.style-name { font-size: 16px; font-weight: 700; }
+.chev { color: var(--faint); flex-shrink: 0; }
+.board { margin-top: 16px; height: 300px; background: var(--tile); border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+.bitem { width: 92px; height: 92px; background: var(--surface); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #4d586b; }
+.bitem svg { width: 63%; height: auto; }
+.style-foot { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; }
+.seasons { font-size: 13px; letter-spacing: 0.06em; color: var(--sub); }
+.count { font-size: 12.5px; color: var(--faint); }
+.ghost { border: 1.5px dashed #ccd5e2; border-radius: 18px; min-height: 160px; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--sub); font-size: 14px; font-weight: 500; background: transparent; font-family: var(--sans); cursor: pointer; transition: border-color 140ms ease, color 140ms ease; }
+.ghost:hover { border-color: var(--accent); color: var(--ink); }
+
+.fab { display: none; }
+.tabbar { display: none; }
+
+@media (max-width: 600px) {
+  .header-inner { padding: 0 20px; height: 60px; }
+  .nav, .logout { display: none; }
+  .header .icon-btn { display: flex; margin-left: auto; }
+  .page { padding: 20px 20px 140px; }
+  h1 { font-size: 42px; }
+  .subtitle { margin-top: 8px; font-size: 13px; }
+  .title-actions { display: none; }
+  .styles { margin-top: 26px; grid-template-columns: 1fr; gap: 16px; }
+  .style-card { padding: 18px; border-radius: 16px; }
+  .style-name { font-size: 15px; }
+  .board { margin-top: 14px; height: 150px; gap: 8px; }
+  .bitem { width: 60px; height: 60px; border-radius: 8px; }
+  .style-foot { margin-top: 14px; }
+  .seasons { font-size: 12px; }
+  .count { font-size: 11.5px; }
+  .ghost { min-height: 96px; font-size: 13px; }
+
+  .fab { display: flex; position: fixed; right: 20px; bottom: calc(88px + env(safe-area-inset-bottom)); width: 56px; height: 56px; border: none; border-radius: 28px; background: var(--accent); color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(27, 116, 255, 0.35); cursor: pointer; z-index: 20; }
+  .fab:hover { background: var(--accent-hover); }
+
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: calc(72px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--bg); border-top: 1px solid var(--line); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 10.5px; color: #9aa3b2; }
+  .tabbar a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+  .tabbar a.active { color: var(--ink); font-weight: 500; }
+  .tabbar a.active .dot { background: var(--accent); }
+}
+</style>
+</head>
+<body>
+
+<header class=&quot;header&quot;>
+  <div class=&quot;header-inner&quot;>
+    <a class=&quot;logo&quot; href=&quot;wardrobe.html&quot;>wardro<span>base</span></a>
+    <nav class=&quot;nav&quot;>
+      <a href=&quot;wardrobe.html&quot;><span>クローゼット</span><span class=&quot;dot&quot;></span></a>
+      <a class=&quot;active&quot; href=&quot;styling.html&quot;><span>スタイリング</span><span class=&quot;dot&quot;></span></a>
+      <a href=&quot;outfits.html&quot;><span>コーデ</span><span class=&quot;dot&quot;></span></a>
+    </nav>
+    <a class=&quot;logout&quot; href=&quot;#&quot;>ログアウト</a>
+    <button class=&quot;icon-btn&quot; type=&quot;button&quot; aria-label=&quot;スタイルを検索&quot;>
+      <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;6.5&quot;/><path d=&quot;M16 16 L20.5 20.5&quot;/></svg>
+    </button>
+  </div>
+</header>
+
+<main class=&quot;page&quot;>
+  <div class=&quot;title-row&quot;>
+    <div>
+      <h1>Styling</h1>
+      <div class=&quot;subtitle&quot;>2つのスタイル</div>
+    </div>
+    <div class=&quot;title-actions&quot;>
+      <button class=&quot;btn-primary&quot; type=&quot;button&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+        スタイルを作成
+      </button>
+    </div>
+  </div>
+
+  <div class=&quot;styles&quot;>
+
+    <div class=&quot;style-card&quot;>
+      <div class=&quot;style-head&quot;>
+        <div class=&quot;style-name&quot;>休日用のデフォルト</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+      <div class=&quot;board&quot;>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M11 19 L37 19 L39.5 41 L8.5 41 Z&quot;/><path d=&quot;M18 19 C18 10.5 30 10.5 30 19&quot;/></svg></div>
+      </div>
+      <div class=&quot;style-foot&quot;>
+        <div class=&quot;seasons&quot;>春・秋</div>
+        <div class=&quot;count&quot;>5点</div>
+      </div>
+    </div>
+
+    <div class=&quot;style-card&quot;>
+      <div class=&quot;style-head&quot;>
+        <div class=&quot;style-name&quot;>仕事用のデフォルト</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+      <div class=&quot;board&quot;>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M18 7 L9 11 L6 39 L14 39 L15 21 L15 41 L33 41 L33 21 L34 39 L42 39 L39 11 L30 7 C28 12 20 12 18 7 Z&quot;/><path d=&quot;M24 13 L24 41&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 7 L31 7 L31 24 C36.5 26 41 28.5 41 33 L41 39 L17 39 Z&quot;/><path d=&quot;M17 24 L31 24&quot;/></svg></div>
+      </div>
+      <div class=&quot;style-foot&quot;>
+        <div class=&quot;seasons&quot;>秋・冬</div>
+        <div class=&quot;count&quot;>4点</div>
+      </div>
+    </div>
+
+    <button class=&quot;ghost&quot; type=&quot;button&quot;>
+      <svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+      スタイルを追加
+    </button>
+
+  </div>
+</main>
+
+<button class=&quot;fab&quot; type=&quot;button&quot; aria-label=&quot;スタイルを作成&quot;>
+  <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+</button>
+
+<nav class=&quot;tabbar&quot;>
+  <a href=&quot;wardrobe.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;5&quot; y=&quot;3&quot; width=&quot;14&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M12 3 L12 21&quot;/><path d=&quot;M9.5 11 L9.5 13.5&quot;/><path d=&quot;M14.5 11 L14.5 13.5&quot;/></svg>
+    <span>クローゼット</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a class=&quot;active&quot; href=&quot;styling.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 4 a2.4 2.4 0 1 1 2.4 2.4 C13.2 6.8 12 7.5 12 9.2 L3.8 16.6 A1.2 1.2 0 0 0 4.6 18.7 L19.4 18.7 A1.2 1.2 0 0 0 20.2 16.6 L12 9.2&quot;/></svg>
+    <span>スタイリング</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a href=&quot;outfits.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;6&quot; y=&quot;3&quot; width=&quot;13&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M6 7.5 L4 7.5&quot;/><path d=&quot;M6 12 L4 12&quot;/><path d=&quot;M6 16.5 L4 16.5&quot;/></svg>
+    <span>コーデ</span><span class=&quot;dot&quot;></span>
+  </a>
+</nav>
+
+</body>
+</html>
+"></iframe></div>
+    </div>
+    <div class="device sp">
+      <div class="label">スマホ（390px）</div>
+      <div class="shell"><iframe class="scaler" title="スタイリング（スマホ）" srcdoc="<!doctype html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>Styling — wardrobase 案Aモック</title>
+<!-- 案A（ミニマル・エディトリアル）デザインモック。PC/スマホ両対応の静的HTML。ブレークポイントはアプリ本体と同じ600px -->
+<link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap&quot;>
+<style>
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --tile: #eef1f6;
+  --ink: #1a2333; --sub: #5a6472; --muted: #8a93a2; --faint: #b4bcc9;
+  --line: #e4e7ec; --line-soft: #dfe3ea;
+  --accent: #1b74ff; --accent-hover: #0d5fe8;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; height: 64px; display: flex; align-items: center; }
+.logo { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.nav { margin-left: auto; display: flex; gap: 4px; }
+.nav a { height: 44px; padding: 0 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 13px; color: var(--sub); border-radius: 10px; }
+.nav a:hover { color: var(--ink); }
+.nav a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+.nav a.active { color: var(--ink); font-weight: 700; }
+.nav a.active .dot { background: var(--accent); }
+.logout { margin-left: 28px; font-size: 12.5px; color: var(--muted); }
+.header .icon-btn { display: none; }
+
+.icon-btn { width: 44px; height: 44px; border: 1px solid var(--line-soft); border-radius: 22px; background: transparent; display: flex; align-items: center; justify-content: center; color: var(--sub); cursor: pointer; }
+.icon-btn:hover { border-color: var(--faint); color: var(--ink); }
+
+.page { max-width: 1240px; margin: 0 auto; padding: 40px 48px 80px; }
+.title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+h1 { margin: 0; font-family: var(--serif); font-size: 52px; font-weight: 500; line-height: 1.05; }
+.subtitle { margin-top: 10px; font-size: 14px; color: var(--sub); }
+.title-actions { display: flex; align-items: center; gap: 12px; }
+.btn-primary { height: 44px; padding: 0 22px; border: none; border-radius: 22px; background: var(--accent); color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 6px 16px rgba(27, 116, 255, 0.25); transition: background 120ms ease; }
+.btn-primary:hover { background: var(--accent-hover); }
+
+.styles { margin-top: 36px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.style-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; cursor: pointer; transition: border-color 140ms ease, box-shadow 160ms ease; }
+.style-card:hover { border-color: var(--accent); box-shadow: 0 8px 20px rgba(26, 35, 51, 0.06); }
+.style-head { display: flex; align-items: center; justify-content: space-between; }
+.style-name { font-size: 16px; font-weight: 700; }
+.chev { color: var(--faint); flex-shrink: 0; }
+.board { margin-top: 16px; height: 300px; background: var(--tile); border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+.bitem { width: 92px; height: 92px; background: var(--surface); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #4d586b; }
+.bitem svg { width: 63%; height: auto; }
+.style-foot { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; }
+.seasons { font-size: 13px; letter-spacing: 0.06em; color: var(--sub); }
+.count { font-size: 12.5px; color: var(--faint); }
+.ghost { border: 1.5px dashed #ccd5e2; border-radius: 18px; min-height: 160px; display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--sub); font-size: 14px; font-weight: 500; background: transparent; font-family: var(--sans); cursor: pointer; transition: border-color 140ms ease, color 140ms ease; }
+.ghost:hover { border-color: var(--accent); color: var(--ink); }
+
+.fab { display: none; }
+.tabbar { display: none; }
+
+@media (max-width: 600px) {
+  .header-inner { padding: 0 20px; height: 60px; }
+  .nav, .logout { display: none; }
+  .header .icon-btn { display: flex; margin-left: auto; }
+  .page { padding: 20px 20px 140px; }
+  h1 { font-size: 42px; }
+  .subtitle { margin-top: 8px; font-size: 13px; }
+  .title-actions { display: none; }
+  .styles { margin-top: 26px; grid-template-columns: 1fr; gap: 16px; }
+  .style-card { padding: 18px; border-radius: 16px; }
+  .style-name { font-size: 15px; }
+  .board { margin-top: 14px; height: 150px; gap: 8px; }
+  .bitem { width: 60px; height: 60px; border-radius: 8px; }
+  .style-foot { margin-top: 14px; }
+  .seasons { font-size: 12px; }
+  .count { font-size: 11.5px; }
+  .ghost { min-height: 96px; font-size: 13px; }
+
+  .fab { display: flex; position: fixed; right: 20px; bottom: calc(88px + env(safe-area-inset-bottom)); width: 56px; height: 56px; border: none; border-radius: 28px; background: var(--accent); color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(27, 116, 255, 0.35); cursor: pointer; z-index: 20; }
+  .fab:hover { background: var(--accent-hover); }
+
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: calc(72px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--bg); border-top: 1px solid var(--line); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 10.5px; color: #9aa3b2; }
+  .tabbar a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+  .tabbar a.active { color: var(--ink); font-weight: 500; }
+  .tabbar a.active .dot { background: var(--accent); }
+}
+</style>
+</head>
+<body>
+
+<header class=&quot;header&quot;>
+  <div class=&quot;header-inner&quot;>
+    <a class=&quot;logo&quot; href=&quot;wardrobe.html&quot;>wardro<span>base</span></a>
+    <nav class=&quot;nav&quot;>
+      <a href=&quot;wardrobe.html&quot;><span>クローゼット</span><span class=&quot;dot&quot;></span></a>
+      <a class=&quot;active&quot; href=&quot;styling.html&quot;><span>スタイリング</span><span class=&quot;dot&quot;></span></a>
+      <a href=&quot;outfits.html&quot;><span>コーデ</span><span class=&quot;dot&quot;></span></a>
+    </nav>
+    <a class=&quot;logout&quot; href=&quot;#&quot;>ログアウト</a>
+    <button class=&quot;icon-btn&quot; type=&quot;button&quot; aria-label=&quot;スタイルを検索&quot;>
+      <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;6.5&quot;/><path d=&quot;M16 16 L20.5 20.5&quot;/></svg>
+    </button>
+  </div>
+</header>
+
+<main class=&quot;page&quot;>
+  <div class=&quot;title-row&quot;>
+    <div>
+      <h1>Styling</h1>
+      <div class=&quot;subtitle&quot;>2つのスタイル</div>
+    </div>
+    <div class=&quot;title-actions&quot;>
+      <button class=&quot;btn-primary&quot; type=&quot;button&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+        スタイルを作成
+      </button>
+    </div>
+  </div>
+
+  <div class=&quot;styles&quot;>
+
+    <div class=&quot;style-card&quot;>
+      <div class=&quot;style-head&quot;>
+        <div class=&quot;style-name&quot;>休日用のデフォルト</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+      <div class=&quot;board&quot;>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M11 19 L37 19 L39.5 41 L8.5 41 Z&quot;/><path d=&quot;M18 19 C18 10.5 30 10.5 30 19&quot;/></svg></div>
+      </div>
+      <div class=&quot;style-foot&quot;>
+        <div class=&quot;seasons&quot;>春・秋</div>
+        <div class=&quot;count&quot;>5点</div>
+      </div>
+    </div>
+
+    <div class=&quot;style-card&quot;>
+      <div class=&quot;style-head&quot;>
+        <div class=&quot;style-name&quot;>仕事用のデフォルト</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+      <div class=&quot;board&quot;>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M18 7 L9 11 L6 39 L14 39 L15 21 L15 41 L33 41 L33 21 L34 39 L42 39 L39 11 L30 7 C28 12 20 12 18 7 Z&quot;/><path d=&quot;M24 13 L24 41&quot;/></svg></div>
+        <div class=&quot;bitem&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 7 L31 7 L31 24 C36.5 26 41 28.5 41 33 L41 39 L17 39 Z&quot;/><path d=&quot;M17 24 L31 24&quot;/></svg></div>
+      </div>
+      <div class=&quot;style-foot&quot;>
+        <div class=&quot;seasons&quot;>秋・冬</div>
+        <div class=&quot;count&quot;>4点</div>
+      </div>
+    </div>
+
+    <button class=&quot;ghost&quot; type=&quot;button&quot;>
+      <svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+      スタイルを追加
+    </button>
+
+  </div>
+</main>
+
+<button class=&quot;fab&quot; type=&quot;button&quot; aria-label=&quot;スタイルを作成&quot;>
+  <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+</button>
+
+<nav class=&quot;tabbar&quot;>
+  <a href=&quot;wardrobe.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;5&quot; y=&quot;3&quot; width=&quot;14&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M12 3 L12 21&quot;/><path d=&quot;M9.5 11 L9.5 13.5&quot;/><path d=&quot;M14.5 11 L14.5 13.5&quot;/></svg>
+    <span>クローゼット</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a class=&quot;active&quot; href=&quot;styling.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 4 a2.4 2.4 0 1 1 2.4 2.4 C13.2 6.8 12 7.5 12 9.2 L3.8 16.6 A1.2 1.2 0 0 0 4.6 18.7 L19.4 18.7 A1.2 1.2 0 0 0 20.2 16.6 L12 9.2&quot;/></svg>
+    <span>スタイリング</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a href=&quot;outfits.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;6&quot; y=&quot;3&quot; width=&quot;13&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M6 7.5 L4 7.5&quot;/><path d=&quot;M6 12 L4 12&quot;/><path d=&quot;M6 16.5 L4 16.5&quot;/></svg>
+    <span>コーデ</span><span class=&quot;dot&quot;></span>
+  </a>
+</nav>
+
+</body>
+</html>
+"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="ja">コーデ記録</span><span class="en">Outfits</span><a class="open" href="outfits.html">単体で開く</a></h2>
+  <div class="row">
+    <div class="device pc">
+      <div class="label">PC（1440px）</div>
+      <div class="shell"><iframe class="scaler" title="コーデ記録（PC）" srcdoc="<!doctype html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>Outfits — wardrobase 案Aモック</title>
+<!-- 案A（ミニマル・エディトリアル）デザインモック。PC/スマホ両対応の静的HTML。ブレークポイントはアプリ本体と同じ600px -->
+<link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap&quot;>
+<style>
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --tile: #eef1f6;
+  --ink: #1a2333; --sub: #5a6472; --muted: #8a93a2; --faint: #b4bcc9;
+  --line: #e4e7ec; --line-soft: #dfe3ea;
+  --accent: #1b74ff; --accent-hover: #0d5fe8;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; height: 64px; display: flex; align-items: center; }
+.logo { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.nav { margin-left: auto; display: flex; gap: 4px; }
+.nav a { height: 44px; padding: 0 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 13px; color: var(--sub); border-radius: 10px; }
+.nav a:hover { color: var(--ink); }
+.nav a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+.nav a.active { color: var(--ink); font-weight: 700; }
+.nav a.active .dot { background: var(--accent); }
+.logout { margin-left: 28px; font-size: 12.5px; color: var(--muted); }
+.header .icon-btn { display: none; }
+
+.icon-btn { width: 44px; height: 44px; border: 1px solid var(--line-soft); border-radius: 22px; background: transparent; display: flex; align-items: center; justify-content: center; color: var(--sub); cursor: pointer; }
+.icon-btn:hover { border-color: var(--faint); color: var(--ink); }
+
+.page { max-width: 1240px; margin: 0 auto; padding: 40px 48px 80px; }
+.title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+h1 { margin: 0; font-family: var(--serif); font-size: 52px; font-weight: 500; line-height: 1.05; }
+.subtitle { margin-top: 10px; font-size: 14px; color: var(--sub); }
+.title-actions { display: flex; align-items: center; gap: 12px; }
+.btn-primary { height: 44px; padding: 0 22px; border: none; border-radius: 22px; background: var(--accent); color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 6px 16px rgba(27, 116, 255, 0.25); transition: background 120ms ease; }
+.btn-primary:hover { background: var(--accent-hover); }
+
+.timeline { max-width: 820px; margin: 36px auto 0; display: flex; flex-direction: column; gap: 26px; }
+.day-group { display: flex; gap: 24px; }
+.day { width: 78px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding-top: 12px; }
+.day .num { font-family: var(--serif); font-size: 40px; font-weight: 500; line-height: 1; }
+.day .wd { margin-top: 6px; font-size: 11.5px; color: var(--muted); }
+.record { flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; display: flex; align-items: center; gap: 24px; cursor: pointer; transition: border-color 140ms ease, box-shadow 160ms ease; }
+.record:hover { border-color: var(--accent); box-shadow: 0 8px 20px rgba(26, 35, 51, 0.06); }
+.thumbs { display: flex; gap: 10px; flex-shrink: 0; }
+.thumb { width: 76px; height: 76px; background: var(--tile); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #4d586b; }
+.thumb svg { width: 58%; height: auto; }
+.thumb.more { color: var(--sub); font-size: 13px; font-weight: 500; }
+.memo { flex: 1; min-width: 0; font-size: 13px; color: var(--sub); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chev { flex-shrink: 0; color: var(--faint); }
+
+.fab { display: none; }
+.tabbar { display: none; }
+
+@media (max-width: 600px) {
+  .header-inner { padding: 0 20px; height: 60px; }
+  .nav, .logout { display: none; }
+  .header .icon-btn { display: flex; margin-left: auto; }
+  .page { padding: 20px 20px 140px; }
+  h1 { font-size: 42px; }
+  .subtitle { margin-top: 8px; font-size: 13px; }
+  .title-actions { display: none; }
+  .timeline { margin-top: 26px; gap: 22px; }
+  .day-group { gap: 14px; }
+  .day { width: 54px; padding-top: 8px; }
+  .day .num { font-size: 30px; }
+  .day .wd { font-size: 10.5px; margin-top: 5px; }
+  .record { flex-direction: column; align-items: flex-start; gap: 11px; padding: 14px; border-radius: 14px; }
+  .thumbs { gap: 8px; }
+  .thumb { width: 62px; height: 62px; border-radius: 8px; }
+  .thumb.more { font-size: 12px; }
+  .memo { font-size: 12px; width: 100%; }
+  .chev { display: none; }
+
+  .fab { display: flex; position: fixed; right: 20px; bottom: calc(88px + env(safe-area-inset-bottom)); width: 56px; height: 56px; border: none; border-radius: 28px; background: var(--accent); color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(27, 116, 255, 0.35); cursor: pointer; z-index: 20; }
+  .fab:hover { background: var(--accent-hover); }
+
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: calc(72px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--bg); border-top: 1px solid var(--line); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 10.5px; color: #9aa3b2; }
+  .tabbar a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+  .tabbar a.active { color: var(--ink); font-weight: 500; }
+  .tabbar a.active .dot { background: var(--accent); }
+}
+</style>
+</head>
+<body>
+
+<header class=&quot;header&quot;>
+  <div class=&quot;header-inner&quot;>
+    <a class=&quot;logo&quot; href=&quot;wardrobe.html&quot;>wardro<span>base</span></a>
+    <nav class=&quot;nav&quot;>
+      <a href=&quot;wardrobe.html&quot;><span>クローゼット</span><span class=&quot;dot&quot;></span></a>
+      <a href=&quot;styling.html&quot;><span>スタイリング</span><span class=&quot;dot&quot;></span></a>
+      <a class=&quot;active&quot; href=&quot;outfits.html&quot;><span>コーデ</span><span class=&quot;dot&quot;></span></a>
+    </nav>
+    <a class=&quot;logout&quot; href=&quot;#&quot;>ログアウト</a>
+    <button class=&quot;icon-btn&quot; type=&quot;button&quot; aria-label=&quot;日付で開く&quot;>
+      <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;4&quot; y=&quot;6&quot; width=&quot;16&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M4 10.5 L20 10.5&quot;/><path d=&quot;M9 4 L9 8&quot;/><path d=&quot;M15 4 L15 8&quot;/></svg>
+    </button>
+  </div>
+</header>
+
+<main class=&quot;page&quot;>
+  <div class=&quot;title-row&quot;>
+    <div>
+      <h1>Outfits</h1>
+      <div class=&quot;subtitle&quot;>2026年8月・12件の記録</div>
+    </div>
+    <div class=&quot;title-actions&quot;>
+      <button class=&quot;icon-btn&quot; type=&quot;button&quot; aria-label=&quot;日付で開く&quot;>
+        <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;4&quot; y=&quot;6&quot; width=&quot;16&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M4 10.5 L20 10.5&quot;/><path d=&quot;M9 4 L9 8&quot;/><path d=&quot;M15 4 L15 8&quot;/></svg>
+      </button>
+      <button class=&quot;btn-primary&quot; type=&quot;button&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+        コーデを記録
+      </button>
+    </div>
+  </div>
+
+  <div class=&quot;timeline&quot;>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>14</div><div class=&quot;wd&quot;>8月・金</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        </div>
+        <div class=&quot;memo&quot;>定番の週末セット。歩きやすさ優先</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>11</div><div class=&quot;wd&quot;>8月・火</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        </div>
+        <div class=&quot;memo&quot;>出社日。夕方は少し肌寒かった</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>08</div><div class=&quot;wd&quot;>8月・土</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M11 19 L37 19 L39.5 41 L8.5 41 Z&quot;/><path d=&quot;M18 19 C18 10.5 30 10.5 30 19&quot;/></svg></div>
+          <div class=&quot;thumb more&quot;>+2</div>
+        </div>
+        <div class=&quot;memo&quot;>買い物へ。荷物が多い日はトート</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>05</div><div class=&quot;wd&quot;>8月・水</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        </div>
+        <div class=&quot;memo&quot;>気温高め。半袖に戻した</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>02</div><div class=&quot;wd&quot;>8月・日</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        </div>
+        <div class=&quot;memo&quot;>近所を散歩。とにかく暑い</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<button class=&quot;fab&quot; type=&quot;button&quot; aria-label=&quot;コーデを記録&quot;>
+  <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+</button>
+
+<nav class=&quot;tabbar&quot;>
+  <a href=&quot;wardrobe.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;5&quot; y=&quot;3&quot; width=&quot;14&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M12 3 L12 21&quot;/><path d=&quot;M9.5 11 L9.5 13.5&quot;/><path d=&quot;M14.5 11 L14.5 13.5&quot;/></svg>
+    <span>クローゼット</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a href=&quot;styling.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 4 a2.4 2.4 0 1 1 2.4 2.4 C13.2 6.8 12 7.5 12 9.2 L3.8 16.6 A1.2 1.2 0 0 0 4.6 18.7 L19.4 18.7 A1.2 1.2 0 0 0 20.2 16.6 L12 9.2&quot;/></svg>
+    <span>スタイリング</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a class=&quot;active&quot; href=&quot;outfits.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;6&quot; y=&quot;3&quot; width=&quot;13&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M6 7.5 L4 7.5&quot;/><path d=&quot;M6 12 L4 12&quot;/><path d=&quot;M6 16.5 L4 16.5&quot;/></svg>
+    <span>コーデ</span><span class=&quot;dot&quot;></span>
+  </a>
+</nav>
+
+</body>
+</html>
+"></iframe></div>
+    </div>
+    <div class="device sp">
+      <div class="label">スマホ（390px）</div>
+      <div class="shell"><iframe class="scaler" title="コーデ記録（スマホ）" srcdoc="<!doctype html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>Outfits — wardrobase 案Aモック</title>
+<!-- 案A（ミニマル・エディトリアル）デザインモック。PC/スマホ両対応の静的HTML。ブレークポイントはアプリ本体と同じ600px -->
+<link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap&quot;>
+<style>
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --tile: #eef1f6;
+  --ink: #1a2333; --sub: #5a6472; --muted: #8a93a2; --faint: #b4bcc9;
+  --line: #e4e7ec; --line-soft: #dfe3ea;
+  --accent: #1b74ff; --accent-hover: #0d5fe8;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1240px; margin: 0 auto; padding: 0 48px; height: 64px; display: flex; align-items: center; }
+.logo { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+.logo span { color: var(--accent); }
+.nav { margin-left: auto; display: flex; gap: 4px; }
+.nav a { height: 44px; padding: 0 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 13px; color: var(--sub); border-radius: 10px; }
+.nav a:hover { color: var(--ink); }
+.nav a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+.nav a.active { color: var(--ink); font-weight: 700; }
+.nav a.active .dot { background: var(--accent); }
+.logout { margin-left: 28px; font-size: 12.5px; color: var(--muted); }
+.header .icon-btn { display: none; }
+
+.icon-btn { width: 44px; height: 44px; border: 1px solid var(--line-soft); border-radius: 22px; background: transparent; display: flex; align-items: center; justify-content: center; color: var(--sub); cursor: pointer; }
+.icon-btn:hover { border-color: var(--faint); color: var(--ink); }
+
+.page { max-width: 1240px; margin: 0 auto; padding: 40px 48px 80px; }
+.title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+h1 { margin: 0; font-family: var(--serif); font-size: 52px; font-weight: 500; line-height: 1.05; }
+.subtitle { margin-top: 10px; font-size: 14px; color: var(--sub); }
+.title-actions { display: flex; align-items: center; gap: 12px; }
+.btn-primary { height: 44px; padding: 0 22px; border: none; border-radius: 22px; background: var(--accent); color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 6px 16px rgba(27, 116, 255, 0.25); transition: background 120ms ease; }
+.btn-primary:hover { background: var(--accent-hover); }
+
+.timeline { max-width: 820px; margin: 36px auto 0; display: flex; flex-direction: column; gap: 26px; }
+.day-group { display: flex; gap: 24px; }
+.day { width: 78px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding-top: 12px; }
+.day .num { font-family: var(--serif); font-size: 40px; font-weight: 500; line-height: 1; }
+.day .wd { margin-top: 6px; font-size: 11.5px; color: var(--muted); }
+.record { flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; display: flex; align-items: center; gap: 24px; cursor: pointer; transition: border-color 140ms ease, box-shadow 160ms ease; }
+.record:hover { border-color: var(--accent); box-shadow: 0 8px 20px rgba(26, 35, 51, 0.06); }
+.thumbs { display: flex; gap: 10px; flex-shrink: 0; }
+.thumb { width: 76px; height: 76px; background: var(--tile); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #4d586b; }
+.thumb svg { width: 58%; height: auto; }
+.thumb.more { color: var(--sub); font-size: 13px; font-weight: 500; }
+.memo { flex: 1; min-width: 0; font-size: 13px; color: var(--sub); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chev { flex-shrink: 0; color: var(--faint); }
+
+.fab { display: none; }
+.tabbar { display: none; }
+
+@media (max-width: 600px) {
+  .header-inner { padding: 0 20px; height: 60px; }
+  .nav, .logout { display: none; }
+  .header .icon-btn { display: flex; margin-left: auto; }
+  .page { padding: 20px 20px 140px; }
+  h1 { font-size: 42px; }
+  .subtitle { margin-top: 8px; font-size: 13px; }
+  .title-actions { display: none; }
+  .timeline { margin-top: 26px; gap: 22px; }
+  .day-group { gap: 14px; }
+  .day { width: 54px; padding-top: 8px; }
+  .day .num { font-size: 30px; }
+  .day .wd { font-size: 10.5px; margin-top: 5px; }
+  .record { flex-direction: column; align-items: flex-start; gap: 11px; padding: 14px; border-radius: 14px; }
+  .thumbs { gap: 8px; }
+  .thumb { width: 62px; height: 62px; border-radius: 8px; }
+  .thumb.more { font-size: 12px; }
+  .memo { font-size: 12px; width: 100%; }
+  .chev { display: none; }
+
+  .fab { display: flex; position: fixed; right: 20px; bottom: calc(88px + env(safe-area-inset-bottom)); width: 56px; height: 56px; border: none; border-radius: 28px; background: var(--accent); color: #fff; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(27, 116, 255, 0.35); cursor: pointer; z-index: 20; }
+  .fab:hover { background: var(--accent-hover); }
+
+  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: calc(72px + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); background: var(--bg); border-top: 1px solid var(--line); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 10.5px; color: #9aa3b2; }
+  .tabbar a .dot { width: 4px; height: 4px; border-radius: 2px; background: transparent; }
+  .tabbar a.active { color: var(--ink); font-weight: 500; }
+  .tabbar a.active .dot { background: var(--accent); }
+}
+</style>
+</head>
+<body>
+
+<header class=&quot;header&quot;>
+  <div class=&quot;header-inner&quot;>
+    <a class=&quot;logo&quot; href=&quot;wardrobe.html&quot;>wardro<span>base</span></a>
+    <nav class=&quot;nav&quot;>
+      <a href=&quot;wardrobe.html&quot;><span>クローゼット</span><span class=&quot;dot&quot;></span></a>
+      <a href=&quot;styling.html&quot;><span>スタイリング</span><span class=&quot;dot&quot;></span></a>
+      <a class=&quot;active&quot; href=&quot;outfits.html&quot;><span>コーデ</span><span class=&quot;dot&quot;></span></a>
+    </nav>
+    <a class=&quot;logout&quot; href=&quot;#&quot;>ログアウト</a>
+    <button class=&quot;icon-btn&quot; type=&quot;button&quot; aria-label=&quot;日付で開く&quot;>
+      <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;4&quot; y=&quot;6&quot; width=&quot;16&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M4 10.5 L20 10.5&quot;/><path d=&quot;M9 4 L9 8&quot;/><path d=&quot;M15 4 L15 8&quot;/></svg>
+    </button>
+  </div>
+</header>
+
+<main class=&quot;page&quot;>
+  <div class=&quot;title-row&quot;>
+    <div>
+      <h1>Outfits</h1>
+      <div class=&quot;subtitle&quot;>2026年8月・12件の記録</div>
+    </div>
+    <div class=&quot;title-actions&quot;>
+      <button class=&quot;icon-btn&quot; type=&quot;button&quot; aria-label=&quot;日付で開く&quot;>
+        <svg width=&quot;19&quot; height=&quot;19&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;4&quot; y=&quot;6&quot; width=&quot;16&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M4 10.5 L20 10.5&quot;/><path d=&quot;M9 4 L9 8&quot;/><path d=&quot;M15 4 L15 8&quot;/></svg>
+      </button>
+      <button class=&quot;btn-primary&quot; type=&quot;button&quot;>
+        <svg width=&quot;16&quot; height=&quot;16&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+        コーデを記録
+      </button>
+    </div>
+  </div>
+
+  <div class=&quot;timeline&quot;>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>14</div><div class=&quot;wd&quot;>8月・金</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        </div>
+        <div class=&quot;memo&quot;>定番の週末セット。歩きやすさ優先</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>11</div><div class=&quot;wd&quot;>8月・火</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        </div>
+        <div class=&quot;memo&quot;>出社日。夕方は少し肌寒かった</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>08</div><div class=&quot;wd&quot;>8月・土</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M11 19 L37 19 L39.5 41 L8.5 41 Z&quot;/><path d=&quot;M18 19 C18 10.5 30 10.5 30 19&quot;/></svg></div>
+          <div class=&quot;thumb more&quot;>+2</div>
+        </div>
+        <div class=&quot;memo&quot;>買い物へ。荷物が多い日はトート</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>05</div><div class=&quot;wd&quot;>8月・水</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/><path d=&quot;M24 14 L24 41&quot;/><path d=&quot;M20 9 L24 14 L28 9&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        </div>
+        <div class=&quot;memo&quot;>気温高め。半袖に戻した</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+    <div class=&quot;day-group&quot;>
+      <div class=&quot;day&quot;><div class=&quot;num&quot;>02</div><div class=&quot;wd&quot;>8月・日</div></div>
+      <div class=&quot;record&quot;>
+        <div class=&quot;thumbs&quot;>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M17 8 L10 11 L5 21 L12 25 L14 21 L14 41 L34 41 L34 21 L36 25 L43 21 L38 11 L31 8 C29 13 19 13 17 8 Z&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M15 7 L33 7 L36 41 L27 41 L24 20 L21 41 L12 41 Z&quot;/><path d=&quot;M15 12 L33 12&quot;/></svg></div>
+          <div class=&quot;thumb&quot;><svg viewBox=&quot;0 0 48 48&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M5 33 C5 29 9 27 14 26 L19 21 C25 26 33 29 39 30 C42.5 30.7 44 32 44 34.5 L44 38 L5 38 Z&quot;/><path d=&quot;M20 24 L23 27&quot;/><path d=&quot;M24 22 L27 25&quot;/></svg></div>
+        </div>
+        <div class=&quot;memo&quot;>近所を散歩。とにかく暑い</div>
+        <svg class=&quot;chev&quot; width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.8&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M9 6 L15 12 L9 18&quot;/></svg>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<button class=&quot;fab&quot; type=&quot;button&quot; aria-label=&quot;コーデを記録&quot;>
+  <svg width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.2&quot; stroke-linecap=&quot;round&quot;><path d=&quot;M12 5 L12 19&quot;/><path d=&quot;M5 12 L19 12&quot;/></svg>
+</button>
+
+<nav class=&quot;tabbar&quot;>
+  <a href=&quot;wardrobe.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;5&quot; y=&quot;3&quot; width=&quot;14&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M12 3 L12 21&quot;/><path d=&quot;M9.5 11 L9.5 13.5&quot;/><path d=&quot;M14.5 11 L14.5 13.5&quot;/></svg>
+    <span>クローゼット</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a href=&quot;styling.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><path d=&quot;M12 4 a2.4 2.4 0 1 1 2.4 2.4 C13.2 6.8 12 7.5 12 9.2 L3.8 16.6 A1.2 1.2 0 0 0 4.6 18.7 L19.4 18.7 A1.2 1.2 0 0 0 20.2 16.6 L12 9.2&quot;/></svg>
+    <span>スタイリング</span><span class=&quot;dot&quot;></span>
+  </a>
+  <a class=&quot;active&quot; href=&quot;outfits.html&quot;>
+    <svg width=&quot;23&quot; height=&quot;23&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;1.7&quot; stroke-linecap=&quot;round&quot;><rect x=&quot;6&quot; y=&quot;3&quot; width=&quot;13&quot; height=&quot;18&quot; rx=&quot;2&quot;/><path d=&quot;M6 7.5 L4 7.5&quot;/><path d=&quot;M6 12 L4 12&quot;/><path d=&quot;M6 16.5 L4 16.5&quot;/></svg>
+    <span>コーデ</span><span class=&quot;dot&quot;></span>
+  </a>
+</nav>
+
+</body>
+</html>
+"></iframe></div>
+    </div>
+  </div>
+</section>
+</main>
+</body>
+</html>
