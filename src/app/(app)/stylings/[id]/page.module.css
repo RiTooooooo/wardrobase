@@ -125,27 +125,6 @@
   background: var(--color-accent-hover);
 }
 
-.secondaryLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 36px;
-  padding: var(--space-2) var(--space-4);
-  font-size: var(--text-sm);
-  font-weight: var(--font-normal);
-  border-radius: var(--radius-button);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  transition:
-    color var(--duration-fast) var(--easing),
-    border-color var(--duration-fast) var(--easing);
-}
-
-.secondaryLink:hover {
-  color: var(--color-text-primary);
-  border-color: var(--color-border-strong);
-}
-
 /* 破壊的操作は目立つカプセルにせず、赤い静かなテキストに留める */
 .deleteButton {
   display: inline-flex;

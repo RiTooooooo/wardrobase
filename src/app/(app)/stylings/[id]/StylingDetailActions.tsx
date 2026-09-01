@@ -40,15 +40,10 @@ export function StylingDetailActions({
 
   return (
     <div className={styles.actions}>
+      {/* 編集はボードに一本化済み。手段が1つなので但し書きは付けない */}
       <Link
         className={styles.editLink}
         href={`/stylings/${stylingId}/board`}
-      >
-        ボードで編集
-      </Link>
-      <Link
-        className={styles.secondaryLink}
-        href={`/stylings/${stylingId}/edit`}
       >
         編集する
       </Link>
