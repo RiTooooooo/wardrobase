@@ -1,110 +1,15 @@
+/*
+ * 3セクション共通のページ枠。
+ * 幅と左右余白はヘッダーの .inner と同じにして左端を揃える。
+ */
 .page {
   display: flex;
   flex-direction: column;
-  /* タイトル→操作列→コンテンツの間隔は3セクション共通の 24px リズム */
   gap: var(--space-6);
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  /* 上下の余白は outfits と同じ控えめな値に揃える（3セクション共通） */
-  padding: var(--space-6) var(--space-8) var(--space-10);
-}
-
-/* タイトルの下に操作列を置く（3セクション共通のパターン） */
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-6);
-}
-
-.titleArea {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-3);
-}
-
-/* 英語の大見出し＋日本語の補足という構成 */
-.title {
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  letter-spacing: -0.01em;
-}
-
-/* 件数の数字だけ大きく青くして、リズムを付ける */
-.countNumber {
-  font-size: var(--text-lg);
-  font-weight: var(--font-bold);
-  color: var(--color-accent);
-}
-
-.count {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-}
-
-.headerActions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.addButton {
-  display: inline-flex;
-  align-items: center;
-  /* 文字サイズは据え置き、上下にほどよい呼吸を持たせる */
-  min-height: 38px;
-  padding: 10px var(--space-4);
-  font-size: var(--text-sm);
-  font-weight: var(--font-normal);
-  color: #fff;
-  background: var(--color-accent);
-  border-radius: var(--radius-button);
-  transition:
-    background var(--duration-fast) var(--easing),
-    transform var(--duration-slow) var(--easing-out),
-    box-shadow var(--duration-slow) var(--easing-out);
-}
-
-/* ホバーでふわっと浮き、押した瞬間に沈む（Button コンポーネントと同じ動き） */
-.addButton:hover {
-  background: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lift-sm);
-}
-
-.addButton:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-/*
- * 主役（ボードで作成）の隣に置く脇役。枠のカプセルを並べると
- * 操作盤に見えるため、静かなテキストボタンに留める。
- */
-.secondaryButton {
-  display: inline-flex;
-  align-items: center;
-  /* 隣の主ボタンと高さを揃える */
-  min-height: 38px;
-  padding: 10px var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--font-normal);
-  color: var(--color-text-secondary);
-  border-radius: var(--radius-md);
-  transition:
-    color var(--duration-fast) var(--easing),
-    background var(--duration-fast) var(--easing);
-}
-
-.secondaryButton:hover {
-  color: var(--color-text-primary);
-  background: var(--color-bg-surface);
-}
-
-.secondaryButton:active {
-  transform: translateY(0);
-  box-shadow: none;
+  padding: var(--space-10) var(--space-12) var(--space-16);
 }
 
 .empty {
@@ -113,7 +18,7 @@
   color: var(--color-text-tertiary);
   text-align: center;
   background: var(--color-bg-elevated);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
 }
 
 .emptyLink {
@@ -126,232 +31,130 @@
 }
 
 .grid {
+  margin-top: var(--space-3);
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--space-4);
-  /* タグの紐がカードの上へ突き出すぶん、行間と1行目の上を広めに取る */
-  row-gap: var(--space-8);
-  padding-top: var(--space-8);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
 }
 
-/*
- * スタイリングは服に付く「下げ札（ハングタグ）」として描く。
- * ハトメと紐を持ち、1枚ずつわずかに傾けて吊るされているように見せる。
- * 傾きは nth-child でずらし、並んだときの手作業感を出す。
- */
+/* 白い面のカード。傾き・ハトメ・紐は使わない */
 .card {
-  --tilt: -1.8deg;
-
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  /* ハトメのぶん、上に余白を取る */
-  padding: var(--space-6) var(--space-4) var(--space-4);
+  padding: var(--space-6);
   background: var(--color-bg-surface);
-  border-radius: var(--radius-xl);
   border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-sm);
-  transform: rotate(var(--tilt));
-  /* 揺れの支点はハトメの位置 */
-  transform-origin: 21px 17px;
-  animation: tagIn var(--duration-slower) var(--easing-out)
-    calc(140ms + min(var(--index, 0), 8) * 70ms) backwards;
+  border-radius: var(--radius-xl);
   transition:
-    box-shadow var(--duration-slow) var(--easing-out),
-    border-color var(--duration-normal) var(--easing);
+    border-color var(--duration-fast) var(--easing),
+    box-shadow var(--duration-fast) var(--easing),
+    transform var(--duration-fast) var(--easing);
 }
 
-.card:nth-child(2n) {
-  --tilt: 1.4deg;
-}
-
-.card:nth-child(3n) {
-  --tilt: 0.5deg;
-}
-
-/* ハトメ。金具ではなく、やわらかいパステルブルーの輪にする */
-.card::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 14px;
-  width: 14px;
-  height: 14px;
-  border-radius: var(--radius-full);
-  background: var(--color-bg-base);
-  border: 3px solid color-mix(in srgb, var(--color-accent) 55%, #ffffff);
-}
-
-/*
- * 紐。ハトメからふんわりカーブして上へ抜ける糸。
- * 円の枠線の上側だけを見せて弧を描く。
- */
-.card::after {
-  content: "";
-  position: absolute;
-  top: -22px;
-  left: 18px;
-  width: 30px;
-  height: 26px;
-  border: 2px solid transparent;
-  border-top-color: color-mix(in srgb, var(--color-accent) 70%, #ffffff);
-  border-radius: 50%;
-  transform: rotate(32deg);
-}
-
-/* 指した札は青い輪郭で示し、吊るされたまま小さく揺れる */
-.card:hover,
-.card:focus-visible {
+.card:hover {
   border-color: var(--color-accent);
-  box-shadow: var(--shadow-lift);
-  animation: swing 900ms var(--easing);
+  box-shadow: var(--shadow-md);
 }
 
-/*
- * 下げ札の揺れ。支点（ハトメ）を中心に振れ幅を減衰させ、
- * 最後は元の傾きに戻って止まる。
- */
-@keyframes swing {
-  0%,
-  100% {
-    transform: rotate(var(--tilt));
-  }
-
-  20% {
-    transform: rotate(calc(var(--tilt) + 2.4deg));
-  }
-
-  50% {
-    transform: rotate(calc(var(--tilt) - 1.8deg));
-  }
-
-  80% {
-    transform: rotate(calc(var(--tilt) + 0.8deg));
-  }
+/* タッチでも分かる押下フィードバック */
+.card:active {
+  transform: scale(0.99);
 }
 
-/* 現れるときも傾いたまま浮き上がる（riseIn の下げ札版） */
-@keyframes tagIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px) rotate(var(--tilt));
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) rotate(var(--tilt));
-  }
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
 }
 
 .cardName {
   font-size: var(--text-base);
-  font-weight: var(--font-medium);
+  font-weight: var(--font-bold);
   color: var(--color-text-primary);
-}
-
-.cardItems {
-  display: flex;
-  gap: var(--space-1);
-  overflow-x: auto;
-}
-
-.cardThumb {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--color-bg-surface);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chev {
+  display: flex;
   flex-shrink: 0;
+  color: var(--color-border-strong);
 }
 
-.cardThumbImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.cardFoot {
+  margin-top: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.cardThumbName {
-  width: 100%;
-  height: 100%;
+.seasons {
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+}
+
+.count {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* 破線の追加枠。カードの列に「まだ増やせる」ことを示す */
+.ghost {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
-  color: var(--color-text-tertiary);
-  text-align: center;
-  padding: var(--space-1);
+  gap: var(--space-2);
+  min-height: 160px;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  transition:
+    border-color var(--duration-fast) var(--easing),
+    color var(--duration-fast) var(--easing);
 }
 
-.cardSeasons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
+.ghost:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text-primary);
 }
 
-.seasonChip {
-  padding: 2px var(--space-2);
-  font-size: var(--text-xs);
-  color: var(--color-accent);
-  background: var(--color-accent-muted);
-  border-radius: var(--radius-full);
-}
-
-/* 狭い画面では左右32pxの余白が効きすぎるため詰める */
 @media (max-width: 600px) {
-  /* 下の家具・本を圧縮したのに合わせ、ヘッダー帯も一段小さく釣り合わせる */
-  .title {
-    font-size: var(--text-xl);
-  }
-
-  .countNumber {
-    font-size: var(--text-base);
-  }
-
-  /* 上下の呼吸は保ち、文字を一段小さくして軽くする */
-  .addButton {
-    min-height: 36px;
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--text-xs);
-  }
-
   .page {
-    padding: var(--space-4);
-    /* ファーストビューで全体像が見えるよう、縦の間隔を詰める */
     gap: var(--space-5);
+    /* 下は FAB（56px＋余白）に隠れないぶんを確保する */
+    padding: var(--space-5) var(--space-5)
+      calc(var(--space-16) + var(--space-10));
   }
 
-  /*
-   * スマホは1画面になるべく多くの札が入るよう、札を一回り小さくする。
-   * ただし縦の間隔は詰めない——紐がカードの上へ約22pxはみ出すため、
-   * 間隔を削ると上の札に触れてしまう。
-   */
   .grid {
-    gap: var(--space-3);
-    row-gap: var(--space-8);
-    padding-top: var(--space-8);
+    margin-top: 0;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
   }
 
-  /* 上はハトメ（下端20px）と名前が触れないよう、ひと回り厚く取る */
   .card {
-    gap: var(--space-3);
-    padding: var(--space-6) var(--space-4) var(--space-4);
-  }
-
-  /* 札が小さくなるぶん、ハトメもひとまわり縮めて釣り合わせる */
-  .card::before {
-    top: 8px;
-    left: 12px;
-    width: 12px;
-    height: 12px;
+    padding: var(--space-4);
   }
 
   .cardName {
     font-size: var(--text-sm);
   }
 
-  .cardThumb {
-    width: 44px;
-    height: 44px;
+  .cardFoot {
+    margin-top: var(--space-3);
+  }
+
+  .seasons {
+    font-size: var(--text-xs);
+  }
+
+  .ghost {
+    min-height: 96px;
+    font-size: var(--text-xs);
   }
 }

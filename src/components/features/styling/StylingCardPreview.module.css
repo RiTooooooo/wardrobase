@@ -1,0 +1,78 @@
+/* ===== ミニボード（ボード配置の縮小再現） ===== */
+
+/*
+ * ボード編集画面の黒カーペットと同じレシピで敷く
+ * （BoardCanvas.module.css の値と揃えること。CSS Modules 間で
+ * 共有できないため書き写している）。
+ * aspect-ratio は TSX の PREVIEW_ASPECT (5 / 2) と揃えること。
+ */
+.canvas {
+  --carpet-tint: #17191d;
+  --carpet-shade: 58%;
+  --carpet-vignette: 45%;
+
+  margin-top: var(--space-4);
+  aspect-ratio: 5 / 2;
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--carpet-tint);
+  background-image:
+    /* 周辺を落として、中央のアイテムへ視線を集める */
+    radial-gradient(
+      ellipse at 50% 45%,
+      transparent 40%,
+      color-mix(in srgb, var(--carpet-tint) var(--carpet-vignette), transparent)
+        100%
+    ),
+    /* 全体を暗く沈める層 */
+    linear-gradient(
+      color-mix(in srgb, var(--carpet-tint) var(--carpet-shade), transparent),
+      color-mix(in srgb, var(--carpet-tint) var(--carpet-shade), transparent)
+    ),
+    url("/textures/carpet.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.canvasInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ボード編集画面のアイテムと同じ、白いタイルに cover の写真 */
+.boardItem {
+  position: absolute;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.boardName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  text-align: center;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 600px) {
+  .canvas {
+    margin-top: var(--space-3);
+    padding: var(--space-2);
+  }
+}
