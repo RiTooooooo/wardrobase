@@ -1,10 +1,13 @@
 /*
- * ワードローブのクローゼットと同じ、白い塗りの家具として組む。
- * 青は天板・台輪・側板・取っ手だけに使い、面としては出しゃばらせない。
+ * ログイン画面の線画と同じ言語で組む。
+ * 白地に細い青線（1.5px）だけで家具の輪郭を描き、塗りの面は使わない。
  */
 .closet {
-  /* 段の区切り。白い塗りの上の薄い影 */
-  --seam: var(--color-border);
+  /* 線画の線。ログインの stroke と同じ細さ・同じ青 */
+  --stroke: 1.5px solid var(--color-accent);
+
+  /* 段の区切り。骨格より薄い青線で、箱の中の仕切りに見せる */
+  --seam: color-mix(in srgb, var(--color-accent) 28%, transparent);
 
   display: flex;
   flex-direction: column;
@@ -14,20 +17,22 @@
   overflow: hidden;
 }
 
-/* 天板。本体よりわずかに広く張り出させる。取っ手と同じ青で塗る */
+/* 天板。本体よりわずかに広く張り出した、線だけの板 */
 .cornice {
-  height: 7px;
+  height: 8px;
   margin: 0 calc(var(--space-1) * -1);
-  background: var(--color-accent);
+  background: var(--color-bg-elevated);
+  border: var(--stroke);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   flex-shrink: 0;
 }
 
-/* 台輪。天板と対にして家具の足元を締める。こちらも青の塗り */
+/* 台輪。天板と対にして家具の足元を締める */
 .plinth {
   height: 8px;
   margin: 0 calc(var(--space-1) * -1) var(--space-3);
-  background: var(--color-accent);
+  background: var(--color-bg-elevated);
+  border: var(--stroke);
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
   flex-shrink: 0;
 }
@@ -38,9 +43,9 @@
   flex: 1;
   min-height: 0;
   background: var(--color-bg-elevated);
-  /* 左右の側板。天板・台輪と同じ青で家具の箱を閉じる */
-  border-left: 6px solid var(--color-accent);
-  border-right: 6px solid var(--color-accent);
+  /* 左右の側板も同じ細さの青線で箱を閉じる */
+  border-left: var(--stroke);
+  border-right: var(--stroke);
   overflow-y: auto;
 }
 
@@ -103,14 +108,14 @@
 }
 
 /*
- * 取っ手。
- * カテゴリ名が英語になり（最長 Accessories）、狭い幅では中央置きだと
- * ラベルと重なるため、点数の手前に寄せて置く。
+ * 取っ手。線画に合わせて塗らず、細い青線の輪郭だけで描く。
+ * 狭い幅では中央置きだとラベルと重なるため、点数の手前に寄せて置く。
  */
 .pull {
   width: 30px;
-  height: 7px;
-  background: var(--color-accent);
+  height: 9px;
+  background: transparent;
+  border: var(--stroke);
   border-radius: var(--radius-full);
   flex-shrink: 0;
   transition: transform var(--duration-slow) var(--easing);
