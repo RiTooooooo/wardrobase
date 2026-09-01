@@ -1,0 +1,80 @@
+.chips {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* 枠線カプセル。選択中はインク色の塗りに反転する（青は操作の到達点に取っておく） */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 44px;
+  padding: 0 var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border-strong);
+  /* 角の丸めはボタンと同じ値に統一する */
+  border-radius: var(--radius-button);
+  transition:
+    color var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing),
+    background var(--duration-fast) var(--easing),
+    transform var(--duration-fast) var(--easing);
+}
+
+.chip:hover:not(:disabled) {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-bright);
+}
+
+/* タッチでも分かる押下フィードバック */
+.chip:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.count {
+  color: var(--color-text-tertiary);
+}
+
+.chipActive,
+.chipActive:hover:not(:disabled) {
+  color: var(--color-bg-base);
+  background: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+}
+
+.chipActive .count {
+  color: color-mix(in srgb, var(--color-bg-base) 65%, transparent);
+}
+
+/* 0件。押せないことを薄さで示す */
+.chip:disabled {
+  color: var(--color-border-strong);
+  border-color: var(--color-border);
+  cursor: default;
+}
+
+.chip:disabled .count {
+  color: var(--color-border-strong);
+}
+
+/* 狭い画面では畳まず、画面端まで使って横に滑らせる */
+@media (max-width: 600px) {
+  .chips {
+    gap: var(--space-2);
+    margin-inline: calc(-1 * var(--space-5));
+    padding-inline: var(--space-5);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    padding: 0 var(--space-4);
+  }
+}

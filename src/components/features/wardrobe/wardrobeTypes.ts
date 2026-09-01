@@ -20,6 +20,7 @@ export type SortKey =
 export type WardrobeFilters = {
   category: string | null;
   color: string | null;
+  /** シーズングループ（SS / AW）。null は「すべて」 */
   season: string | null;
   query: string;
   sort: SortKey;

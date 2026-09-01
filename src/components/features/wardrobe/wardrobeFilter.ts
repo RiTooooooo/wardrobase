@@ -1,3 +1,5 @@
+import { SEASON_GROUP_MEMBERS, isSeasonGroup } from "@/domain/item/season";
+
 import type { WardrobeFilters, WardrobeItem } from "./wardrobeTypes";
 
 function matchesQuery(item: WardrobeItem, query: string): boolean {
@@ -15,8 +17,13 @@ function matchesColor(item: WardrobeItem, color: string | null): boolean {
   return color === null || item.color === color;
 }
 
-function matchesSeason(item: WardrobeItem, season: string | null): boolean {
-  return season === null || item.seasons.includes(season);
+/* 季節はシーズングループ（SS / AW）で絞る。メンバーのどれかを持てば一致 */
+function matchesSeason(item: WardrobeItem, group: string | null): boolean {
+  if (group === null) return true;
+  if (!isSeasonGroup(group)) return false;
+  return SEASON_GROUP_MEMBERS[group].some((season) =>
+    item.seasons.includes(season),
+  );
 }
 
 function matchesFilters(

@@ -14,13 +14,14 @@ export const CATEGORIES = [
 
 export type Category = (typeof CATEGORIES)[number];
 
+/* 英語はセリフ体の画面見出しだけに残す方針のため、ラベルは日本語 */
 export const CATEGORY_LABELS: Record<Category, string> = {
-  TOPS: "Tops",
-  BOTTOMS: "Bottoms",
-  OUTER: "Outerwear",
-  SHOES: "Shoes",
-  BAG: "Bags",
-  ACCESSORY: "Accessories",
+  TOPS: "トップス",
+  BOTTOMS: "ボトムス",
+  OUTER: "アウター",
+  SHOES: "シューズ",
+  BAG: "バッグ",
+  ACCESSORY: "アクセサリー",
 };
 
 /**

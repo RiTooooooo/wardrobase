@@ -1,0 +1,74 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  animation: reveal var(--duration-normal) var(--easing-out);
+}
+
+/*
+ * 入力欄。角の丸めはチップと同じカプセルに揃える。
+ * outline は消さない——グローバルの :focus-visible リングを活かしたまま、
+ * 枠線の色でもフォーカスを示す。
+ */
+.searchInput {
+  flex: 1;
+  min-width: 180px;
+  max-width: 320px;
+  height: 44px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-button);
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.searchInput:focus {
+  border-color: var(--color-accent);
+}
+
+.seasons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* カテゴリチップと同じ見た目（語彙を揃える） */
+.chip {
+  composes: chip from "./CategoryChips.module.css";
+  padding: 0 var(--space-4);
+}
+
+.chipActive {
+  composes: chipActive from "./CategoryChips.module.css";
+}
+
+.sortSelect {
+  height: 44px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border-input);
+  border-radius: var(--radius-button);
+}
+
+.sortSelect:focus {
+  border-color: var(--color-accent);
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

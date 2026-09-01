@@ -4,8 +4,11 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { WardrobeCloset } from "@/components/features/wardrobe/WardrobeCloset";
+import { WardrobeView } from "@/components/features/wardrobe/WardrobeView";
 import type { WardrobeItem } from "@/components/features/wardrobe/wardrobeTypes";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Fab } from "@/components/ui/Fab";
+import { PageTitle } from "@/components/ui/PageTitle";
 import { findItemsByUser } from "@/infrastructure/prisma/itemRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
 import { auth } from "@/lib/auth";
@@ -41,31 +44,32 @@ export default async function WardrobePage(): Promise<ReactElement> {
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.titleArea}>
-          <h1 className={styles.title}>Wardrobe</h1>
-          <span className={styles.count}>
-            <span className={styles.countNumber}>{items.length}</span> items
-          </span>
-        </div>
-      </header>
-      {items.length === 0 ? (
-        <p className={styles.empty}>
-          アイテムがまだ登録されていません。
-          <Link className={styles.emptyLink} href="/items/new">
-            最初の1着を登録する
-          </Link>
-        </p>
-      ) : (
-        <WardrobeCloset
-          items={wardrobeItems}
-          addAction={
-            <Link className={styles.addButton} href="/items/new">
-              アイテムを追加
-            </Link>
-          }
-        />
+      {items.length === 0 ? <EmptyState /> : (
+        <WardrobeView items={wardrobeItems} />
       )}
+      <Fab href="/items/new" label="アイテムを追加" />
     </div>
+  );
+}
+
+function EmptyState(): ReactElement {
+  return (
+    <>
+      <PageTitle
+        title="Wardrobe"
+        subtitle="全0点のアイテム"
+        actions={
+          <ButtonLink href="/items/new" narrowHidden>
+            アイテムを追加
+          </ButtonLink>
+        }
+      />
+      <p className={styles.empty}>
+        アイテムがまだ登録されていません。
+        <Link className={styles.emptyLink} href="/items/new">
+          最初の1着を登録する
+        </Link>
+      </p>
+    </>
   );
 }

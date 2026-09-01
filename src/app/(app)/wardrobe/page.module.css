@@ -1,88 +1,15 @@
+/*
+ * 3セクション共通のページ枠。
+ * 幅と左右余白はヘッダーの .inner と同じにして左端を揃える。
+ */
 .page {
   display: flex;
   flex-direction: column;
-  /* タイトル→操作列→コンテンツの間隔は3セクション共通の 24px リズム */
   gap: var(--space-6);
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  /* 上下の余白は outfits と同じ控えめな値に揃える（3セクション共通） */
-  padding: var(--space-6) var(--space-8) var(--space-10);
-  /*
-   * クローゼットの足元（台輪）まで常に画面内に収める。
-   * ページを画面の残り高さに固定し、収まらない中身は
-   * クローゼットの箱の中でスクロールさせる。
-   */
-  height: calc(100dvh - var(--header-height));
-  min-height: 480px;
-}
-
-/* タイトルの下に操作列を置く（3セクション共通のパターン） */
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-4);
-}
-
-/*
- * 塊ごとに出すと「3段が順に出た」で終わってしまうため、
- * 見出し・ボタン・フィルタ・カードを1本の流れとして少しずつずらす。
- */
-.titleArea {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-3);
-  animation: riseIn var(--duration-slower) var(--easing-out) backwards;
-}
-
-/* 英語の大見出し＋日本語の補足という構成。誇張せず 2rem で締める */
-.title {
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  letter-spacing: -0.01em;
-}
-
-/* 件数の数字だけ大きく青くして、リズムを付ける */
-.countNumber {
-  font-size: var(--text-lg);
-  font-weight: var(--font-bold);
-  color: var(--color-accent);
-}
-
-.count {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-}
-
-.addButton {
-  display: inline-flex;
-  align-items: center;
-  /* 文字サイズは据え置き、上下にほどよい呼吸を持たせる */
-  min-height: 38px;
-  padding: 10px var(--space-4);
-  font-size: var(--text-sm);
-  font-weight: var(--font-normal);
-  color: #fff;
-  background: var(--color-accent);
-  border-radius: var(--radius-button);
-  transition:
-    background var(--duration-fast) var(--easing),
-    transform var(--duration-slow) var(--easing-out),
-    box-shadow var(--duration-slow) var(--easing-out);
-  animation: riseIn var(--duration-slower) var(--easing-out) 55ms backwards;
-}
-
-/* ホバーでふわっと浮き、押した瞬間に沈む（Button コンポーネントと同じ動き） */
-.addButton:hover {
-  background: var(--color-accent-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lift-sm);
-}
-
-.addButton:active {
-  transform: translateY(0);
-  box-shadow: none;
+  padding: var(--space-10) var(--space-12) var(--space-16);
 }
 
 .empty {
@@ -91,7 +18,7 @@
   color: var(--color-text-tertiary);
   text-align: center;
   background: var(--color-bg-elevated);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
 }
 
 .emptyLink {
@@ -103,50 +30,11 @@
   text-decoration: underline;
 }
 
-/* CSS Modules は animation-name をスコープ化するため、使う側で定義する */
-@keyframes riseIn {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 狭い画面では左右32pxの余白が効きすぎるため詰める */
 @media (max-width: 600px) {
-  /* 下の家具・本を圧縮したのに合わせ、ヘッダー帯も一段小さく釣り合わせる */
-  .title {
-    font-size: var(--text-xl);
-  }
-
-  .countNumber {
-    font-size: var(--text-base);
-  }
-
-  /* 上下の呼吸は保ち、文字を一段小さくして軽くする */
-  .addButton {
-    min-height: 36px;
-    padding: var(--space-2) var(--space-3);
-    font-size: var(--text-xs);
-  }
-
   .page {
-    padding: var(--space-4);
-    /* ファーストビューで全体像が見えるよう、縦の間隔を詰める */
     gap: var(--space-5);
-    height: auto;
-    min-height: 0;
-  }
-
-  /*
-   * 件数は最上段の引き出し（All 12）と重複するため、狭い画面では出さない。
-   * タイトルと追加ボタンを1行に収めるための幅も稼げる。
-   */
-  .count {
-    display: none;
+    /* 下は FAB（56px＋余白）に隠れないぶんを確保する */
+    padding: var(--space-5) var(--space-5)
+      calc(var(--space-16) + var(--space-10));
   }
 }

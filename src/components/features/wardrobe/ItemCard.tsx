@@ -4,8 +4,7 @@ import type { CSSProperties, ReactElement } from "react";
 import Link from "next/link";
 
 import { FadeInImage } from "@/components/ui/FadeInImage";
-import type { Category } from "@/domain/item/category";
-import { CATEGORY_LABELS } from "@/domain/item/category";
+import { CATEGORY_LABELS, isCategory } from "@/domain/item/category";
 
 import type { WardrobeItem } from "./wardrobeTypes";
 import styles from "./ItemCard.module.css";
@@ -16,9 +15,8 @@ type Props = {
   index: number;
   /**
    * 詳細ページへ写真をモーフさせるか。
-   * 遷移名は画面内で一意である必要があり、同じアイテムが
-   * 「All」段とカテゴリ段の両方に描かれるため、
-   * 開いている引き出しの中のカードだけ true にする。
+   * 遷移名は画面内で一意である必要があるため、
+   * 同じアイテムを二度描く画面では片方だけ true にする。
    */
   morph?: boolean;
 };
@@ -39,8 +37,11 @@ function CardImage({ item }: { item: WardrobeItem }): ReactElement {
   );
 }
 
+/* 写真が主役のタイル。面や枠は持たず、写真と2行のテキストだけで構成する */
 export function ItemCard({ item, index, morph = false }: Props): ReactElement {
-  const categoryLabel = CATEGORY_LABELS[item.category as Category];
+  const categoryLabel = isCategory(item.category)
+    ? CATEGORY_LABELS[item.category]
+    : item.category;
   const order = { "--index": index } as CSSProperties;
 
   return (
@@ -52,15 +53,8 @@ export function ItemCard({ item, index, morph = false }: Props): ReactElement {
       ) : (
         <CardImage item={item} />
       )}
-      <div className={styles.info}>
-        <span className={styles.name}>{item.name}</span>
-        <div className={styles.meta}>
-          <span className={styles.category}>{categoryLabel}</span>
-          {item.brand ? (
-            <span className={styles.brand}>{item.brand}</span>
-          ) : null}
-        </div>
-      </div>
+      <span className={styles.name}>{item.name}</span>
+      <span className={styles.category}>{categoryLabel}</span>
     </Link>
   );
 }

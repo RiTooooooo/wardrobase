@@ -1,0 +1,66 @@
+/* 検索・絞り込みを開くトグル。開いている間は青で状態を示す */
+.filterButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-button);
+  transition:
+    color var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing);
+}
+
+.filterButton:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-bright);
+}
+
+.filterButtonOpen,
+.filterButtonOpen:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* 有効な検索条件の数。閉じていても条件が残っていることを示す */
+.filterBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.noMatch {
+  padding: var(--space-12);
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  text-align: center;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-xl);
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5) var(--space-3);
+  }
+}

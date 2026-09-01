@@ -1,46 +1,47 @@
 .card {
   display: flex;
   flex-direction: column;
-  background: var(--color-bg-surface);
-  border: 1px solid transparent;
   /*
-   * 検索ボックスと丸みが揃って見える値。
-   * 丸みの見え方は要素の大きさに左右されるため、数値を合わせても揃わない。
-   * 同じ 8px でも、高さ44pxの入力欄では丸く、幅400px超のカードでは直角に見える。
+   * 表示時に左上から順にふわっと現れる。
+   * 待たせないよう1枚あたりのずれは小さく、12番目で頭打ちにする。
+   * fill-mode は both ではなく backwards（終了後の transform 保持を避ける）。
    */
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  /* 地の上に白い面をうっすら浮かせておき、ホバーでさらに持ち上げる */
-  box-shadow: var(--shadow-sm);
-  /*
-   * ヘッダー・フィルタに続いて、左上から順に現れる。
-   * 枚数が増えても最後の1枚まで待たされないよう、ずれ幅は12番目で頭打ちにする。
-   * fill-mode は both ではなく backwards。both だと終了後も transform が
-   * 保持され、ホバーの浮き上がりを打ち消してしまう。
-   */
-  animation: riseIn var(--duration-slower) var(--easing-out)
-    calc(540ms + min(var(--index, 0), 12) * 55ms) backwards;
-  /* 浮き上がりは減速カーブでふわっと着地させる */
-  transition:
-    transform var(--duration-slow) var(--easing-out),
-    box-shadow var(--duration-slow) var(--easing-out),
-    border-color var(--duration-normal) var(--easing),
-    background var(--duration-normal) var(--easing);
+  animation: riseIn var(--duration-normal) var(--easing-out)
+    calc(min(var(--index, 0), 12) * 24ms) backwards;
+  transition: transform var(--duration-fast) var(--easing);
 }
 
-/* ふわっと浮かせて、選べる対象であることを伝える */
-.card:hover {
-  background: var(--color-bg-overlay);
-  border-color: var(--color-accent);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lift);
+/* タッチでも分かる押下フィードバック */
+.card:active {
+  transform: scale(0.97);
 }
 
 .imageWrapper {
   position: relative;
-  aspect-ratio: 1;
-  background: var(--color-bg-elevated);
+  /* 写真をわずかに縦長にして、衣服の全身が収まりやすくする */
+  aspect-ratio: 14 / 15;
+  background: var(--color-bg-overlay);
+  border-radius: var(--radius-lg);
   overflow: hidden;
+}
+
+/*
+ * ホバーの輪郭線。写真の上に重ねるため疑似要素で描く
+ * （inset の box-shadow は img の下に隠れてしまう）。
+ */
+.imageWrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1.5px var(--color-accent);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing);
+  pointer-events: none;
+}
+
+.card:hover .imageWrapper::after {
+  opacity: 1;
 }
 
 .image {
@@ -55,14 +56,8 @@
   background: var(--color-bg-overlay);
 }
 
-.info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding: var(--space-3);
-}
-
 .name {
+  margin-top: var(--space-3);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-text-primary);
@@ -71,35 +66,27 @@
   white-space: nowrap;
 }
 
-.meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-}
-
 .category {
-  font-size: var(--text-xs);
-  color: var(--color-text-secondary);
-}
-
-.brand {
+  margin-top: var(--space-1);
   font-size: var(--text-xs);
   color: var(--color-text-tertiary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 /* CSS Modules は animation-name をスコープ化するため、使う側で定義する */
 @keyframes riseIn {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(10px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .name {
+    margin-top: var(--space-2);
   }
 }

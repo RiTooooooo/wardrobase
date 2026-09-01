@@ -9,7 +9,7 @@ import { FadeInImage } from "@/components/ui/FadeInImage";
 import { CATEGORY_LABELS } from "@/domain/item/category";
 import type { Color } from "@/domain/item/color";
 import { COLOR_META } from "@/domain/item/color";
-import { SEASON_LABELS } from "@/domain/item/season";
+import { seasonGroupsOf } from "@/domain/item/season";
 import { findItemById } from "@/infrastructure/prisma/itemRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
 import { auth } from "@/lib/auth";
@@ -93,7 +93,7 @@ function ItemImage({
 function ItemDetails({ item }: { item: ItemRow }): ReactElement {
   const categoryLabel = CATEGORY_LABELS[item.category];
   const colorLabel = COLOR_META[item.color as Color].label;
-  const seasonLabels = item.seasons.map((s) => SEASON_LABELS[s]);
+  const seasonLabels = seasonGroupsOf(item.seasons);
 
   return (
     <div className={styles.details}>
@@ -144,6 +144,7 @@ function SubCategoryField({
   return <OptionalField label="サブカテゴリ" value={value} />;
 }
 
+/* 他の項目と同じプレーンテキストで揃える（チップにすると字下げが浮く） */
 function SeasonField({
   labels,
 }: {
@@ -151,16 +152,7 @@ function SeasonField({
 }): ReactElement | null {
   if (labels.length === 0) return null;
 
-  return (
-    <div className={styles.field}>
-      <span className={styles.fieldLabel}>シーズン</span>
-      <div className={styles.seasons}>
-        {labels.map((label) => (
-          <span key={label} className={styles.seasonTag}>{label}</span>
-        ))}
-      </div>
-    </div>
-  );
+  return <DetailField label="シーズン" value={labels.join("・")} />;
 }
 
 function PriceField({
