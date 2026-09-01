@@ -3,12 +3,13 @@ import type { ReactElement } from "react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { OutfitBook } from "@/components/features/outfit/OutfitBook";
+import { OutfitTimeline } from "@/components/features/outfit/OutfitTimeline";
 import type {
-  DateGroup,
   OutfitEntry,
   ThumbItem,
-} from "@/components/features/outfit/lookbookTypes";
+  TimelineDay,
+} from "@/components/features/outfit/timelineTypes";
+import { Fab } from "@/components/ui/Fab";
 import type { OutfitWithItems } from "@/infrastructure/prisma/outfitRepository";
 import { findOutfitsByUser } from "@/infrastructure/prisma/outfitRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
@@ -23,18 +24,21 @@ function toIsoDate(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
-function formatDate(date: Date): string {
-  return date.toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    weekday: "short",
-  });
+/* タイムラインの日付列。「08」と「8月・金」に分けて描く */
+function formatMonthWeekday(date: Date): string {
+  const month = date.toLocaleDateString("ja-JP", { month: "long" });
+  const weekday = date.toLocaleDateString("ja-JP", { weekday: "short" });
+  return `${month}・${weekday}`;
 }
 
-async function toOutfitEntry(
-  outfit: OutfitWithItems,
-): Promise<OutfitEntry> {
+type DatedEntry = {
+  date: string;
+  dayNumber: string;
+  monthWeekday: string;
+  entry: OutfitEntry;
+};
+
+async function toDatedEntry(outfit: OutfitWithItems): Promise<DatedEntry> {
   const items: ThumbItem[] = [];
   for (const oi of outfit.items) {
     const imageUrl = oi.item.imagePath
@@ -43,31 +47,30 @@ async function toOutfitEntry(
     items.push({ name: oi.item.name, imageUrl });
   }
   return {
-    id: outfit.id,
     date: toIsoDate(outfit.wornOn),
-    dateLabel: formatDate(outfit.wornOn),
-    satisfaction: outfit.satisfaction,
-    weather: outfit.weather,
-    memo: outfit.memo,
-    items,
+    dayNumber: String(outfit.wornOn.getDate()).padStart(2, "0"),
+    monthWeekday: formatMonthWeekday(outfit.wornOn),
+    entry: { id: outfit.id, memo: outfit.memo, items },
   };
 }
 
-function groupByDate(entries: OutfitEntry[]): DateGroup[] {
-  const groups: DateGroup[] = [];
-  for (const entry of entries) {
-    const last = groups.at(-1);
-    if (last !== undefined && last.label === entry.dateLabel) {
-      last.entries.push(entry);
+/* 同じ日の記録を1つの日付列にまとめる（並びは新しい順のまま） */
+function groupByDate(entries: DatedEntry[]): TimelineDay[] {
+  const days: TimelineDay[] = [];
+  for (const item of entries) {
+    const last = days.at(-1);
+    if (last !== undefined && last.date === item.date) {
+      last.entries.push(item.entry);
     } else {
-      groups.push({
-        date: entry.date,
-        label: entry.dateLabel,
-        entries: [entry],
+      days.push({
+        date: item.date,
+        dayNumber: item.dayNumber,
+        monthWeekday: item.monthWeekday,
+        entries: [item.entry],
       });
     }
   }
-  return groups;
+  return days;
 }
 
 export default async function OutfitListPage(): Promise<ReactElement> {
@@ -78,13 +81,13 @@ export default async function OutfitListPage(): Promise<ReactElement> {
   }
 
   const outfits = await findOutfitsByUser(session.user.id);
-  const entries = await Promise.all(outfits.map(toOutfitEntry));
-  const groups = groupByDate(entries);
+  const entries = await Promise.all(outfits.map(toDatedEntry));
+  const days = groupByDate(entries);
 
   return (
     <div className={styles.page}>
-      <OutfitBook groups={groups} totalCount={entries.length} />
+      <OutfitTimeline days={days} totalCount={entries.length} />
+      <Fab href="/outfits/new" label="コーデを記録" />
     </div>
   );
 }
-

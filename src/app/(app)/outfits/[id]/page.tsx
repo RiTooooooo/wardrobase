@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
+import { SatisfactionStars } from "@/components/features/outfit/SatisfactionStars";
 import type { OutfitWithItems } from "@/infrastructure/prisma/outfitRepository";
 import { findOutfitById } from "@/infrastructure/prisma/outfitRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
@@ -91,7 +92,10 @@ function OutfitMeta({ outfit }: { outfit: OutfitWithItems }): ReactElement {
   return (
     <div className={styles.details}>
       {outfit.satisfaction !== null ? (
-        <DetailField label="お気に入り度" value={`${outfit.satisfaction} / 5`} />
+        <div className={styles.field}>
+          <span className={styles.fieldLabel}>お気に入り度</span>
+          <SatisfactionStars value={outfit.satisfaction} />
+        </div>
       ) : null}
       {outfit.weather !== null ? (
         <DetailField label="天気" value={outfit.weather} />

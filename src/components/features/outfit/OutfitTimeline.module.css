@@ -1,0 +1,280 @@
+/*
+ * 見出し行からタイムラインまで、ページ枠（1240px）いっぱいの1カラム。
+ * 幅を絞って中央に置くと、見出しと操作ボタンの位置が
+ * Wardrobe / Styling とずれて、タブ切り替えのたびに飛んで見える。
+ */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+/* ===== 日付検索 ===== */
+
+.dateField {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 44px;
+  padding: 0 var(--space-4);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-button);
+  transition:
+    color var(--duration-fast) var(--easing),
+    border-color var(--duration-fast) var(--easing);
+}
+
+.dateField:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-bright);
+}
+
+.dateField:focus-within {
+  border-color: var(--color-accent);
+}
+
+.dateIcon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.dateInput {
+  /* 空のとき幅が縮む端末があるため、最小幅を確保する */
+  min-width: 108px;
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+}
+
+/* カレンダーの絵柄は左に自前で置くので、ブラウザ内蔵の分は消して二重を防ぐ */
+.dateInput::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/*
+ * iOS Safari は空の date input に何も表示しない（ただの空欄に見える）。
+ * 狭い画面では案内文を重ねて出す。広い画面は 年/月/日 の書式が出るので重ねない。
+ */
+.datePlaceholder {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--space-4) + 19px + var(--space-2));
+  transform: translateY(-50%);
+  display: none;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.searchEmpty {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ===== タイムライン ===== */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.dayGroup {
+  display: flex;
+  gap: var(--space-6);
+  /* 日付ジャンプの着地点。固定ヘッダーに隠れない位置で止める */
+  scroll-margin-top: calc(var(--header-height) + var(--space-4));
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 78px;
+  padding-top: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* 日はセリフ体の数字。押せないものなので青は使わない */
+.dayNumber {
+  font-family: var(--font-serif);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-medium);
+  line-height: 1;
+  color: var(--color-text-primary);
+}
+
+.dayMeta {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.records {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.record {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition:
+    border-color var(--duration-fast) var(--easing),
+    box-shadow var(--duration-fast) var(--easing),
+    transform var(--duration-fast) var(--easing);
+}
+
+.record:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+/* タッチでも分かる押下フィードバック */
+.record:active {
+  transform: scale(0.99);
+}
+
+/* 日付検索で着地した日。輪郭で「ここ」と示す */
+.dayFocused .record {
+  border-color: var(--color-accent);
+}
+
+.thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  flex-shrink: 0;
+  /* 1行に5点まで。多い記録は折り返して、メモの幅を守る */
+  max-width: calc(5 * 76px + 4 * var(--space-3));
+}
+
+.thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  background: var(--color-bg-overlay);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.thumbImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbName {
+  padding: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  text-align: center;
+  overflow: hidden;
+}
+
+.memo {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chev {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--color-border-strong);
+}
+
+.empty {
+  padding: var(--space-12);
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  text-align: center;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-xl);
+}
+
+.emptyLink {
+  margin-left: var(--space-2);
+  color: var(--color-accent);
+}
+
+.emptyLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .column {
+    gap: var(--space-5);
+  }
+
+  .datePlaceholder {
+    display: block;
+  }
+
+  /* Android Chrome は空でも書式を出すため、案内文と重ならないよう文字を消す */
+  .dateInputEmpty {
+    color: transparent;
+  }
+
+  .timeline {
+    gap: var(--space-5);
+  }
+
+  .dayGroup {
+    gap: var(--space-3);
+  }
+
+  .day {
+    width: 54px;
+    padding-top: var(--space-2);
+  }
+
+  .dayNumber {
+    font-size: var(--text-3xl);
+  }
+
+  .dayMeta {
+    margin-top: var(--space-1);
+  }
+
+  /* 狭い画面は写真→メモの縦積みにする */
+  .record {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .thumb {
+    width: 62px;
+    height: 62px;
+  }
+
+  .memo {
+    width: 100%;
+    font-size: var(--text-xs);
+  }
+
+  .chev {
+    display: none;
+  }
+}
