@@ -38,8 +38,11 @@
   /* 真っ黒ではなく濃紺寄りに寄せる */
   --color-text-primary: #1a2333;
   --color-text-secondary: #5a6472;
-  /* 最も薄い文字。白地で WCAG AA (4.5:1) を満たす値 */
-  --color-text-tertiary: #6b7280;
+  /*
+   * 最も薄い文字。地の #f5f6f8 の上でも WCAG AA (4.5:1) を満たす値
+   * （#6b7280 は白地では通るが薄地では 4.39:1 で割り込む）。
+   */
+  --color-text-tertiary: #616a78;
   --color-text-inverse: #ffffff;
 
   /* ===== カラー: ボーダー ===== */
@@ -64,9 +67,11 @@
   --color-warning: #a15c07;
 
   /* ===== タイポグラフィ: フォント ===== */
-  /* Geist は欧文のみ。日本語は次の Noto Sans JP に落ちる */
-  --font-sans: "Geist", "Noto Sans JP", system-ui, -apple-system, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-sans: var(--font-zen-kaku), "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP", system-ui, -apple-system, sans-serif;
+  /* セリフ体は英語の画面見出し（Wardrobe / Styling / Outfits）専用 */
+  --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, monospace;
 
   /* ===== タイポグラフィ: サイズ ===== */
   --text-xs: 0.75rem;
@@ -79,6 +84,8 @@
   /* 英語のページ見出し（ディスプレイ用途）。本文系とは用途を分ける */
   --text-4xl: 2.5rem;
   --text-5xl: 3rem;
+  /* セリフ体の画面見出し。広い画面はこれ、狭い画面は 4xl に落とす */
+  --text-display: 3.25rem;
 
   /* ===== タイポグラフィ: ウェイト ===== */
   --font-normal: 400;
@@ -114,7 +121,7 @@
    * ボタン（塗り・枠線・リンク型を含む）の角。
    * ここを変えると全ボタンの形が一括で変わる。チップや丸い装飾は対象外。
    */
-  --radius-button: 12px;
+  --radius-button: 14px;
 
   /* ===== シャドウ ===== */
   /* 黒ではなく紺色を薄く落とし、白地で濁らないようにする */
@@ -143,6 +150,15 @@
 
   /* ===== レイアウト ===== */
   --sidebar-width: 200px;
-  --bottom-nav-height: 64px;
-  --header-height: 56px;
+  --bottom-nav-height: 72px;
+  --header-height: 64px;
+  /* ヘッダーと各ページの本文が共有するコンテナ幅。ずれると左端が揃わない */
+  --page-max-width: 1240px;
+}
+
+/* 狭い画面ではヘッダーを一段低くする。参照側の calc も自動で追従する */
+@media (max-width: 600px) {
+  :root {
+    --header-height: 60px;
+  }
 }

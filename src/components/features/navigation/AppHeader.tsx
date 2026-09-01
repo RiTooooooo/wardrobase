@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 
 import Link from "next/link";
@@ -11,37 +10,18 @@ import { SignOutButton } from "@/components/features/auth/SignOutButton";
 import styles from "./AppHeader.module.css";
 import { isCurrent, NAV_ITEMS } from "./navItems";
 
-/**
- * ページ先頭では背景に溶け込み、スクロールしたときだけ
- * すりガラスと細い区切り線が現れる（内容が下を通る間だけ「棚板」になる）。
+/*
+ * 常設ヘッダー。地と同じ色に細い下線だけを引いた静かなバー。
+ * 現在地はラベル下の青いドットで示す（青は操作・現在地の専用色）。
  */
-function useScrolled(): boolean {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    function onScroll(): void {
-      setScrolled(window.scrollY > 8);
-    }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return (): void => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return scrolled;
-}
-
 export function AppHeader(): ReactElement {
   const pathname = usePathname();
-  const scrolled = useScrolled();
   const innerClass = isFullWidthPath(pathname)
     ? `${styles.inner} ${styles.innerWide}`
     : styles.inner;
-  const headerClass = scrolled
-    ? `${styles.header} ${styles.headerScrolled}`
-    : styles.header;
 
   return (
-    <header className={headerClass}>
+    <header className={styles.header}>
       <div className={innerClass}>
         <Link className={styles.logo} href="/wardrobe">
           wardro<span className={styles.logoAccent}>base</span>
@@ -83,7 +63,8 @@ function NavLink({
       href={href}
       aria-current={isActive ? "page" : undefined}
     >
-      {label}
+      <span>{label}</span>
+      <span className={styles.dot} aria-hidden="true" />
     </Link>
   );
 }

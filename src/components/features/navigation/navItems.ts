@@ -11,6 +11,7 @@ export type NavItem = {
   match: readonly string[];
 };
 
+/* 行き先の名前は各画面のセリフ体見出しと同じ英語表記で揃える */
 export const NAV_ITEMS: readonly NavItem[] = [
   { href: "/wardrobe", label: "Wardrobe", match: ["/wardrobe", "/items"] },
   { href: "/stylings", label: "Styling", match: ["/stylings"] },

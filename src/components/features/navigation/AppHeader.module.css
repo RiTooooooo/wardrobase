@@ -1,60 +1,25 @@
 /*
- * ページ先頭ではヘッダーを背景と同化させ、区切り線を置かない。
- * 内容がヘッダーの下を通り始めたときだけ（.headerScrolled）
- * すりガラスと細い線が現れ、「浮いた棚板」として機能する。
+ * 地と同じ色のバーに細い下線を1本。すりガラスや影は使わない。
+ * 内側のボックスは各ページの .page と同じ幅・余白にして左端を揃える。
  */
 .header {
   height: var(--header-height);
-  background: transparent;
-  border-bottom: 1px solid transparent;
+  background: var(--color-bg-base);
+  border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 100;
   flex-shrink: 0;
-  transition:
-    background var(--duration-fast) var(--easing),
-    border-color var(--duration-fast) var(--easing);
 }
 
-.headerScrolled {
-  background: var(--color-bg-chrome);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  /* 日付見出しの下線と同じ濃さで「薄い区切り」の語彙を揃える */
-  border-bottom-color: color-mix(
-    in srgb,
-    var(--color-text-primary) 12%,
-    transparent
-  );
-}
-
-/*
- * 広い画面ではナビがヘッダーに載るため、常に下線と地を敷いて
- * 「バー」としての輪郭を持たせる（スクロール連動は狭い画面だけ）。
- */
-@media (min-width: 601px) {
-  .header {
-    background: var(--color-bg-chrome);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom-color: color-mix(
-      in srgb,
-      var(--color-text-primary) 12%,
-      transparent
-    );
-  }
-}
-
-/* .page と同じボックス構造（max-width + 内側パディング）にして左端を揃える */
 .inner {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
   height: 100%;
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  padding: 0 var(--space-8);
+  padding: 0 var(--space-12);
 }
 
 /* ボード画面用。左端をボードの引き出しと揃える（board/new の .page と同じ左右padding） */
@@ -85,50 +50,51 @@
   margin-left: auto;
 }
 
-/*
- * ヘッダーはマウス操作が前提の幅でしか出ない（狭い画面はタブバーに切り替わる）
- * ため、グローバルナビの定番の小ささまで詰めてよい。
- */
+/* ラベルの下に現在地ドットを重ねる縦積み。切り替わっても文字が動かない */
 .navLink {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  min-height: 32px;
-  padding: var(--space-1) var(--space-3);
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
+  justify-content: center;
+  gap: 3px;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  /* 現在地の枠が付いたときに文字がずれないよう、常に枠の分を確保しておく */
-  border: 1px solid transparent;
   border-radius: var(--radius-md);
-  transition:
-    color var(--duration-fast) var(--easing),
-    background var(--duration-fast) var(--easing),
-    border-color var(--duration-fast) var(--easing);
+  transition: color var(--duration-fast) var(--easing);
 }
 
 .navLink:hover {
   color: var(--color-text-primary);
-  background: var(--color-bg-surface);
 }
 
-/* 現在地は枠や塗りを使わず、白い文字だけで示す（他は灰色に沈む） */
 .navLinkActive {
   color: var(--color-text-primary);
+  font-weight: var(--font-bold);
 }
 
-.navLinkActive:hover {
+/* 現在地ドット。非現在地では透明のまま場所だけ確保する */
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
   background: transparent;
+}
+
+.navLinkActive .dot {
+  background: var(--color-accent);
 }
 
 .trailing {
   display: flex;
   align-items: center;
+  margin-left: var(--space-6);
 }
 
 /*
  * 狭い画面ではナビを下部のタブバー（BottomNav）に移す。
- * 3項目とロゴとログアウトを1行に並べると 569px 必要で、
- * 375px の画面では横スクロールしないとログアウトに届かなかった。
+ * ログアウトは行き場が無くなるため、ヘッダー右端に小さく残す。
  */
 @media (max-width: 600px) {
   .nav {
@@ -136,9 +102,11 @@
   }
 
   .inner {
-    gap: var(--space-3);
-    padding: 0 var(--space-3);
-    /* ナビが無くなるぶん、ログアウトを右端へ寄せる */
+    padding: 0 var(--space-5);
     justify-content: space-between;
+  }
+
+  .trailing {
+    margin-left: 0;
   }
 }

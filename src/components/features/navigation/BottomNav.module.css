@@ -22,27 +22,43 @@
      * 半透明だと下の文字が透けて重なり、内容が切れているように見えるため、
      * ここは透かさない。
      */
-    background: var(--color-bg-elevated);
+    background: var(--color-bg-base);
     border-top: 1px solid var(--color-border);
   }
 
   .tab {
     display: flex;
     flex: 1;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
+    gap: var(--space-1);
+    font-size: var(--text-xs);
     color: var(--color-text-secondary);
-    /* 現在地の下線ぶんを常に確保して、切り替わっても文字が動かないようにする */
-    border-top: 2px solid transparent;
-    transition:
-      color var(--duration-fast) var(--easing),
-      border-color var(--duration-fast) var(--easing);
+    transition: color var(--duration-fast) var(--easing);
+  }
+
+  /* 絵柄はログインの線画と同じ青線で描く（ラベルの色は状態で変わる） */
+  .icon {
+    width: 23px;
+    height: 23px;
+    color: var(--color-accent);
+  }
+
+  /* 現在地ドット。非現在地では透明のまま場所だけ確保する */
+  .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: transparent;
   }
 
   .tabActive {
     color: var(--color-text-primary);
-    border-top-color: var(--color-accent);
+    font-weight: var(--font-medium);
+  }
+
+  .tabActive .dot {
+    background: var(--color-accent);
   }
 }

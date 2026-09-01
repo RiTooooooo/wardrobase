@@ -1,0 +1,36 @@
+.fab {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .fab {
+    position: fixed;
+    right: var(--space-5);
+    /* タブバーの上に浮かせる */
+    bottom: calc(
+      var(--bottom-nav-height) + env(safe-area-inset-bottom) + var(--space-4)
+    );
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    color: var(--color-on-accent);
+    background: var(--color-accent);
+    border-radius: var(--radius-button);
+    box-shadow: var(--shadow-lift-sm);
+    transition:
+      background var(--duration-fast) var(--easing),
+      transform var(--duration-fast) var(--easing);
+  }
+
+  .fab:hover {
+    background: var(--color-accent-hover);
+  }
+
+  /* タッチでも分かる押下フィードバック */
+  .fab:active {
+    transform: scale(0.94);
+  }
+}
