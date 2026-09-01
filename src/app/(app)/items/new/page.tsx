@@ -21,7 +21,7 @@ export default async function NewItemPage(): Promise<ReactElement> {
     <div className={styles.page}>
       <div className={styles.header}>
         <Link className={styles.back} href="/wardrobe">
-          ワードローブに戻る
+          Wardrobeに戻る
         </Link>
         <h1 className={styles.title}>アイテムを登録</h1>
       </div>

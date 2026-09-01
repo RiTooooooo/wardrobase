@@ -39,7 +39,7 @@ export default async function StylingDetailPage({
     <div className={styles.page}>
       <div className={styles.header}>
         <Link className={styles.back} href="/stylings">
-          スタイリング一覧に戻る
+          Stylingに戻る
         </Link>
         <h1 className={styles.title}>{styling.name}</h1>
       </div>

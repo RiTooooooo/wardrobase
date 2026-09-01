@@ -47,7 +47,7 @@ export default async function ItemDetailPage({
     <div className={styles.page}>
       <div className={styles.header}>
         <Link className={styles.back} href="/wardrobe">
-          ワードローブに戻る
+          Wardrobeに戻る
         </Link>
         {/* 一覧ページと同じ文法: タイトルが先、操作列（主役1つ+テキスト脇役）が後 */}
         <h1 className={styles.title}>{item.name}</h1>

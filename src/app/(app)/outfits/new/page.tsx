@@ -50,8 +50,8 @@ export default async function NewOutfitPage(): Promise<ReactElement> {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <Link className={styles.back} href="/wardrobe">
-          ワードローブに戻る
+        <Link className={styles.back} href="/outfits">
+          Outfitsに戻る
         </Link>
         <h1 className={styles.title}>コーデを記録</h1>
       </div>

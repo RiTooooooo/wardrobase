@@ -33,7 +33,8 @@ export function OutfitDetailActions({ outfitId }: Props): ReactElement {
       return;
     }
 
-    router.push("/wardrobe");
+    /* 削除したらコーデ記録の一覧へ戻す（詳細はもう無い） */
+    router.push("/outfits");
   }
 
   return (

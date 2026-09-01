@@ -38,8 +38,8 @@ export default async function OutfitDetailPage({
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <Link className={styles.back} href="/wardrobe">
-          ワードローブに戻る
+        <Link className={styles.back} href="/outfits">
+          Outfitsに戻る
         </Link>
         <h1 className={styles.title}>
           {formatDate(outfit.wornOn)} のコーデ
