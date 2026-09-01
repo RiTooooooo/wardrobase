@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
-import { SEASON_LABELS } from "@/domain/item/season";
+import { seasonGroupsOf } from "@/domain/item/season";
 import type { StylingWithItems } from "@/infrastructure/prisma/stylingRepository";
 import { findStylingById } from "@/infrastructure/prisma/stylingRepository";
 import { createViewUrl } from "@/infrastructure/s3/presignedUrl";
@@ -109,9 +109,9 @@ function StylingMeta({
         <div className={styles.field}>
           <span className={styles.fieldLabel}>季節</span>
           <div className={styles.seasonChips}>
-            {styling.seasons.map((season) => (
-              <span key={season} className={styles.seasonChip}>
-                {SEASON_LABELS[season]}
+            {seasonGroupsOf(styling.seasons).map((group) => (
+              <span key={group} className={styles.seasonChip}>
+                {group}
               </span>
             ))}
           </div>
