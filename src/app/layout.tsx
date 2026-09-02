@@ -1,12 +1,15 @@
 import type { ReactElement, ReactNode } from "react";
 
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Zen_Kaku_Gothic_New } from "next/font/google";
+import { Bodoni_Moda, Zen_Kaku_Gothic_New } from "next/font/google";
 import "../styles/globals.css";
 
-/* 画面見出し（Wardrobe / Styling / Outfits）専用のセリフ体。英字のみ */
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+/*
+ * 画面見出し・日付数字・ロゴ用のセリフ体。英字のみ。
+ * 縦画が太く横画が極細の、ファッション誌の見出しの系統。
+ */
+const bodoniModa = Bodoni_Moda({
+  variable: "--font-bodoni",
   weight: ["500", "600"],
   subsets: ["latin"],
   display: "swap",
@@ -47,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${cormorant.variable} ${zenKakuGothicNew.variable}`}
+      className={`${bodoniModa.variable} ${zenKakuGothicNew.variable}`}
     >
       <body>{children}</body>
     </html>

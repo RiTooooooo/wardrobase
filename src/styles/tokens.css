@@ -69,8 +69,12 @@
   /* ===== タイポグラフィ: フォント ===== */
   --font-sans: var(--font-zen-kaku), "Hiragino Kaku Gothic ProN",
     "Noto Sans JP", system-ui, -apple-system, sans-serif;
-  /* セリフ体は英語の画面見出し（Wardrobe / Styling / Outfits）専用 */
-  --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  /*
+   * セリフ体はロゴ（誌名）と日付数字だけの特別扱い。
+   * 代役には各OS同梱の同系統（高コントラストのセリフ体）を挟む。
+   */
+  --font-serif: var(--font-bodoni), "Didot", "Bodoni 72", Georgia,
+    "Times New Roman", serif;
   --font-mono: ui-monospace, monospace;
 
   /* ===== タイポグラフィ: サイズ ===== */
@@ -84,8 +88,6 @@
   /* 英語のページ見出し（ディスプレイ用途）。本文系とは用途を分ける */
   --text-4xl: 2.5rem;
   --text-5xl: 3rem;
-  /* セリフ体の画面見出し。広い画面はこれ、狭い画面は 4xl に落とす */
-  --text-display: 3.25rem;
 
   /* ===== タイポグラフィ: ウェイト ===== */
   --font-normal: 400;

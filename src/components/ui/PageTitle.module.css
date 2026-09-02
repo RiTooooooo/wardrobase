@@ -5,11 +5,16 @@
   gap: var(--space-4);
 }
 
+/*
+ * 見出しは本文と同じゴシックの標準ウェイトで軽やかに置く
+ * （セリフ体はロゴと日付数字だけの特別扱い）。
+ * 太字だと本文書体の欧文の丸みが強調され、ロゴと質感が揃わない。
+ * 大きさで十分立つので、太さは足さない。
+ */
 .title {
-  font-family: var(--font-serif);
-  font-size: var(--text-display);
-  font-weight: var(--font-medium);
-  line-height: 1.05;
+  font-size: var(--text-4xl);
+  font-weight: var(--font-normal);
+  line-height: 1.1;
   letter-spacing: 0;
 }
 
@@ -31,7 +36,7 @@
 
 @media (max-width: 600px) {
   .title {
-    font-size: var(--text-4xl);
+    font-size: var(--text-3xl);
   }
 
   .subtitle {
