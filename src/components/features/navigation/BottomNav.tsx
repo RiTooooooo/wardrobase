@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 
 import styles from "./BottomNav.module.css";
 import { isCurrent, NAV_ITEMS } from "./navItems";
+import { markSectionNav } from "./sectionNav";
 
 /*
  * 狭い画面用のナビゲーション。
@@ -30,6 +31,7 @@ export function BottomNav(): ReactElement {
             className={active ? `${styles.tab} ${styles.tabActive}` : styles.tab}
             href={item.href}
             aria-current={active ? "page" : undefined}
+            onClick={() => markSectionNav(pathname, item.href)}
           >
             <TabIcon href={item.href} />
             <span>{item.label}</span>

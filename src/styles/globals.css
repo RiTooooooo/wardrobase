@@ -96,6 +96,45 @@ img {
 }
 
 /*
+ * セクション間（Wardrobe / Styling / Outfits）の移動は、時間差のない
+ * 溶け合いに、ごく浅いスケールの「置き」を重ねる。新しい本文が
+ * わずかに小さい状態からすっと定位置に収まり、古い本文は
+ * その逆へ抜けていく。方向の概念を持たない静かな繋ぎ。
+ * セクション移動かどうかはナビのクリック時に JS が
+ * <html data-section-nav> として立てる（sectionNav.ts）。
+ *
+ * フェードは左右対称の ease-in-out で完全に重ね、不透明度の合計を
+ * 常に1に保つ（時間差やずれがあると途中で背景が透けて見える）。
+ * スケールの基準点は上端中央。ページが縦に長くても見えている
+ * 上部の動きが暴れないようにするため。
+ */
+html[data-section-nav]::view-transition-old(.page-fade) {
+  transform-origin: 50% 0;
+  animation:
+    300ms ease-in-out both vt-fade reverse,
+    300ms var(--easing-out) both vt-settle-out;
+}
+
+html[data-section-nav]::view-transition-new(.page-fade) {
+  transform-origin: 50% 0;
+  animation:
+    300ms ease-in-out both vt-fade,
+    300ms var(--easing-out) both vt-settle-in;
+}
+
+@keyframes vt-settle-in {
+  from {
+    transform: scale(0.988);
+  }
+}
+
+@keyframes vt-settle-out {
+  to {
+    transform: scale(1.012);
+  }
+}
+
+/*
  * morph: 一覧の写真が詳細ページの写真へ形を変えながら移動する。
  * 中間で軽くぼかし、拡大縮小の補間の粗さを隠す。
  */

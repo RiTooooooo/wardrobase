@@ -9,6 +9,7 @@ import { SignOutButton } from "@/components/features/auth/SignOutButton";
 
 import styles from "./AppHeader.module.css";
 import { isCurrent, NAV_ITEMS } from "./navItems";
+import { markSectionNav } from "./sectionNav";
 
 /*
  * 常設ヘッダー。地と同じ色に細い下線だけを引いた静かなバー。
@@ -33,6 +34,7 @@ export function AppHeader(): ReactElement {
               href={item.href}
               label={item.label}
               isActive={isCurrent(pathname, item)}
+              onNavigate={() => markSectionNav(pathname, item.href)}
             />
           ))}
         </nav>
@@ -48,10 +50,12 @@ function NavLink({
   href,
   label,
   isActive,
+  onNavigate,
 }: {
   href: string;
   label: string;
   isActive: boolean;
+  onNavigate: () => void;
 }): ReactElement {
   const className = isActive
     ? `${styles.navLink} ${styles.navLinkActive}`
@@ -62,6 +66,7 @@ function NavLink({
       className={className}
       href={href}
       aria-current={isActive ? "page" : undefined}
+      onClick={onNavigate}
     >
       <span>{label}</span>
       <span className={styles.dot} aria-hidden="true" />
