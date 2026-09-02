@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import type { CSSProperties, ReactElement } from "react";
 
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -95,8 +95,13 @@ function EmptyState(): ReactElement {
 function StylingGrid({ cards }: { cards: StylingCard[] }): ReactElement {
   return (
     <div className={styles.grid}>
-      {cards.map((card) => (
-        <Link key={card.id} href={`/stylings/${card.id}`} className={styles.card}>
+      {cards.map((card, index) => (
+        <Link
+          key={card.id}
+          href={`/stylings/${card.id}`}
+          className={styles.card}
+          style={{ "--index": index } as CSSProperties}
+        >
           <div className={styles.cardHead}>
             <span className={styles.cardName}>{card.name}</span>
             <span className={styles.chev} aria-hidden="true">
@@ -110,7 +115,11 @@ function StylingGrid({ cards }: { cards: StylingCard[] }): ReactElement {
           </div>
         </Link>
       ))}
-      <Link className={styles.ghost} href="/stylings/board/new">
+      <Link
+        className={styles.ghost}
+        href="/stylings/board/new"
+        style={{ "--index": cards.length } as CSSProperties}
+      >
         <IconPlus size={18} />
         スタイルを追加
       </Link>

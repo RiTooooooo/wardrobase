@@ -42,6 +42,13 @@
   display: flex;
   flex-direction: column;
   padding: var(--space-6);
+  /*
+   * 表示時に上から順に、縮んだ状態からバネで現れるスタッガー
+   * （ワードローブの ItemCard と同じ語彙）。
+   * fill-mode は both ではなく backwards（終了後の transform 保持を避ける）。
+   */
+  animation: popIn var(--duration-spring) var(--easing-spring)
+    calc(min(var(--index, 0), 12) * 60ms) backwards;
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -116,11 +123,27 @@
   transition:
     border-color var(--duration-fast) var(--easing),
     color var(--duration-fast) var(--easing);
+  /* カード列の最後に続いて現れる */
+  animation: popIn var(--duration-spring) var(--easing-spring)
+    calc(min(var(--index, 0), 12) * 60ms) backwards;
 }
 
 .ghost:hover {
   border-color: var(--color-accent);
   color: var(--color-text-primary);
+}
+
+/* CSS Modules は animation-name をスコープ化するため、使う側で定義する */
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (max-width: 600px) {

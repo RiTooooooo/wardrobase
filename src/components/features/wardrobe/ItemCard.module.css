@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: column;
   /*
-   * 表示時に左上から順にふわっと現れる。
-   * 待たせないよう1枚あたりのずれは小さく、12番目で頭打ちにする。
+   * 表示時に左上から順に、縮んだ状態からバネで現れるスタッガー。
+   * 1枚あたり60msずらし、待たせないよう12番目で頭打ちにする。
    * fill-mode は both ではなく backwards（終了後の transform 保持を避ける）。
    */
-  animation: riseIn var(--duration-normal) var(--easing-out)
-    calc(min(var(--index, 0), 12) * 24ms) backwards;
+  animation: riseIn var(--duration-spring) var(--easing-spring)
+    calc(min(var(--index, 0), 12) * 60ms) backwards;
   transition: transform var(--duration-fast) var(--easing);
 }
 
@@ -76,12 +76,12 @@
 @keyframes riseIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px) scale(0.7);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 

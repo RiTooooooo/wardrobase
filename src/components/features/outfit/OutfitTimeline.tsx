@@ -123,6 +123,17 @@ function DateJump({
   );
 }
 
+/* 日をまたいだ通し番号。入場スタッガーを一覧全体で連続させる */
+function entryOffsets(days: TimelineDay[]): number[] {
+  const offsets: number[] = [];
+  let total = 0;
+  for (const day of days) {
+    offsets.push(total);
+    total += day.entries.length;
+  }
+  return offsets;
+}
+
 function Timeline({
   days,
   focusDate,
@@ -130,9 +141,11 @@ function Timeline({
   days: TimelineDay[];
   focusDate: string | null;
 }): ReactElement {
+  const offsets = entryOffsets(days);
+
   return (
     <div className={styles.timeline}>
-      {days.map((day) => (
+      {days.map((day, dayIndex) => (
         <div
           key={day.date}
           id={dayDomId(day.date)}
@@ -147,8 +160,12 @@ function Timeline({
             <span className={styles.dayMeta}>{day.monthWeekday}</span>
           </div>
           <div className={styles.records}>
-            {day.entries.map((entry) => (
-              <OutfitRecordCard key={entry.id} entry={entry} />
+            {day.entries.map((entry, entryIndex) => (
+              <OutfitRecordCard
+                key={entry.id}
+                entry={entry}
+                index={offsets[dayIndex] + entryIndex}
+              />
             ))}
           </div>
         </div>

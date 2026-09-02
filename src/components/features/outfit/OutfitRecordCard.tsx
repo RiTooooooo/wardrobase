@@ -1,5 +1,5 @@
 import { ViewTransition } from "react";
-import type { ReactElement } from "react";
+import type { CSSProperties, ReactElement } from "react";
 
 import Link from "next/link";
 
@@ -15,11 +15,18 @@ import type { OutfitEntry, ThumbItem } from "./timelineTypes";
  */
 export function OutfitRecordCard({
   entry,
+  index,
 }: {
   entry: OutfitEntry;
+  /** タイムライン全体での通し番号。入場スタッガーのずらし幅に使う */
+  index: number;
 }): ReactElement {
   return (
-    <Link href={`/outfits/${entry.id}`} className={styles.record}>
+    <Link
+      href={`/outfits/${entry.id}`}
+      className={styles.record}
+      style={{ "--index": index } as CSSProperties}
+    >
       <Thumbs outfitId={entry.id} items={entry.items} />
       <span className={styles.memo}>{entry.memo}</span>
       <span className={styles.chev} aria-hidden="true">
