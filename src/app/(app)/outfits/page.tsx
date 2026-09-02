@@ -44,7 +44,7 @@ async function toDatedEntry(outfit: OutfitWithItems): Promise<DatedEntry> {
     const imageUrl = oi.item.imagePath
       ? await createViewUrl(oi.item.imagePath)
       : null;
-    items.push({ name: oi.item.name, imageUrl });
+    items.push({ id: oi.item.id, name: oi.item.name, imageUrl });
   }
   return {
     date: toIsoDate(outfit.wornOn),

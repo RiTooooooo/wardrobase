@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import type { ReactElement } from "react";
 
 import { headers } from "next/headers";
@@ -46,7 +47,7 @@ export default async function OutfitDetailPage({
         </h1>
       </div>
       <OutfitDetailActions outfitId={id} />
-      <OutfitItems items={outfitItems} />
+      <OutfitItems outfitId={id} items={outfitItems} />
       <OutfitMeta outfit={outfit} />
     </div>
   );
@@ -67,22 +68,38 @@ async function buildOutfitItems(
   return result;
 }
 
-function OutfitItems({ items }: { items: OutfitItemView[] }): ReactElement {
+/*
+ * 服のタイル。タイムラインの同じ写真からモーフして受け取る。
+ * 遷移名は OutfitRecordCard の Thumbs と揃えること。
+ */
+function OutfitItems({
+  outfitId,
+  items,
+}: {
+  outfitId: string;
+  items: OutfitItemView[];
+}): ReactElement {
   return (
     <div className={styles.itemsGrid}>
       {items.map((item) => (
-        <Link key={item.id} href={`/items/${item.id}`} className={styles.itemThumb}>
-          {item.imageUrl ? (
-            <img
-              className={styles.itemThumbImage}
-              src={item.imageUrl}
-              alt={item.name}
-              loading="lazy"
-            />
-          ) : (
-            <span className={styles.itemThumbName}>{item.name}</span>
-          )}
-        </Link>
+        <ViewTransition
+          key={item.id}
+          name={`outfit-${outfitId}-item-${item.id}`}
+          share="morph"
+        >
+          <Link href={`/items/${item.id}`} className={styles.itemThumb}>
+            {item.imageUrl ? (
+              <img
+                className={styles.itemThumbImage}
+                src={item.imageUrl}
+                alt={item.name}
+                loading="lazy"
+              />
+            ) : (
+              <span className={styles.itemThumbName}>{item.name}</span>
+            )}
+          </Link>
+        </ViewTransition>
       ))}
     </div>
   );

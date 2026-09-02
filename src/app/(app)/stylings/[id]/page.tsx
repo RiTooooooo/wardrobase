@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import type { ReactElement } from "react";
 
 import { headers } from "next/headers";
@@ -44,7 +45,7 @@ export default async function StylingDetailPage({
         <h1 className={styles.title}>{styling.name}</h1>
       </div>
       <StylingDetailActions stylingId={id} />
-      <StylingItems items={stylingItems} />
+      <StylingItems stylingId={id} items={stylingItems} />
       <StylingMeta styling={styling} />
     </div>
   );
@@ -69,30 +70,38 @@ async function buildStylingItems(
   return result;
 }
 
+/*
+ * 服のタイル。一覧カードのミニボードの同じ服からモーフして受け取る。
+ * 遷移名は StylingCardPreview と揃えること。
+ */
 function StylingItems({
+  stylingId,
   items,
 }: {
+  stylingId: string;
   items: StylingItemView[];
 }): ReactElement {
   return (
     <div className={styles.itemsGrid}>
       {items.map((item) => (
-        <Link
+        <ViewTransition
           key={item.id}
-          href={`/items/${item.id}`}
-          className={styles.itemThumb}
+          name={`styling-${stylingId}-item-${item.id}`}
+          share="morph"
         >
-          {item.imageUrl ? (
-            <img
-              className={styles.itemThumbImage}
-              src={item.imageUrl}
-              alt={item.name}
-              loading="lazy"
-            />
-          ) : (
-            <span className={styles.itemThumbName}>{item.name}</span>
-          )}
-        </Link>
+          <Link href={`/items/${item.id}`} className={styles.itemThumb}>
+            {item.imageUrl ? (
+              <img
+                className={styles.itemThumbImage}
+                src={item.imageUrl}
+                alt={item.name}
+                loading="lazy"
+              />
+            ) : (
+              <span className={styles.itemThumbName}>{item.name}</span>
+            )}
+          </Link>
+        </ViewTransition>
       ))}
     </div>
   );

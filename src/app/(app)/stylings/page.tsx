@@ -37,6 +37,7 @@ async function toStylingCard(styling: StylingWithItems): Promise<StylingCard> {
       ? await createViewUrl(si.item.imagePath)
       : null;
     items.push({
+      id: si.item.id,
       name: si.item.name,
       imageUrl,
       x: si.positionX,
@@ -102,7 +103,7 @@ function StylingGrid({ cards }: { cards: StylingCard[] }): ReactElement {
               <IconChevronRight />
             </span>
           </div>
-          <StylingCardPreview items={card.items} />
+          <StylingCardPreview stylingId={card.id} items={card.items} />
           <div className={styles.cardFoot}>
             <span className={styles.seasons}>{seasonText(card.seasons)}</span>
             <span className={styles.count}>{card.items.length}点</span>

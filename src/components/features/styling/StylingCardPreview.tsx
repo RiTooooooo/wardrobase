@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import type { CSSProperties, ReactElement } from "react";
 
 import { BOARD_ITEM_SIZE } from "@/components/features/board/boardTypes";
@@ -10,6 +11,7 @@ import { fitBoardPreview } from "@/domain/styling/previewLayout";
 import styles from "./StylingCardPreview.module.css";
 
 export type PreviewCardItem = {
+  id: string;
   name: string;
   imageUrl: string | null;
   /** ボード上の配置。ボード保存を経ていない古いスタイリングでは null */
@@ -34,8 +36,10 @@ const MIN_SPAN = 640;
 const FALLBACK_STEP = 110;
 
 export function StylingCardPreview({
+  stylingId,
   items,
 }: {
+  stylingId: string;
   items: PreviewCardItem[];
 }): ReactElement {
   const rects = fitBoardPreview(
@@ -48,22 +52,31 @@ export function StylingCardPreview({
     <div className={styles.canvas}>
       <div className={styles.canvasInner}>
         {items.map((item, index) => (
-          <div
-            key={index}
-            className={styles.boardItem}
-            style={toRectStyle(rects[index], item.zIndex)}
+          // 各アイテムは詳細ページの同じ服のタイルへモーフする。
+          // 同じ服が別のスタイリングにも並ぶため、遷移名は
+          // スタイリングIDを含めて画面内で一意にする
+          // （詳細ページ側の StylingItems と揃えること）
+          <ViewTransition
+            key={item.id}
+            name={`styling-${stylingId}-item-${item.id}`}
+            share="morph"
           >
-            {item.imageUrl !== null ? (
-              <img
-                className={styles.image}
-                src={item.imageUrl}
-                alt={item.name}
-                loading="lazy"
-              />
-            ) : (
-              <span className={styles.boardName}>{item.name}</span>
-            )}
-          </div>
+            <div
+              className={styles.boardItem}
+              style={toRectStyle(rects[index], item.zIndex)}
+            >
+              {item.imageUrl !== null ? (
+                <img
+                  className={styles.image}
+                  src={item.imageUrl}
+                  alt={item.name}
+                  loading="lazy"
+                />
+              ) : (
+                <span className={styles.boardName}>{item.name}</span>
+              )}
+            </div>
+          </ViewTransition>
         ))}
       </div>
     </div>

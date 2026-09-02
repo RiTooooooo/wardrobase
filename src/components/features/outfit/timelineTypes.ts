@@ -3,7 +3,7 @@
  * ページ（Server Component）で組み立て、OutfitTimeline（Client）が受け取る。
  */
 
-export type ThumbItem = { name: string; imageUrl: string | null };
+export type ThumbItem = { id: string; name: string; imageUrl: string | null };
 
 export type OutfitEntry = {
   id: string;
