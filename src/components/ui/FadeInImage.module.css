@@ -1,24 +1,22 @@
 /*
- * ぼかしが解けるフェードだけの静かな表示。
- * 縮み＋バネの登場感はカード側の入場スタッガーが担うため、
- * 読み込みタイミング依存のここでは大きさを動かさない（二重に
- * スケールすると騒がしい）。
+ * 読み込み完了時の静かなフェード。opacity だけを動かす。
+ *
+ * 以前は filter: blur(8px) の解除も重ねていたが、blur は GPU 負荷が高く
+ * 一覧で十数枚が同時に解けるとスマホでコマ落ちしていた。また 700ms は
+ * カードの入場スタッガーと合わさって「遷移が遅い」体感の一因だった。
+ * 縮み＋バネの登場感はカード側のスタッガーが担う。
  */
 .image {
-  transition:
-    opacity var(--duration-slower) var(--easing-out),
-    filter var(--duration-slower) var(--easing-out);
+  transition: opacity var(--duration-normal) var(--easing-out);
 }
 
-/* 読み込み中。背後のスケルトン（親要素の背景）が見える */
+/* 読み込み中。背後の親要素の背景が見える */
 .hidden {
   opacity: 0;
-  filter: blur(8px);
 }
 
 .loaded {
   opacity: 1;
-  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

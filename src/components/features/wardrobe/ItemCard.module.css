@@ -3,11 +3,11 @@
   flex-direction: column;
   /*
    * 表示時に左上から順に、縮んだ状態からバネで現れるスタッガー。
-   * 1枚あたり60msずらし、待たせないよう12番目で頭打ちにする。
+   * ずらし幅と上限枚数は tokens.css（--stagger-step / --stagger-max）。
    * fill-mode は both ではなく backwards（終了後の transform 保持を避ける）。
    */
   animation: riseIn var(--duration-spring) var(--easing-spring)
-    calc(min(var(--index, 0), 12) * 60ms) backwards;
+    calc(min(var(--index, 0), var(--stagger-max)) * var(--stagger-step)) backwards;
   transition: transform var(--duration-fast) var(--easing);
 }
 

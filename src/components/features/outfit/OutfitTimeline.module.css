@@ -142,7 +142,7 @@
    * fill-mode は both ではなく backwards（終了後の transform 保持を避ける）。
    */
   animation: popIn var(--duration-spring) var(--easing-spring)
-    calc(min(var(--index, 0), 12) * 60ms) backwards;
+    calc(min(var(--index, 0), var(--stagger-max)) * var(--stagger-step)) backwards;
 }
 
 /* CSS Modules は animation-name をスコープ化するため、使う側で定義する */

@@ -48,7 +48,7 @@
    * fill-mode は both ではなく backwards（終了後の transform 保持を避ける）。
    */
   animation: popIn var(--duration-spring) var(--easing-spring)
-    calc(min(var(--index, 0), 12) * 60ms) backwards;
+    calc(min(var(--index, 0), var(--stagger-max)) * var(--stagger-step)) backwards;
   background: var(--color-bg-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
@@ -125,7 +125,7 @@
     color var(--duration-fast) var(--easing);
   /* カード列の最後に続いて現れる */
   animation: popIn var(--duration-spring) var(--easing-spring)
-    calc(min(var(--index, 0), 12) * 60ms) backwards;
+    calc(min(var(--index, 0), var(--stagger-max)) * var(--stagger-step)) backwards;
 }
 
 .ghost:hover {
