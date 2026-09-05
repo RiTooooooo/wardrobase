@@ -10,6 +10,13 @@
   top: 0;
   z-index: 100;
   flex-shrink: 0;
+  /*
+   * View Transition では独自の層にする。名前が無いとページ背景と同じ層に
+   * 沈み、退場中の本文スナップショット（スクロールでヘッダーの裏に
+   * 隠れていた部分を含む）が手前に被って見える。z-index で本文より
+   * 手前に積まれる層になる。アニメーションは globals.css で止めている
+   */
+  view-transition-name: app-header;
 }
 
 .inner {

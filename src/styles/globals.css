@@ -101,6 +101,23 @@ img {
 }
 
 /*
+ * ヘッダーとタブバーは常設なので、遷移では動かさない。
+ * 独自の層にしているのは、退場中の本文が手前に被らないようにするため
+ * （AppHeader.module.css / BottomNav.module.css）。中身は遷移の前後で同じ
+ * なのでクロスフェードは無意味で、止めて描画コストも省く。
+ */
+::view-transition-group(app-header),
+::view-transition-group(bottom-nav),
+::view-transition-image-pair(app-header),
+::view-transition-image-pair(bottom-nav),
+::view-transition-old(app-header),
+::view-transition-old(bottom-nav),
+::view-transition-new(app-header),
+::view-transition-new(bottom-nav) {
+  animation: none;
+}
+
+/*
  * セクション間（Wardrobe / Styling / Outfits）の移動は、フェードに
  * ごく浅いスケールの「置き」を重ねる。古い本文はわずかに広がりながら
  * 抜け、新しい本文はわずかに小さい状態からすっと定位置に収まる。
