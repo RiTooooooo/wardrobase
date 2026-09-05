@@ -84,42 +84,46 @@ img {
  * ページ間の View Transitions。
  * ::view-transition-* は疑似要素のためCSS Modulesに置けず、ここで定義する。
  *
- * page-fade: (app)/layout.tsx が本文に付けるクロスフェード。
- * 出は素早く、入りは出を待ってからゆっくり（注意を奪い合わせない）。
+ * page-fade: PageTransition が本文に付ける。本文はパス名で key 付けされて
+ * いるため、遷移は「古い本文の退場」と「新しい本文の入場」という
+ * 別々の層になる。別々の層はブラウザが混ぜ合わせてくれない
+ * （同じ層の中身が入れ替わる cross-fade とは違う）ので、時間的に
+ * 重ねると古い見出しが新しい見出しの下に半透明で残って見える。
+ * そのため出と入りは必ず直列にし、古い本文が消えきってから
+ * 新しい本文を出す。出は素早く、入りはゆっくり。
  */
 ::view-transition-old(.page-fade) {
-  animation: 150ms var(--easing) both vt-fade reverse;
+  animation: 120ms var(--easing) both vt-fade reverse;
 }
 
 ::view-transition-new(.page-fade) {
-  animation: 240ms var(--easing-out) 90ms both vt-fade;
+  animation: 220ms var(--easing-out) 120ms both vt-fade;
 }
 
 /*
- * セクション間（Wardrobe / Styling / Outfits）の移動は、時間差のない
- * 溶け合いに、ごく浅いスケールの「置き」を重ねる。新しい本文が
- * わずかに小さい状態からすっと定位置に収まり、古い本文は
- * その逆へ抜けていく。方向の概念を持たない静かな繋ぎ。
+ * セクション間（Wardrobe / Styling / Outfits）の移動は、フェードに
+ * ごく浅いスケールの「置き」を重ねる。古い本文はわずかに広がりながら
+ * 抜け、新しい本文はわずかに小さい状態からすっと定位置に収まる。
+ * 方向の概念を持たない静かな繋ぎ。
  * セクション移動かどうかはナビのクリック時に JS が
  * <html data-section-nav> として立てる（sectionNav.ts）。
  *
- * フェードは左右対称の ease-in-out で完全に重ね、不透明度の合計を
- * 常に1に保つ（時間差やずれがあると途中で背景が透けて見える）。
+ * ここでも出と入りは重ねない（上記のゴーストを避けるため）。
  * スケールの基準点は上端中央。ページが縦に長くても見えている
  * 上部の動きが暴れないようにするため。
  */
 html[data-section-nav]::view-transition-old(.page-fade) {
   transform-origin: 50% 0;
   animation:
-    300ms ease-in-out both vt-fade reverse,
-    300ms var(--easing-out) both vt-settle-out;
+    140ms var(--easing) both vt-fade reverse,
+    140ms var(--easing) both vt-settle-out;
 }
 
 html[data-section-nav]::view-transition-new(.page-fade) {
   transform-origin: 50% 0;
   animation:
-    300ms ease-in-out both vt-fade,
-    300ms var(--easing-out) both vt-settle-in;
+    260ms var(--easing-out) 140ms both vt-fade,
+    260ms var(--easing-out) 140ms both vt-settle-in;
 }
 
 @keyframes vt-settle-in {
